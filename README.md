@@ -56,7 +56,6 @@ entry for :lilypond-view-exe in the ".fomus" file):
 ```
 (in-package :fomus)
 
-(in-package :fomus)
 (fomus
  ;; :output '(:lilypond :view t)
  :composer ""
