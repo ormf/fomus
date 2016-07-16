@@ -1,0 +1,1238 @@
+<chapter id="objects">
+  <title id="objects.title">Objects</title>
+  <section id="section.objects1">
+    <para>
+      This chapter describes several important classes and structures that provide the main way of specifying all of the
+      part, instrument, and notational information that is passed to <application>FOMUS</application> for processing.
+      Each section gives a description of a class or structure, its constructor, and a list of its accessor functions.
+      How these are actually used depends on the interface that the user chooses to use (See
+      <link linkend="usage" endterm="usage.title"/> for more information).
+    </para>
+    <para>
+      All constructor functions have a corresponding copy function that take exactly the same
+      keyword arguments plus one extra argument (the object to be copied).
+      Any keyword/argument pairs supplied when a copy function is called indicate new replacement values.
+      Objects may therefore be used as templates for creating new objects that differ only in one or two
+      slot values.
+    </para>
+    <para>    
+      The actual class hierarchy isn't given here since it shouldn't be of any concern for most users.
+      It is reflected somewhat in the prefixes that appear in the accessor function names.
+    </para>
+  </section>
+  <section id="section.objects2">
+    <title id="class.part">Class PART</title>
+    <para>
+      A <classname><link linkend="class.part">PART</link></classname> object represents a written part in the score.
+      They are analogous to tracks in a MIDI sequencer or staves in any notation program,
+      though a part may actually represent more than one staff for instruments that require it.
+      <classname><link linkend="class.part">PART</link></classname> objects are containers for <classname><link linkend="class.note">NOTE</link></classname>,
+      <classname><link linkend="class.rest">REST</link></classname> and <classname><link linkend="class.mark">MARK</link></classname> objects
+      (and optionally <classname><link linkend="class.timesig">TIMESIG</link></classname> and
+      <classname><link linkend="class.keysig">KEYSIG</link></classname> object if they only apply to that particular part).
+      Each <classname><link linkend="class.part">PART</link></classname> object also specifies an <classname><link linkend="struct.instr">INSTR</link></classname>
+      object which contains specific information on how
+      to notate a particular instrument.
+    </para>
+    <para>
+      <classname><link linkend="class.part">PART</link></classname> objects are passed to <application>FOMUS</application> by including them in the
+      <varname><link linkend="setting.parts">PARTS</link></varname> list.
+    </para>
+    <para>Constructor: 
+      <function>(MAKE-PART &amp;key
+        :ID <userinput>id</userinput>
+	:PARTID <userinput>partid</userinput>
+        :NAME <userinput>name</userinput>
+	:ABBREV <userinput>abbrev</userinput>
+	:INSTR <userinput>instr</userinput>
+	:EVENTS <userinput>events</userinput>
+	:PROPS <userinput>props</userinput>
+	:OPTS <userinput>opts</userinput>)</function>
+    </para>
+    <para>Copy Function: 
+      <function>(COPY-PART <userinput>part</userinput> &amp;key
+        :ID <userinput>id</userinput>
+	:PARTID <userinput>partid</userinput>
+        :NAME <userinput>name</userinput>
+	:ABBREV <userinput>abbrev</userinput>
+	:INSTR <userinput>instr</userinput>
+	:EVENTS <userinput>events</userinput>
+	:PROPS <userinput>props</userinput>
+	:OPTS <userinput>opts</userinput>)</function>
+    </para>
+    <para>Predicate Function: <function>(PARTP <userinput>obj</userinput>)</function></para>
+    <para>Accessors:
+      <variablelist>
+        <varlistentry>
+          <term><function><anchor id="part.id"/>OBJ-ID</function></term>
+	  <listitem>
+	    <para>
+	      This slot isn't used by FOMUS.
+	      The user may use it to store an ID value or some miscellaneous data.
+            </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="part.partid"/>PART-PARTID</function></term>
+	  <listitem>
+	    <para>
+	      This is a symbol or number used as an index or reference to identify the part.
+	      It doesn't need to be unique--parts that share the same ID symbol are treated as a group.
+	      When they appear in <structfield><link linkend="note.partid">PARTID</link></structfield> or
+	      <structfield><link linkend="timesig.partids">PARTIDS</link></structfield> slots in classes
+	      other than the <classname><link linkend="class.part">PART</link></classname> class they are treated as references to a particular part or group
+	      of parts.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="part.name"/>PART-NAME</function></term>
+	  <listitem>
+	    <para>
+	      This is a string value representing the part name that is to appear on the score.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="part.abbrev"/>PART-ABBREV</function></term>
+	  <listitem>
+	    <para>
+	      This is a string value representing the abbreviated part name that is to appear on the score.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="part.instr"/>PART-INSTR</function></term>
+	  <listitem>
+	    <para>
+  	      This slot specifies an instrument for the part.
+	      All part must be associated with an instrument--if no instrument is given a generic default instrument will be chosen.
+              Instruments provide important data for many of <application>FOMUS</application>'s algorithms and determine at least several
+	      major aspects of score layout, including the number of staves a part has and whether or not pitches are to be
+	      transposed.
+	    </para>
+	    <para>
+	      Instruments may be specified in one of several ways.
+	      If a symbol is provided, it is used to lookup an instrument in a user-defined list
+	      or <application>FOMUS</application>'s own predefined list of instruments (see the <varname><link linkend="setting.instr.groups">INSTR-GROUPS</link></varname>
+	      setting in the <link linkend="settings" endterm="settings.title"/> chapter).
+	      The slot may also contain an instance of an instrument object.
+	      If a list is given, <application>FOMUS</application> expects the first element to be a lookup symbol for an instrument
+	      and the rest of the list to be keyword/argument pairs specifying slots that are to be modified in the original instrument
+	      (as if included in a call to <function><link linkend="function.copy.instr">COPY-INSTR</link></function>.
+	    </para>
+       	    <example id="example.part.instr.slot.setting">
+                <title>PART-INSTR Slot Setting</title>
+                <programlisting>
+<![CDATA[
+'(:piano :staves 3 :simultlim 6)]]>
+                </programlisting>
+  	    </example>
+	    <para>
+	      If an integer from <literal>0</literal> to <literal>127</literal> is provided instead of an identifying symbol, <application>FOMUS</application>
+	      interprets this as a MIDI program change number and will use the first instrument it finds that has this number in its 
+	      <classname><link linkend="instr.midiprgch.im">MIDIPRGCH-IM</link></classname> slot.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="part.events"/>PART-EVENTS</function></term>
+	  <listitem>
+	    <para>
+	      This is a list of <classname><link linkend="class.note">NOTE</link></classname>,
+	      <classname><link linkend="class.rest">REST</link></classname> or
+	      <classname><link linkend="class.mark">MARK</link></classname> objects.
+	      <classname><link linkend="class.timesig">TIMESIG</link></classname> and
+	      <classname><link linkend="class.keysig">KEYSIG</link></classname> objects may also be included in this list.
+	    </para>
+	  </listitem>
+	</varlistentry> 
+        <varlistentry>
+          <term><function><anchor id="part.props"/>PART-PROPS</function></term>
+	  <listitem>
+	    <para>
+	      Part properties are specified in the same way that <structfield><link linkend="note.marks">MARKS</link></structfield> are specified.
+	      They are settings that affect only the part they are included in.
+	      See <link linkend="marks.partprops" endterm="marks.partprops.title"/> for a list of these.
+	    </para>
+	  </listitem>
+	</varlistentry> 
+        <varlistentry>
+          <term><function><anchor id="part.opts"/>PART-OPTS</function></term>
+	  <listitem>
+	    <para>
+	      This is a keyword/argument pair list specifying options to be passed directly to the backend algorithms.
+	      Each backend has its own set of options that may be specified alongside options for any other backend.
+	      See the <link linkend="outputs" endterm="outputs.title"/> for more information.
+	    </para>
+	  </listitem>
+	</varlistentry> 
+      </variablelist>
+    </para>
+  </section>
+  <section id="section.objects3">
+    <title id="class.timesig">Class TIMESIG</title>
+    <para>
+      A <classname><link linkend="class.timesig">TIMESIG</link></classname> object indicates a time signature change in the score.
+      They may also be used to indicate special barlines and a few other changes.
+      <application>FOMUS</application> uses <classname><link linkend="class.timesig">TIMESIG</link></classname> objects to determine where to place measures and
+      how to format the events that appear in them.
+      If new time signatures appear in the middle of a measure, <application>FOMUS</application> either splits the measure
+      or expands it to a larger size depending on the values of <varname><link linkend="setting.auto.override.timesigs">AUTO-OVERRIDE-TIMESIGS</link></varname>
+      and <varname><link linkend="setting.min.auto.timesig.dur">MIN-AUTO-TIMESIG-DUR</link></varname>.
+    </para>
+    <para>
+      Each time signature either specifies or implies a value that specifies what notational value is equivalent to 1 "beat" duration.
+      <application>FOMUS</application> uses this value to determine how all durational events are notated and where they appear in the score.
+      Unless otherwise indicated, all offsets and durations are expressed in beat units.
+      See the <structfield><link linkend="timesig.beat">BEAT</link></structfield> slot for information on how to specify it.
+    </para>
+    <para>
+      Time signatures are passed to <application>FOMUS</application> by including them either
+      in the <varname><link linkend="setting.global">GLOBAL</link></varname> list or the <structfield><link linkend="part.events">EVENTS</link></structfield>
+      slot list of a <classname><link linkend="class.part">PART</link></classname> object.
+      <classname><link linkend="class.timesig">TIMESIG</link></classname> objects listed inside a part apply only to that part
+      (unless the <structfield><link linkend="timesig.partids">PARTIDS</link></structfield> slot
+      indicates otherwise).
+      This method most likely won't be used.
+      <classname><link linkend="class.timesig">TIMESIG</link></classname> objects in the <varname><link linkend="setting.global">GLOBAL</link></varname>
+      list affect parts according to the contents of their <structfield><link linkend="timesig.partids">PARTIDS</link></structfield> slot values.
+      A symbol or list of symbols in the <structfield><link linkend="timesig.partids">PARTIDS</link></structfield> slot applies the time signature to the parts
+      that match those symbols.
+      A default <structfield><link linkend="timesig.partids">PARTIDS</link></structfield> slot value of <literal>NIL</literal> indicates that the time signature be
+      applied to all parts that don't have any other time signature specified at that exact offset.
+      This way you can specify that a certain <classname><link linkend="class.timesig">TIMESIG</link></classname> object be applied to only several
+      <classname><link linkend="class.part">PART</link></classname> objects while another <classname><link linkend="class.timesig">TIMESIG</link></classname>
+      object by applied to all of the remaining parts.
+    </para>
+    <para>Constructor: 
+      <function>(MAKE-TIMESIG &amp;key
+        :ID <userinput>id</userinput>
+	:PARTIDS <userinput>partids</userinput>
+        :OFF <userinput>off</userinput>
+	:TIME <userinput>time</userinput>
+	:COMP <userinput>comp</userinput>
+	:BEAT <userinput>beat</userinput>
+	:DIV <userinput>div</userinput>
+	:REPL <userinput>repl</userinput>
+	:PROPS <userinput>props</userinput>)</function>
+    </para>
+    <para>Copy Function: 
+      <function>(COPY-TIMESIG <userinput>timesig</userinput> &amp;key
+        :ID <userinput>id</userinput>
+	:PARTIDS <userinput>partids</userinput>
+        :OFF <userinput>off</userinput>
+	:TIME <userinput>time</userinput>
+	:COMP <userinput>comp</userinput>
+	:BEAT <userinput>beat</userinput>
+	:DIV <userinput>div</userinput>
+	:REPL <userinput>repl</userinput>
+	:PROPS <userinput>props</userinput>)</function>
+    </para>
+    <para>Predicate Function: <function>(TIMESIGP <userinput>obj</userinput>)</function></para>
+    <para>Accessors:
+      <variablelist>
+        <varlistentry>
+          <term><function><anchor id="timesig.id"/>OBJ-ID</function></term>
+	  <listitem>
+	    <para>
+	      This slot isn't used by FOMUS. 
+            </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="timesig.partids"/>TIMESIG-PARTIDS</function></term>
+	  <listitem>
+	    <para>
+	      This is a reference to a particular part or group of parts.
+	      If the value of this slot is <literal>NIL</literal>, the time signature is applied to
+	      all parts that don't have some another <classname><link linkend="class.timesig">TIMESIG</link></classname> object
+	      defined for them if this <classname><link linkend="class.timesig">TIMESIG</link></classname> object is included in the
+	      <varname><link linkend="setting.global">GLOBAL</link></varname> list.
+	      If the <classname><link linkend="class.timesig">TIMESIG</link></classname> object is in a
+	      <classname><link linkend="class.part">PART</link></classname> object's <structfield><link linkend="part.events">EVENTS</link></structfield> slot,
+	      the time signature is applied to the part.
+   	      If the value is a symbol, number, or list of symbols or numbers, these values are used to lookup which part or parts the event belongs to.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="timesig.off"/>TIMESIG-OFF</function></term>
+	  <listitem>
+	    <para>
+	      This is a number (real, ratio or integer) specifying the absolute position for the onset for this note.
+	      The offset is measured in "beats," which may indicate different notational positions depending on 
+	      previous time signatures and what values are present in their <structfield><link linkend="timesig.beat">BEAT</link></structfield> slots.
+	      The number must be precise and "notatable" (floating point numbers are not recommended and values like 10/3 that don't
+	      occur on regular beat divisions are currently impossible for <application>FOMUS</application> to notate).
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="timesig.time"/>TIMESIG-TIME</function></term>
+	  <listitem>
+	    <para>
+	      This is a required list of two integers, specifying the numerator and denominator of the printed time signature.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="timesig.comp"/>TIMESIG-COMP</function></term>
+	  <listitem>
+	    <para>
+	      If this slot is set to <literal>T</literal>, indicates that the measure is a compound meter.
+	      <application>FOMUS</application> then derives the beat value from the denominator of the time signature.
+	      Setting this to <literal>T</literal> or <literal>NIL</literal> always overrides whatever default action is
+	      specified in the <varname><link linkend="setting.auto.timesig.comp">AUTO-TIMESIG-COMP</link></varname> setting.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="timesig.beat"/>TIMESIG-BEAT</function></term>
+	  <listitem>
+	    <para>
+	      The <structfield><link linkend="timesig.beat">BEAT</link></structfield> slot value determines how events are mapped from beat units to notational durations.
+	      It is a ratio that specifies what notational duration is equivalent to 1 beat.
+	      This duration is expressed as a fraction of a whole note (1/4, for example, specifies a quarter note, 1/2 specifies
+	      a half note, and 3/8 specifies three eight notes).
+	      If the time signature is a compound time signature, the value of this slot is ignored and the
+	      beat value is calculated from the denominator (for example, the beat value of a 12/8 signature is 3/8).
+	      If the slot contains the default value of <literal>NIL</literal>, the beat value is either the
+	      value of <varname><link linkend="setting.default.beat">DEFAULT-BEAT</link></varname> or it is calculated from the
+	      denominator (a non-compound 4/8 or 7/8 time signature would have a beat value of 1/8).
+	      The beat value of a measure effects how notes are are divided and laid out.
+	    </para>
+	  </listitem>
+	</varlistentry> 
+        <varlistentry>
+          <term><function><anchor id="timesig.div"/>TIMESIG-DIV</function></term>
+	  <listitem>
+	    <para>
+	      This is a single list or list of lists containing ratios or integers that add up to the total number of beats
+	      in a measure (as specified by either the <structfield><link linkend="timesig.time">TIME</link></structfield> or
+	      <structfield><link linkend="timesig.beat">BEAT</link></structfield> slots).
+	      It represents all of the choices available for dividing up measures following this time signature.
+	      If the slot contains the default value of <literal>NIL</literal>, <application>FOMUS</application> looks up
+	      divisions first in a user-supplied table if one exists (see the <varname><link linkend="setting.default.meas.divs">DEFAULT-MEAS-DIVS</link></varname>
+	      setting) then in <application>FOMUS</application>'s default table.
+	      A value usually only needs to be specified here if the user wants to force <application>FOMUS</application>
+	      to divide measures in a specific way rather than choosing between several choices.
+	      The following example shows what might be specified for a 7/8 meter:
+       	    <example id="example.timesig.div.slot.setting">
+                <title>TIMESIG-DIV Slot Setting</title>
+                <programlisting>
+<![CDATA[
+'((4 3) (3 4))]]>
+                </programlisting>
+  	    </example>
+	      As another example, setting the <structfield><link linkend="timesig.div">TIMESIG-DIV</link></structfield> slot to <literal>'(1 1 1)</literal> in a 3/4
+	      time signature forces <application>FOMUS</application> to beam measures in groups of 3 (the default is equivalent to
+	      a <structfield><link linkend="timesig.div">TIMESIG-DIV</link></structfield> setting of <literal>'((2 1) (1 2))</literal>)/
+	    </para>
+	  </listitem>
+	</varlistentry> 
+        <varlistentry>
+          <term><function><anchor id="timesig.repl"/>TIMESIG-REPL</function></term>
+	  <listitem>
+	    <para>
+	      This is a list of <classname><link linkend="class.timesig">TIMESIG</link></classname> or
+	      <classname><link linkend="class.timesig.repl">TIMESIG-REPL</link></classname> objects
+	      that are chosen to replace this <classname><link linkend="class.timesig">TIMESIG</link></classname> object when <application>FOMUS</application>
+	      needs to change the length of a measure.
+	      This gives the user some control over how <application>FOMUS</application> fudges measures to make them fit.
+	      When <application>FOMUS</application> changes the length of a measure, it will look here first and then in
+	      the (not implemented yet) setting for a replacement that fits (has the correct number of beats).
+	      If none is found, <application>FOMUS</application> will create a new <classname><link linkend="class.timesig">TIMESIG</link></classname> object
+	      from the current one, modifying the <structfield><link linkend="timesig.div">DIV</link></structfield> slot by adding on extra beats if necessary.
+	    </para>
+	    <para>
+	      <classname><link linkend="class.timesig.repl">TIMESIG-REPL</link></classname> objects are simply
+	      <classname><link linkend="class.timesig">TIMESIG</link></classname> objects with missing
+	      <structfield><link linkend="timesig.off">OFF</link></structfield>,
+	      <structfield><link linkend="timesig.partids">PARTIDS</link></structfield> and
+	      <structfield><link linkend="timesig.repl">REPL</link></structfield> slots, all
+	      of them unnecessary in this context.
+	      The use of these is optional.
+	      If <classname><link linkend="class.timesig">TIMESIG</link></classname> objects are given, these slots are just ignored.
+	    </para>
+	  </listitem>
+	</varlistentry> 
+        <varlistentry>
+          <term><function><anchor id="timesig.props"/>TIMESIG-PROPS</function></term>
+	  <listitem>
+	    <para>
+	      This slot behaves like the <structfield><link linkend="note.marks">MARKS</link></structfield> slot in
+	      <classname><link linkend="class.note">NOTE</link></classname> or
+	      <classname><link linkend="class.rest">REST</link></classname> objects.
+	      Extra time signature or measure properties may be specified here.
+	      See FIXME for more details and the <classname><link linkend="class.mark">MARK</link></classname> class for an example of how to specify properties.
+	    </para>
+	  </listitem>
+	</varlistentry> 
+      </variablelist>
+    </para>
+  </section>
+  <section id="section.objects4">
+    <title id="class.timesig.repl">Class TIMESIG-REPL</title>
+    <para>
+      A <classname><link linkend="class.timesig.repl">TIMESIG-REPL</link></classname> object is a "replacement"
+      <classname><link linkend="class.timesig">TIMESIG</link></classname> object.
+      They are used in the <structfield><link linkend="timesig.repl">REPL</link></structfield> slot of
+      <classname><link linkend="class.timesig">TIMESIG</link></classname> objects and in
+      the FIXME setting, and are simply <classname><link linkend="class.timesig">TIMESIG</link></classname> objects with missing
+      <structfield><link linkend="timesig.off">OFF</link></structfield>,
+      <structfield><link linkend="timesig.partids">PARTIDS</link></structfield> and
+      <structfield><link linkend="timesig.repl">REPL</link></structfield> slots.
+      The use of these is optional.
+      They are included for the sake of conciseness and to (hopefully) eliminate confusion.
+    </para>
+    <para>
+      Since this class is nearly equivalent to the <classname><link linkend="class.timesig">TIMESIG</link></classname> class, no slot descriptions are given here.
+      See the <classname><link linkend="class.timesig">TIMESIG</link></classname> class for an explanation of all the slots.
+      The predicate function <function>TIMESIGP</function> returns <literal>T</literal> for both
+      <classname><link linkend="class.timesig">TIMESIG</link></classname> and <classname><link linkend="class.timesig.repl">TIMESIG-REPL</link></classname> classes.
+    </para>
+    <para>Constructor: 
+      <function>(MAKE-TIMESIG-REPL &amp;key
+        :ID <userinput>id</userinput>
+	:TIME <userinput>time</userinput>
+	:COMP <userinput>comp</userinput>
+	:BEAT <userinput>beat</userinput>
+	:DIV <userinput>div</userinput>
+	:PROPS <userinput>props</userinput>)</function>
+    </para>
+    <para>Copy Function: 
+      <function>(COPY-TIMESIG-REPL <userinput>timesig-repl</userinput> &amp;key
+        :ID <userinput>id</userinput>
+	:TIME <userinput>time</userinput>
+	:COMP <userinput>comp</userinput>
+	:BEAT <userinput>beat</userinput>
+	:DIV <userinput>div</userinput>
+	:PROPS <userinput>props</userinput>)</function>
+    </para>
+    <para>Predicate Function: <function>(TIMESIGP <userinput>obj</userinput>)</function></para>
+  </section>
+  <section id="section.objects5">
+    <title id="class.keysig">Class KEYSIG</title>
+    <para>
+      (This class is not implemented yet.)
+    </para>
+  </section>
+  <section id="section.objects6">
+    <title id="class.note">Class NOTE</title>
+    <para>
+      The <classname><link linkend="class.note">NOTE</link></classname> object will usually be the only object required to describe
+      musical events that occur in the score.
+      It allows the user to specify pitch, offset and duration as well as which voice the event belongs to.
+      A special slot, <structfield><link linkend="note.marks">MARKS</link></structfield>, allows for a wide variety of other information including
+      articulations, clef and staff change overrides, "spanners" like slurs or dashed lines with text, etc..
+      <classname><link linkend="class.note">NOTE</link></classname>, <classname><link linkend="class.rest">REST</link></classname>
+      and <classname><link linkend="class.mark">MARK</link></classname> objects are all
+      considered "events," and so all of their important accessors begin with an <function>EVENT-</function> prefix.
+    </para>
+    <para>
+      <classname><link linkend="class.note">NOTE</link></classname> objects are passed to <application>FOMUS</application> by including them either
+      in the <structfield><link linkend="part.events">EVENTS</link></structfield> slot list of a <classname><link linkend="class.part">PART</link></classname> object or in
+      the global <varname><link linkend="setting.events">EVENTS</link></varname> list.
+      <classname><link linkend="class.note">NOTE</link></classname> objects listed inside a part apply only to that part (unless the
+      <structfield><link linkend="note.partid">PARTID</link></structfield> slot indicates otherwise).
+      <classname><link linkend="class.note">NOTE</link></classname> objects in the <varname><link linkend="setting.events">EVENTS</link></varname>
+      list are distributed to parts according to the contents their
+      <structfield><link linkend="note.partid">PARTID</link></structfield> slot values.
+    </para>
+    <para>Constructor: 
+      <function>(MAKE-NOTE &amp;key 
+        :ID <userinput>id</userinput>
+	:PARTID <userinput>partid</userinput>
+        :VOICE <userinput>voice</userinput>
+	:OFF <userinput>off</userinput>
+	:DUR <userinput>dur</userinput>
+	:NOTE <userinput>note</userinput>
+	:MARKS <userinput>marks</userinput>)</function>
+    </para>
+    <para>Copy Function: 
+      <function>(COPY-NOTE <userinput>note</userinput> &amp;key
+        :ID <userinput>id</userinput>
+	:PARTID <userinput>partid</userinput>
+        :VOICE <userinput>voice</userinput>
+	:OFF <userinput>off</userinput>
+	:DUR <userinput>dur</userinput>
+	:NOTE <userinput>note</userinput>
+	:MARKS <userinput>marks</userinput>)</function>
+    </para>
+    <para>Predicate Function: <function>(NOTEP <userinput>obj</userinput>)</function></para>
+    <para>Accessors:
+      <variablelist>
+        <varlistentry>
+          <term><function><anchor id="note.id"/>OBJ-ID</function></term>
+	  <listitem>
+	    <para>
+	      This slot isn't used by FOMUS.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><function><anchor id="note.partid"/>EVENT-PARTID</function></term>
+	  <listitem>
+	    <para>
+	      This is a reference to a particular part or group of parts.
+	      If the value of this slot is <literal>NIL</literal>, the event is included in whatever part contains it in its
+	      <structfield><link linkend="part.events">EVENTS</link></structfield> slot list, or to all parts if it is included in the global
+	      <varname><link linkend="setting.events">EVENTS</link></varname> list.
+   	      If the value is a symbol, number, or list of symbols or numbers, these values are used to lookup which part or parts the event belongs to.
+	      Events belonging to multiple parts are effectively copied into these parts.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="note.voice"/>EVENT-VOICE</function></term>
+	  <listitem>
+	    <para>
+	      This is an integer or a list of integers specifying a voice or selection of voices that this note
+	      should belong to.
+	      Voice numbers are limited to the integers 1 through 4.
+	      The default value <literal>NIL</literal> specifies voice 1.
+	      If a list of choices is given, <application>FOMUS</application>'s voice distribution algorithm will try to make
+	      an intelligent decision based on voice leading, pitch, balance and other factors.
+	      Note that <classname><link linkend="class.rest">REST</link></classname> and <classname><link linkend="class.mark">MARK</link></classname>
+	      objects use this value slightly differently.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="note.off"/>EVENT-OFF</function></term>
+	  <listitem>
+	    <para>
+	      This is a number (real, ratio or integer) specifying the absolute position for the onset for this note.
+	      The offset is measured in "beats," which may indicate different notational values depending on what the
+	      current time signature is and what value is present in its <structfield><link linkend="timesig.beat">BEAT</link></structfield> slot.
+	      <application>FOMUS</application>'s quantizing algorithm tries to fit all offsets and durations into values
+	      that make the best use of tuplets within given constraints while minimizing the amount of error.
+	      If this quantizing algorithm is switched off, then the user must insure that all offset and duration values
+	      are precise and "notatable" (floating point numbers are not recommended in this case).
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="note.dur"/>EVENT-DUR</function></term>
+	  <listitem>
+	    <para>
+	      This is set to either a number to specify a regular duration or a list to specify a grace note.
+  	      If it's a number (real, ratio or integer) it indicates the note's duration in beats (see <function>EVENT-OFF</function> above).
+	      The comments in <function>EVENT-OFF</function> on quantization also apply here.
+	      If <application>Common Music</application> is present and <varname><link linkend="setting.use.cm">USE-CM</link></varname> is set to <literal>T</literal>,
+	      the value of this slot may also be a symbol, which is parsed by <application>CM</application> using its <function>RHYTHM</function>
+	      function.
+	      Symbols in this case designate notational values and not beats, although
+	      numbers are still interpreted with respect to beats and not filtered through <application>CM</application>'s
+	      <function>RHYTHM</function> function.
+	    </para>
+	    <para>
+	      If a grace note is desired then a list of two elements must be specified, the first element being the duration value described above
+	      and the second element being an integer value describing the "position" that the grace note occupies.
+	      Grace notes with the same offset are organized with respect to this position number.
+	      Lower position grace notes occur earlier in the score than higher position notes.
+	      Grace notes with the same position form chords, and notes with negative positions are notated with a slash.
+	      The duration value at the front of the list is still interpreted in terms of beats and notated as such even though
+	      the note does not take up time in the measure.
+	      Specifying a duration of <literal>'(1/4 -1)</literal>, for example, specifies a grace sixteenth note with a slash
+	      if the current beat is 1/4 (a quarter note).
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="note.note"/>EVENT-NOTE</function></term>
+	  <listitem>
+	    <para>
+	      This slot either designates a pitch (with an optional choice of spellings) or a percussion instrument if the part is a
+	      percussion part.
+	      If specifying a pitch, the value may be either a symbol or a number (real, ratio or integer).
+	      If a number is used, 60 represents middle C, as in a MIDI file.
+	      Numbers are rounded depending on the whether semitones or quartertones are specified (see the
+	      <varname><link linkend="setting.quartertones">QUARTERTONES</link></varname> setting).
+	      Symbols are assembled by concatenating a note letter name (<literal>A</literal> through <literal>G</literal>),
+	      a <literal>+</literal> or <literal>S</literal> for sharp or a <literal>-</literal> or <literal>F</literal> for flat, and an
+	      integer designating the register (<literal>4</literal> is the octave above middle C).
+	      A few examples are given here:
+       	    <example id="event.note.slot.setting1">
+                <title>EVENT-NOTE Slot Setting 1</title>
+                <programlisting>
+<![CDATA[
+'c+4]]>
+                </programlisting>
+  	    </example>	      
+       	    <example id="event.note.slot.setting2">
+                <title>EVENT-NOTE Slot Setting 2</title>
+                <programlisting>
+<![CDATA[
+'ef5]]>
+                </programlisting>
+  	    </example>	      
+	      Quartertones must be specified using numbers.
+	      If <application>Common Music</application> is present and <varname><link linkend="setting.use.cm">USE-CM</link></varname> is set to <literal>T</literal>,
+	      symbols are filtered through <application>CM</application>'s <function>KEYNUM</function> function.
+	      In this case, the value of <varname><link linkend="setting.cm.scale">CM-SCALE</link></varname> will also be passed to the function if it is set to anything other
+	      than <literal>NIL</literal>.
+	    </para>
+	    <para>
+	      If a list of spelling choices is supplied, <application>FOMUS</application> will try to use the note spellings in this list.
+	      To specify one, the value of the <structfield><link linkend="note.note">NOTE</link></structfield>
+	      slot must be a list, the first element of which is the note number
+	      or symbol described above and the rest of which is the list of spelling choices.
+	      A spelling choice is represented either by a number or symbol.
+	      <literal>1</literal>, <literal>+</literal> or <literal>S</literal> designates using a sharp while
+	      <literal>-1</literal>, <literal>-</literal> or <literal>F</literal> designates a flat.
+	      <literal>0</literal>, <literal>N</literal> designates a natural while repeating one of the above symbols (for example,
+	      <literal>++</literal> or <literal>SS</literal>) designates a double sharp or flat.
+	      <literal>2</literal> or <literal>-2</literal> also designates a double sharp or flat.
+	      Quartertones spellings are specified using a list of two elements, the first element specifying the semitone
+	      alteration and the second element specifying the quartertone alteration (one of the numbers
+	      <literal>-1/2</literal>, <literal>0</literal> or <literal>1/2</literal>).
+	      A few examples are given here:
+       	    <example id="event.note.slot.setting3">
+                <title>EVENT-NOTE Slot Setting 3</title>
+                <programlisting>
+<![CDATA[
+'(f4 + --)]]>
+                </programlisting>
+  	    </example>	      
+       	    <example id="event.note.slot.setting4">
+                <title>EVENT-NOTE Slot Setting 4</title>
+                <programlisting>
+<![CDATA[
+'(61.5 (n -1/2))]]>
+                </programlisting>
+  	    </example>	      
+	      If <application>FOMUS</application>'s note spelling algorithm is switched off then all note spellings must be supplied by the user
+	      (so each <structfield><link linkend="note.note">NOTE</link></structfield> slot must contain a list of two elements
+	      specifying the pitch and its spelling, unless it is spelled with a natural).
+	    </para>
+	  </listitem>
+	</varlistentry> 
+        <varlistentry>
+          <term><function><anchor id="note.marks"/>EVENT-MARKS</function></term>
+	  <listitem>
+	    <para>
+	      This slot is nearly equivalent to the <structfield><link linkend="mark.marks">MARKS</link></structfield>
+	      slot in the <classname><link linkend="class.mark">MARK</link></classname>
+	      class described below.
+	      The contents of the <structfield><link linkend="mark.marks">MARKS</link></structfield> slots of
+	      <classname><link linkend="class.mark">MARK</link></classname> objects are actually dumped
+	      into the <structfield><link linkend="note.marks">MARKS</link></structfield> slots of <classname><link linkend="class.note">NOTE</link></classname> and
+	      <classname><link linkend="class.rest">REST</link></classname> objects
+	      once voices and staves have been decided.
+	      See the <classname><link linkend="class.mark">MARK</link></classname> class for more information and
+	      <link linkend="marks" endterm="marks.title"/> for a more detailed explanation of marks and their usage.
+	    </para>
+	  </listitem>
+	</varlistentry> 
+      </variablelist>
+    </para>
+  </section>
+  <section id="section.objects7">
+    <title id="class.rest">Class REST</title>
+    <para>
+      The <classname><link linkend="class.rest">REST</link></classname> objects should rarely be used.
+      <application>FOMUS</application> handles rests automatically and only needs user-defined rests in special
+      cases (such as when a fermata needs to appear in all parts).
+      <classname><link linkend="class.rest">REST</link></classname> objects require nearly the same information as
+      <classname><link linkend="class.note">NOTE</link></classname> objects,
+      except that there is no <structfield><link linkend="note.note">NOTE</link></structfield> slot, the marks that can be assigned to it are limited,
+      and voice information is treated differently
+    </para>
+    <para>
+      <classname><link linkend="class.rest">REST</link></classname> objects are passed to <application>FOMUS</application> by including them either
+      in the <structfield><link linkend="part.events">EVENTS</link></structfield> slot list of a <classname><link linkend="class.part">PART</link></classname> object or in
+      the global <varname><link linkend="setting.events">EVENTS</link></varname> list.
+      The behavior in either case is exactly the same as with a <classname><link linkend="class.note">NOTE</link></classname> object.
+    </para>
+    <para>Constructor: 
+      <function>(MAKE-REST &amp;key 
+        :ID <userinput>id</userinput>
+	:PARTID <userinput>partid</userinput>
+        :VOICE <userinput>voice</userinput>
+	:OFF <userinput>off</userinput>
+	:DUR <userinput>dur</userinput>
+	:MARKS <userinput>marks</userinput>)</function>
+    </para>
+    <para>Copy Function: 
+      <function>(COPY-REST <userinput>rest</userinput> &amp;key
+        :ID <userinput>id</userinput>
+	:PARTID <userinput>partid</userinput>
+        :VOICE <userinput>voice</userinput>
+	:OFF <userinput>off</userinput>
+	:DUR <userinput>dur</userinput>
+	:MARKS <userinput>marks</userinput>)</function>
+    </para>
+    <para>Predicate Function: <function>(RESTP <userinput>obj</userinput>)</function></para>
+    <para>Accessors:
+      <variablelist>
+        <varlistentry>
+          <term><function><anchor id="rest.id"/>OBJ-ID</function></term>
+	  <listitem>
+	    <para>
+	      This slot isn't used by FOMUS.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><function><anchor id="rest.partid"/>EVENT-PARTID</function></term>
+	  <listitem>
+	    <para>
+	      This slot is equivalent to the <structfield><link linkend="note.partid">PARTID</link></structfield>
+	      slot in the <classname><link linkend="class.note">NOTE</link></classname> class.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="rest.voice"/>EVENT-VOICE</function></term>
+	  <listitem>
+	    <para>
+    	      This slot is analogous to but different than the <structfield><link linkend="note.voice">VOICE</link></structfield> slot in the
+	      <classname><link linkend="class.note">NOTE</link></classname> class.
+	      The difference is that when set to a list of voices, the <classname><link linkend="class.rest">REST</link></classname> object is distributed to all
+	      the specified voices instead of one that is chosen by <application>FOMUS</application>.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="rest.off"/>EVENT-OFF</function></term>
+	  <listitem>
+	    <para>
+    	      This slot is equivalent to the <structfield><link linkend="note.off">OFF</link></structfield>
+	      slot in the <classname><link linkend="class.note">NOTE</link></classname> class.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="rest.dur"/>EVENT-DUR</function></term>
+	  <listitem>
+	    <para>
+    	      This slot is equivalent to the <structfield><link linkend="note.dur">DUR</link></structfield>
+	      slot in the <classname><link linkend="class.note">NOTE</link></classname> class with the
+	      exception that rests cannot be grace notes.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="rest.marks"/>EVENT-MARKS</function></term>
+	  <listitem>
+	    <para>
+    	      This slot is equivalent to the <structfield><link linkend="note.marks">MARKS</link></structfield>
+	      slot in the <classname><link linkend="class.note">NOTE</link></classname> class.
+	      However, the number of marks that can be used in the <classname><link linkend="class.rest">REST</link></classname> class is limited. 
+	      See the <classname><link linkend="class.mark">MARK</link></classname> class for more information and
+	      <link linkend="marks" endterm="marks.title"/> for a more detailed explanation of marks and their usage.
+	    </para>
+	  </listitem>
+	</varlistentry> 
+      </variablelist>
+    </para>
+  </section>
+  <section id="section.objects8">
+    <title id="class.mark">Class MARK</title>
+    <para>
+      The <classname><link linkend="class.mark">MARK</link></classname> objects allow the user to specify marks outside of a
+      <classname><link linkend="class.note">NOTE</link></classname>
+      or <classname><link linkend="class.rest">REST</link></classname> class.
+      Marks designate extra information that to be applied to a <classname><link linkend="class.note">NOTE</link></classname> or
+      <classname><link linkend="class.rest">REST</link></classname> object
+      such as articulations, modifications like tremolos or harmonics, printed text, etc..
+      After voices and staff assignments have been established, information in the <classname><link linkend="class.mark">MARK</link></classname> objects is dumped into the
+      <structfield><link linkend="note.marks">MARKS</link></structfield> slots of <classname><link linkend="class.note">NOTE</link></classname> and
+      <classname><link linkend="class.rest">REST</link></classname> objects
+      according to the values in the <structfield><link linkend="mark.off">OFF</link></structfield> and
+      <structfield><link linkend="mark.partid">PARTID</link></structfield> slots.
+    </para>
+    <para>
+      There are several advantages to using <classname><link linkend="class.mark">MARK</link></classname> objects as opposed to specifying marks
+      in <classname><link linkend="class.note">NOTE</link></classname> or <classname><link linkend="class.rest">REST</link></classname> objects.
+      One is that many markings (dynamics, for example) might only need to be attached to notes that are in one voice, such as the bottom voice of
+      a particular staff.
+      Since voice assignments for notes might not be known until <application>FOMUS</application> decides them,
+      <classname><link linkend="class.mark">MARK</link></classname> objects are the only way of insuring that the marks occur in the right place.
+      <classname><link linkend="class.mark">MARK</link></classname> objects are also a convenient way of specifying marks for a range of parts,
+      and make it easier to apply spanners such as slurs without having to juggle <classname><link linkend="class.note">NOTE</link></classname>
+      objects around.
+    </para>
+    <para>
+      <classname><link linkend="class.mark">MARK</link></classname> objects are passed to <application>FOMUS</application> by including them either
+      in the <structfield><link linkend="part.events">EVENTS</link></structfield> slot list of a <classname><link linkend="class.part">PART</link></classname> object or in
+      the global <varname><link linkend="setting.events">EVENTS</link></varname> list.
+      The behavior in either case is exactly the same as with <classname><link linkend="class.note">NOTE</link></classname> or
+      <classname><link linkend="class.rest">REST</link></classname> objects.
+    </para>
+    <para>Constructor: 
+      <function>(MAKE-MARK &amp;key 
+        :ID <userinput>id</userinput>
+	:PARTID <userinput>partid</userinput>
+        :VOICE <userinput>voice</userinput>
+	:OFF <userinput>off</userinput>
+	:MARKS <userinput>marks</userinput>)</function>
+    </para>
+    <para>Copy Function: 
+      <function>(COPY-MARK <userinput>mark</userinput> &amp;key
+        :ID <userinput>id</userinput>
+	:PARTID <userinput>partid</userinput>
+        :VOICE <userinput>voice</userinput>
+	:OFF <userinput>off</userinput>
+	:MARKS <userinput>marks</userinput>)</function>
+    </para>
+    <para>Predicate Function: <function>(MARKP <userinput>obj</userinput>)</function></para>
+    <para>Accessors:
+      <variablelist>
+        <varlistentry>
+          <term><function><anchor id="mark.id"/>OBJ-ID</function></term>
+	  <listitem>
+	    <para>
+	      This slot isn't used by FOMUS.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><function><anchor id="mark.partid"/>EVENT-PARTID</function></term>
+	  <listitem>
+	    <para>
+	      This slot is equivalent to the <structfield><link linkend="note.partid">PARTID</link></structfield> slot in the
+	      <classname><link linkend="class.note">NOTE</link></classname> or <classname><link linkend="class.rest">REST</link></classname> class.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="mark.voice"/>EVENT-VOICE</function></term>
+	  <listitem>
+	    <para>
+    	      This slot is equivalent to the <structfield><link linkend="rest.voice">VOICE</link></structfield>
+	      slot in the <classname><link linkend="class.rest">REST</link></classname> class, with the
+	      exception that a staff or list of staves can be specified instead of voices.
+	      Staves are indicated with a list beginning with the symbol <literal>:STAFF</literal> followed by
+	      one or more integer values.
+	      The integers represent staff choices and can either be negative or positive, negative indicating that
+	      the mark be placed in the uppermost voice of the staff (the staff number is the absolute value of the number given in this case)
+	      and positive indicating that the mark be placed in the lowermost voice of the staff.
+	      <application>FOMUS</application> chooses the option from the list that places the mark the closest to the
+	      specified offset.
+	      Following is an example of how to specify staves:
+       	    <example id="event.voice.slot.setting">
+                <title>EVENT-VOICE Slot Setting</title>
+                <programlisting>
+<![CDATA[
+'(:staff 1 -2)]]>
+                </programlisting>
+  	    </example> 
+	      Specifying a choice of staves like this allows the user to place marks like dynamics that apply to all voices but
+	      only need to appear in one place.
+	      In the case of the example above, a mark with this value in its <structfield><link linkend="mark.voice">VOICE</link></structfield>
+	      slot that is applied to a grand staff is attached to a note in a voice on the inside of the staff.
+	    </para>
+	    <para>
+	      As in the case of the <classname><link linkend="class.rest">REST</link></classname> class, when set to a list of voices, the
+	      <classname><link linkend="class.mark">MARK</link></classname> object is distributed to all
+	      of them.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="mark.off"/>EVENT-OFF</function></term>
+	  <listitem>
+	    <para>
+    	      This slot is equivalent to the <structfield><link linkend="note.off">OFF</link></structfield>
+	      slot in the <classname><link linkend="class.note">NOTE</link></classname> or
+	      <classname><link linkend="class.rest">REST</link></classname> class,
+	      with the exception that offsets may also be wrapped inside a list and given
+	      a positive or negative value (for example, <literal>'(3)</literal>, <literal>'(11.5)</literal> or <literal>'(-11.5)</literal>).
+	      When this list is used, it indicates that the marks in the <structfield><link linkend="mark.marks">MARKS</link></structfield> slot are applied to events
+	      just before or after the given offset depending on its sign.
+	      Positive offset values indicate the mark is to applied to the event just following the offset and negative values indicate the mark is
+	      to be applied just before it (the absolute value of it).
+	      This makes it easier in some cases to place marks that indicate ends of spanners such as slurs, since marks that indicate the
+	      end of the spanner can actually be given the offset where the next spanner begins.
+	      <application>FOMUS</application> will place the end mark in the proper place (the event that
+	      immediately precedes the one at the indicated offset).
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="mark.marks"/>EVENT-MARKS</function></term>
+	  <listitem>
+	    <para>
+	      <structfield><link linkend="mark.marks">MARKS</link></structfield> slots contain lists of marks.
+	      (In a <classname><link linkend="class.note">NOTE</link></classname> or <classname><link linkend="class.rest">REST</link></classname>
+	      object, these marks are "attached" to that event.)
+	      Marks are specified as either symbols or lists of symbols and numbers.
+	      If it is a list, then the first element is the mark symbol followed by one or more arguments.
+	      Following is an example of what may appear in the <structfield><link linkend="mark.marks">MARKS</link></structfield> slot:
+       	    <example id="event.marks.slot.setting1">
+                <title>EVENT-MARKS Slot Setting 1</title>
+                <programlisting>
+<![CDATA[
+'(:accent :startslur- (:startslur- 2 :dotted) (:texttempo "accelerando"))]]>
+                </programlisting>
+  	    </example>	      
+	    </para>
+	    <para>
+	      The <classname><link linkend="class.mark">MARK</link></classname> class can contain one extra mark that
+	      <classname><link linkend="class.note">NOTE</link></classname> or <classname><link linkend="class.rest">REST</link></classname>
+	      objects can't contain.
+	      The symbol itself is <literal>:MARK</literal> and actually specifies another mark that is to be placed in the same voice
+	      at a different offset.
+	      It has the following format: <literal>'(:MARK <userinput>off</userinput> <userinput>mark</userinput>
+	      <userinput>...</userinput>)</literal>, specifying that another mark is to be placed in the same voice at the offset given.
+	      This special mark is necessary if the user specifies a staff instead of a voice and the mark is a symbol indicating the start of a spanner.
+	      It can also be used as a convenience, since only one <classname><link linkend="class.mark">MARK</link></classname> object needs to be instantiated
+	      to specify several marks that belong together.
+	      By specifying the end symbol here as part of a <literal>MARK</literal> mark, <application>FOMUS</application> recognizes the start
+	      and end marks as belonging to each other and will place them in the same voice.
+	      (Starting and ending marks that aren't paired in the same voice cause errors.)
+	      The offset argument that is the second element in this list uses the same extended syntax as the <structfield><link linkend="mark.off">OFF</link></structfield>
+	      slot in this class.
+	      The rest of the list after the second element is the mark symbol and the arguments that apply to that symbol.
+	      Following is an example:
+       	    <example id="event.marks.slot.setting2">
+                <title>EVENT-MARKS Slot Setting 2</title>
+                <programlisting>
+<![CDATA[
+'(:accent (:startslur- 2) (:mark (-101) :endslur- 2))]]>
+                </programlisting>
+  	    </example>	      
+	    </para>
+	    <para>
+	      The contents of the <structfield><link linkend="mark.marks">MARKS</link></structfield> slots of
+	      <classname><link linkend="class.mark">MARK</link></classname> objects are dumped
+	      into the <structfield><link linkend="note.marks">MARKS</link></structfield> slots of <classname><link linkend="class.note">NOTE</link></classname> and
+	      <classname><link linkend="class.rest">REST</link></classname> objects
+	      once voices and staves have been decided.
+	      See <link linkend="marks" endterm="marks.title"/> for a more detailed explanation of marks and their usage.
+	    </para>
+	  </listitem>
+	</varlistentry> 
+      </variablelist>
+    </para>
+  </section>
+  <section id="section.objects9">
+    <title id="struct.instr">Structure INSTR</title>
+    <para>
+      An <classname><link linkend="struct.instr">INSTR</link></classname> structure contain instrument-specific data that's used to inform <application>FOMUS</application>
+      on various aspects of notation.
+      Instruments are specified in the <structfield><link linkend="part.instr">INSTR</link></structfield>
+      slot of <classname><link linkend="class.part">PART</link></classname> objects and can be easily
+      modified.
+      Users can also build their own "database" of instruments by creating a <application>FOMUS</application> initialization file (see
+      <link linkend="init" endterm="init.title"/>).
+    </para>
+    <para>Constructor: 
+      <function>(<anchor id="function.make.instr"/>MAKE-INSTR &amp;key 
+        :SYM <userinput>sym</userinput>
+	:CLEFS <userinput>clefs</userinput>
+        :STAVES <userinput>staves</userinput>
+	:MINP <userinput>minp</userinput>
+	:MAXP <userinput>maxp</userinput> 
+	:SIMULTLIM <userinput>simultlim</userinput>
+	:TPOSE <userinput>tpose</userinput>
+	:CLEFLEGLS <userinput>cleflegls</userinput>
+	:8UPLEGLS <userinput>8uplegls</userinput>
+	:8DNLEGLS <userinput>8dnlegls</userinput>
+	:PERCS <userinput>percs</userinput>
+	:MIDIPRGCH-IM <userinput>midiprgch-im</userinput>
+	:MIDIPRGCH-EX <userinput>midiprgch-ex</userinput>)</function>
+    </para>
+    <para>Copy Function: 
+      <function>(<anchor id="function.copy.instr"/>COPY-INSTR <userinput>instr</userinput> &amp;key
+        :SYM <userinput>sym</userinput>
+	:CLEFS <userinput>clefs</userinput>
+        :STAVES <userinput>staves</userinput>
+	:MINP <userinput>minp</userinput>
+	:MAXP <userinput>maxp</userinput> 
+	:SIMULTLIM <userinput>simultlim</userinput>
+	:TPOSE <userinput>tpose</userinput>
+	:CLEFLEGLS <userinput>cleflegls</userinput>
+	:8UPLEGLS <userinput>8uplegls</userinput>
+	:8DNLEGLS <userinput>8dnlegls</userinput>
+	:PERCS <userinput>percs</userinput>
+	:MIDIPRGCH-IM <userinput>midiprgch-im</userinput>
+	:MIDIPRGCH-EX <userinput>midiprgch-ex</userinput>)</function>
+    </para>
+    <para>Predicate Function: <function>(INSTRP <userinput>obj</userinput>)</function></para>
+    <para>Accessors:
+      <variablelist>
+        <varlistentry>
+          <term><function><anchor id="instr.sym"/>INSTR-SYM</function></term>
+	  <listitem>
+	    <para>
+	      This is a unique symbol identifying the instrument.
+	      It is used as a lookup value so that it may easily be specified in <classname><link linkend="class.part">PART</link></classname> objects.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><function><anchor id="instr.clefs"/>INSTR-CLEFS</function></term>
+	  <listitem>
+	    <para>
+	      This is either a symbol or list of symbols, specifying valid clefs for the instrument in order of preference.
+	      The following clefs are supported:
+	      <literal>:bass</literal>, <literal>:c-baritone</literal>, <literal>:f-baritone</literal>, <literal>:tenor</literal>, <literal>:alto</literal>,
+	      <literal>:mezzosoprano</literal>, <literal>:soprano</literal>, <literal>:treble</literal>
+	      and <literal>:percussion</literal>.
+	      The user may also add an <literal>-8UP</literal> or <literal>-8DN</literal> suffix to the symbol to specify an octave transposition.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="instr.staves"/>INSTR-STAVES</function></term>
+	  <listitem>
+	    <para>
+	      This is an integer specifying the number of staves to use.
+	      The default is 1.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="instr.minp"/>INSTR-MINP</function></term>
+	  <listitem>
+	    <para>
+	      This is an integer specifying the lowest pitch in the instrument's range.
+	      It may also be set to <literal>NIL</literal>, in which case the lower range is considered to be unlimited.
+	      This is only useful if the <varname><link linkend="setting.check.ranges">CHECK-RANGES</link></varname> setting is set to <literal>T</literal>.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="instr.maxp"/>INSTR-MAXP</function></term>
+	  <listitem>
+	    <para>
+	      This is an integer specifying the highest pitch in the instrument's range.
+	      It may also be set to <literal>NIL</literal>, in which case the upper range is considered to be unlimited.
+	      This is only useful if the <varname><link linkend="setting.check.ranges">CHECK-RANGES</link></varname> setting is set to <literal>T</literal>.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="instr.simultlim"/>INSTR-SIMULTLIM</function></term>
+	  <listitem>
+	    <para>
+	      This is an integer of <literal>1</literal> or greater specifying the maximum number of simultaneous pitches allowed in a single voice.
+	      It may also be set to <literal>NIL</literal>, indicating that there is no limit.
+	    </para>
+	  </listitem>
+	</varlistentry> 
+        <varlistentry>
+          <term><function><anchor id="instr.tpose"/>INSTR-TPOSE</function></term>
+	  <listitem>
+	    <para>
+	      This is set to the value <literal>NIL</literal> or an integer indicating the number of semitones to transpose
+	      the instrument before notating it.
+	      This number only has an effect if the <varname><link linkend="setting.transpose">TRANSPOSE</link></varname> setting is set to <literal>T</literal>.
+	    </para>
+	  </listitem>
+	</varlistentry> 
+        <varlistentry>
+          <term><function><anchor id="instr.cleflegls"/>INSTR-CLEFLEGLS</function></term>
+	  <listitem>
+	    <para>
+	      The value of this slot influences how <application>FOMUS</application> decides when to change clefs.
+	      A clef change isn't considered necessary until the number of ledger lines required exceeds a threshold value.
+	      Other factors determine if there is actually a clef change or not.
+	      If the value is an integer, it designates the threshold number of ledger lines in all cases.
+	      If it's a list, the first element of the list must be an integer specifying a default threshold.
+	      This is followed by one or more exceptions, each in the form of a list.
+	      This exception list contains a clef symbol (see the <structfield><link linkend="instr.clefs">CLEFS</link></structfield> slot above)
+	      followed by one of the two symbols <literal>:UP</literal> or <literal>:DN</literal>
+	      and ended by an integer specifying the number of ledger lines.
+	      An example illustrates this data structure.
+       	    <example id="example.instr-cleflegls.slot.setting">
+                <title>INSTR-CLEFLEGLS Slot Setting</title>
+                <programlisting>
+<![CDATA[
+'(2 (:bass :up 3) (:tenor :down 3))]]>
+                </programlisting>
+  	    </example>	      
+	    </para>
+	  </listitem>
+	</varlistentry> 
+        <varlistentry>
+          <term><function id="instr.8uplegls">INSTR-8UPLEGLS</function></term>
+	  <listitem>
+	    <para>
+	      This value influences how <application>FOMUS</application> chooses where to place ottava brackets above the staff.
+	      An ottava bracket isn't considered necessary until the number of ledger lines required exceeds a threshold value.
+	      An integer in this slot indicates the threshold value, while
+	      a list of two elements specifies the threshold for the ottava bracket to begin and the threshold below which the number of ledger lines must
+	      drop for it to end.
+	    </para>
+	  </listitem>
+	</varlistentry> 
+        <varlistentry>
+          <term><function id="instr.8dnlegls">INSTR-8DNLEGLS</function></term>
+	  <listitem>
+	    <para>
+	      This is the same as <function>INSTR-8UPLEGLS</function> above, only for ottava brackets placed below the staff
+	    </para>
+	  </listitem>
+	</varlistentry> 
+        <varlistentry>
+          <term><function><anchor id="instr.percs"/>INSTR-PERCS</function></term>
+	  <listitem>
+	    <para>
+	      This is a list of symbols, <classname><link linkend="struct.perc">PERC</link></classname> objects, numbers or lists
+	      indicating all of the percussion instruments that are to be notated together as a group.
+	      <classname><link linkend="struct.perc">PERC</link></classname> objects provide necessary extra information for notating percussion.
+	      All of these value types function to lookup percussion instruments in the same way as the <structfield><link linkend="part.instr">PART-INSTR</link></structfield>
+	      slot of the <classname><link linkend="class.part">PART</link></classname> class.
+	      Symbols are used as lookup values into a user-defined percussion instrument table (see the
+	      <varname><link linkend="setting.percussion">PERCUSSION</link></varname> setting) or <application>FOMUS</application>'s own predefined table.
+	      Lists contain a symbol lookup value followed by keyword-argument pairs signifying values to replace in the predefined percussion table--it will
+	      usually be necessary to use a list instead of a symbol since the <structfield><link linkend="perc.note">NOTE</link></structfield> and
+	      <structfield><link linkend="perc.voice">VOICE</link></structfield> slots are empty in <application>FOMUS</application>'s table.
+       	    <example id="instr.percs.slot.setting">
+                <title>INSTR-PERCS Slot Setting</title>
+                <programlisting>
+<![CDATA[
+(list '(:low-tom :note 0 :voice 1) '(:high-tom :note 4 :voice 1)
+      (make-perc :anvil :note -3 :voice 2 :midinote-ex 79))]]>
+                </programlisting>
+  	    </example>	      
+	    </para>
+	  </listitem>
+	</varlistentry> 
+        <varlistentry>
+          <term><function><anchor id="instr.midiprgch.im"/>MIDIPRGCH-IM</function></term>
+	  <listitem>
+	    <para>
+	      This is a number from <literal>0</literal> to <literal>127</literal> or a list of such numbers specifying which MIDI program change values can
+	      translate to this instrument.
+	      This is used when specifying an instrument as a program change number (see the <structfield><link linkend="part.instr">INSTR</link></structfield> slot in the
+	      <classname><link linkend="class.part">PART</link></classname> class) or calling the 
+	      <function><link linkend="function.get.midi.instr">GET-MIDI-INSTR</link></function> function.
+	      When given a program change number, <application>FOMUS</application> finds the first instrument that matches in its list.
+	    </para>
+	  </listitem>
+	</varlistentry> 
+        <varlistentry>
+          <term><function><anchor id="instr.midiprgch.ex"/>MIDIPRGCH-EX</function></term>
+	  <listitem>
+	    <para>
+	      This is usually a number from <literal>0</literal> to <literal>127</literal> specifying which program change value is to be used when exporting
+	      MIDI data.
+	      It can also be set to a list, the first element of which is the number mentioned above followed by keyword/value pairs indicating alternate program
+	      change values for different playing modes.
+	      (For example, the list <literal>'(40 :pizz 45)</literal> is a valid value for a violin instrument.)
+	      The keywords currently allowed are <literal>:PIZZ</literal>, <literal>:STOPPED</literal>, <literal>:OPEN</literal> and <literal>:HARMONIC</literal>.
+	      (More will be added in future releases.)
+	    </para>
+	  </listitem>
+	</varlistentry> 
+      </variablelist>
+    </para>
+  </section>
+  <section id="section.objects10">
+    <title id="struct.perc">Structure PERC</title>
+    <para>
+    </para>
+    <para>Constructor: 
+      <function>(<anchor id="function.make.perc"/>MAKE-PERC &amp;key 
+        :SYM <userinput>sym</userinput>
+	:STAFF <userinput>staff</userinput>
+        :VOICE <userinput>voice</userinput>
+	:NOTE <userinput>note</userinput>
+	:AUTODUR <userinput>autodur</userinput>
+	:MARKS <userinput>marks</userinput>
+	:MIDINOTE-IM <userinput>midinote-im</userinput>
+	:MIDINOTE-EX <userinput>midinote-ex</userinput>)</function>
+    </para>
+    <para>Copy Function: 
+      <function>(COPY-PERC <userinput>perc</userinput> &amp;key
+        :SYM <userinput>sym</userinput>
+	:STAFF <userinput>staff</userinput>
+        :VOICE <userinput>voice</userinput>
+	:NOTE <userinput>note</userinput>
+	:AUTODUR <userinput>autodur</userinput>
+	:MARKS <userinput>marks</userinput>
+	:MIDINOTE-IM <userinput>midinote-im</userinput>
+	:MIDINOTE-EX <userinput>midinote-ex</userinput>)</function>
+    </para>
+    <para>Accessors:
+      <variablelist>
+        <varlistentry>
+          <term><function><anchor id="perc.sym"/>PERC-SYM</function></term>
+	  <listitem>
+	    <para>
+	      This is a unique symbol identifying the percussion instrument.
+	      It is used as a lookup value so that it may easily be specified in <classname><link linkend="struct.instr">INSTR</link></classname> structures.
+	    </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><function><anchor id="perc.staff"/>PERC-STAFF</function></term>
+	  <listitem>
+	    <para>
+	      This is an integer of <literal>1</literal> or greater specifying on which staff the
+	      instrument appears on.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="perc.voice"/>PERC-VOICE</function></term>
+	  <listitem>
+	    <para>
+	      This is an integer of <literal>1</literal> or greater specifying a voice that this
+	      instrument belongs to.
+	      Specifying different voices prevents notes belonging to different instruments from being beamed together.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="perc.note"/>PERC-NOTE</function></term>
+	  <listitem>
+	    <para>
+	      This is an integer or symbol designating where the instrument's notes are to appear on the staff.
+	      The value is interpreted with middle C in the center as if notated with an alto clef signature.
+	      See <function>EVENT-NOTE</function> in the <classname><link linkend="class.note">NOTE</link></classname> class for information on
+	      specifying notes with symbols.
+	      Percussion notes should not require flats or sharps.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="perc.autodur"/>PERC-AUTODUR</function></term>
+	  <listitem>
+	    <para>
+	      If set to <literal>T</literal>, indicates that <application>FOMUS</application> should determine
+	      durations for this instrument.
+	      This is appropriate for percussion instruments that don't have long sustain times
+	      and can therefore be notated with durations that are simpler to read.
+	      Notes containing certain marks such as trills and tremolos are left unchanged.
+	      This slot is <literal>T</literal> by default.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="perc.marks"/>PERC-MARKS</function></term>
+	  <listitem>
+	    <para>
+	      Contains a list of <structfield><link linkend="note.marks">MARKS</link></structfield> to be added to
+	      <classname><link linkend="class.note">NOTE</link></classname> objects that specify this percussion instrument.
+	      An example value to put here might be <literal>((:text "R.S." :up))</literal> for a "rim shot" percussion instrument.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="perc.midinote.im"/>PERC-MIDINOTE-IM</function></term>
+	  <listitem>
+	    <para>
+	      Represents the MIDI note or notes used to import MIDI data.
+	      This can either be an integer from <literal>0</literal> to <literal>127</literal> or a list of such integers.
+	    </para>
+	  </listitem>
+	</varlistentry>
+        <varlistentry>
+          <term><function><anchor id="perc.midinote.ex"/>PERC-MIDINOTE-EX</function></term>
+	  <listitem>
+	    <para>
+	      An integer value from <literal>0</literal> to <literal>127</literal> representing the MIDI note used when exporting MIDI data.
+	    </para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+    </para>
+  </section>
+</chapter>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>LilyPond</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch07.html" title="Chapter&#160;7.&#160;Outputs" /><link rel="prev" href="ch07s02.html" title="Data" /><link rel="next" href="ch07s04.html" title="MusicXML" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">LilyPond</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch07s02.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;7.&#160;Outputs</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch07s04.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.outputs3"></a>LilyPond</h2></div></div></div><p>
+      <span class="application">FOMUS</span> currently creates notation files for <span class="application">LilyPond</span> versions 2.4 and 2.6.
+      The <code class="varname"><a href="ch05s04.html#setting.output">OUTPUT</a></code> setting keyword to use is <code class="literal">:LILYPOND</code>.
+      <span class="application">FOMUS</span> outputs a slightly different file depending on whether LilyPond version 2.4 or 2.6 is installed to insure
+      that it compiles correctly (a file for one version may give an error when compiled in the other version).
+      A <code class="filename">.ly</code> extension is added to the base filename to make the complete output filename.
+      When <span class="application">FOMUS</span> loads it looks for <span class="application">LilyPond</span> 
+      and viewer application executables in several locations in the filesystem.
+      If these executables are in an uncommon location or the user wants to specify these herself, several options exist for
+      setting the pathnames and changing command line arguments.
+      When setup correctly, <span class="application">FOMUS</span> can automatically compile the output file and launch a viewer (a PostScript
+      viewing application in <span class="application">Gnome</span> or <span class="application">KDE</span>
+      or the <span class="application">Preview</span> application in OS X).
+    </p><p>
+      Tremolos might be represented by displaying slash marks (like in the MusicXML
+      <code class="varname"><a href="ch07s04.html#musicxml.1note.tremolo.kludge">:XML-1NOTE-TREMOLO-KLUDGE</a></code>
+      and <code class="varname"><a href="ch07s04.html#musicxml.multinote.tremolo.kludge">:XML-MULTINOTE-TREMOLO-KLUDGE</a></code> options)
+      in rare cases where they can't be indicated properly.
+    </p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="section.outputs4"></a>LilyPond Options</h3></div></div></div><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="varname"><a href="ch07s03.html#lily.filename">:FILENAME</a></code></td><td><code class="varname"><a href="ch07s03.html#lily.view.opts">:VIEW-OPTS</a></code></td><td><code class="varname"><a href="ch07s03.html#lily.out.ext">:OUT-EXT</a></code></td></tr><tr><td><code class="varname"><a href="ch07s03.html#lily.process">:PROCESS</a></code></td><td><code class="varname"><a href="ch07s03.html#lily.version">:VERSION</a></code></td><td><code class="varname"><a href="ch07s03.html#lily.text.markup">:TEXT-MARKUP</a></code></td></tr><tr><td><code class="varname"><a href="ch07s03.html#lily.view">:VIEW</a></code></td><td><code class="varname"><a href="ch07s03.html#lily.filehead">:FILEHEAD</a></code></td><td><code class="varname"><a href="ch07s03.html#lily.textdyn.markup">:TEXTDYN-MARKUP</a></code></td></tr><tr><td><code class="varname"><a href="ch07s03.html#lily.exe">:EXE</a></code></td><td><code class="varname"><a href="ch07s03.html#lily.scorehead">:SCOREHEAD</a></code></td><td><code class="varname"><a href="ch07s03.html#lily.texttempo.markup">:TEXTTEMPO-MARKUP</a></code></td></tr><tr><td><code class="varname"><a href="ch07s03.html#lily.opts">:OPTS</a></code></td><td><code class="varname"><a href="ch07s03.html#lily.parthead">:LILY-PARTHEAD</a></code></td><td><code class="varname"><a href="ch07s03.html#lily.textnote.markup">:TEXTNOTE-MARKUP</a></code></td></tr><tr><td><code class="varname"><a href="ch07s03.html#lily.view.exe">:VIEW-EXE</a></code></td><td><code class="varname"><a href="ch07s03.html#lily.partname">:LILY-PARTNAME</a></code></td><td><code class="varname"><a href="ch07s03.html#lily.textacc.markup">:TEXTACC-MARKUP</a></code></td></tr></table></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="section.outputs5"></a>Alphabetical Listing of Options</h3></div></div></div><div class="variablelist"><dl><dt><span class="term"><code class="varname"><a id="lily.exe"></a>:EXE</code></span></dt><dd><p> 
+	      This is a string specifying the path and filename to the <span class="application">LilyPond</span> executable.
+	      The full pathname may or may not need to be specified depending on the Lisp implementation.
+	      This overrides the <code class="varname"><a href="ch05s04.html#setting.lilypond.exe">LILYPOND-EXE</a></code> setting if used.
+    	    </p></dd><dt><span class="term"><code class="varname"><a id="lily.opts"></a>:OPTS</code></span></dt><dd><p>
+	      This is a list of strings representing options to be passed to the <span class="application">LilyPond</span> executable.
+	      The default is currently <code class="literal">'("--ps")</code> for Linux or <code class="literal">'("--pdf")</code> for OS X/Windows,
+	      specifying that <span class="application">LilyPond</span> should generate either a PostScript or PDF format file.
+	      This overrides the <code class="varname"><a href="ch05s04.html#setting.lilypond.opts">LILYPOND-OPTS</a></code> setting if used.
+  	    </p></dd><dt><span class="term"><code class="varname"><a id="lily.filehead"></a>:FILEHEAD</code></span></dt><dd><p>
+	      This is a string or list of strings representing text to be inserted directly into the output file.
+	      Each string in the list is followed by a carriage return.
+	      The text is inserted near the top of the file at a point before any score or part data appears.
+  	    </p></dd><dt><span class="term"><code class="varname"><a id="lily.filename"></a>:FILENAME</code></span></dt><dd><p>
+	      This is a string representing the output filename.
+	      It overrides the <code class="varname"><a href="ch05s04.html#setting.filename">FILENAME</a></code> setting if used.
+  	    </p></dd><dt><span class="term"><code class="varname"><a id="lily.out.ext"></a>:OUT-EXT</code></span></dt><dd><p>
+	      This is a string specifying the extension for the output filename that is created when <span class="application">LilyPond</span> is run.
+	      The default is <code class="literal">"ps"</code> for Linux and <code class="literal">"pdf"</code> for OS X/Windows.
+	      This overrides the <code class="varname"><a href="ch05s04.html#setting.lilypond.out.ext">LILYPOND-OUT-EXT</a></code> setting if used.
+  	    </p></dd><dt><span class="term"><code class="varname"><a id="lily.parthead"></a>:LILY-PARTHEAD</code></span></dt><dd><p>
+	      This option is specified in <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> part objects
+	      and is valid only for that part.
+	      It is a string or list of strings representing text to be inserted directly into the output file.
+	      Each string is followed by a carriage return.
+	      The text inserted at the beginning of a staff section just before note, rest and other
+	      information appears for that part in the file.
+  	    </p></dd><dt><span class="term"><code class="varname"><a id="lily.partname"></a>:LILY-PARTNAME</code></span></dt><dd><p>
+	      This option is specified in <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> part objects
+	      and is valid only for that part.
+	      It is a string representing a part name used to uniquely identify the part in the output file.
+	      If it isn't supplied, <span class="application">FOMUS</span> automatically generates a name.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="lily.process"></a>:PROCESS</code></span></dt><dd><p>
+	      If set to <code class="literal">T</code>, indicates that <span class="application">FOMUS</span> should call <span class="application">LilyPond</span>
+	      to process the output file once it's been written.
+	      If set to <code class="literal">NIL</code>, only the output file is written and no processing occurs (unless 
+	      <code class="varname"><a href="ch07s03.html#lily.view">VIEW</a></code> is set to <code class="literal">T</code>).
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="lily.scorehead"></a>:SCOREHEAD</code></span></dt><dd><p>
+	      This is a string or list of strings representing text to be inserted directly into the output file at the beginning of a score block.
+	      Each string in the list is followed by a carriage return.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="lily.text.markup"></a>:TEXT-MARKUP</code></span></dt><dd><p>
+	      This is a "wrapper" string specifying <span class="application">LilyPond</span> markup instructions to be used when
+	      printing text above or below the staff.
+	      The string must have an <code class="literal">~A</code> or similar substring to indicate where to place the actual text
+	      (as if in a call to <code class="function">FORMAT</code>).
+	      The default value is <code class="literal">"\markup{\italic{~A}}"</code>.
+    	    </p></dd><dt><span class="term"><code class="varname"><a id="lily.textacc.markup"></a>:TEXTACC-MARKUP</code></span></dt><dd><p>
+	      This is a "wrapper" string specifying <span class="application">LilyPond</span> markup instructions to be used when
+	      engraving accidentals as text.
+	      The string must have an <code class="literal">~A</code> or similar substring to indicate where to place the actual text
+	      (as if in a call to <code class="function">FORMAT</code>).
+	      The default value is <code class="literal">"\\markup{\\tiny{~A}}"</code>.
+    	    </p></dd><dt><span class="term"><code class="varname"><a id="lily.textdyn.markup"></a>:TEXTDYN-MARKUP</code></span></dt><dd><p>
+	      This is a "wrapper" string specifying <span class="application">LilyPond</span> markup instructions to be used when
+	      printing text in a dynamic-type font.
+	      The string must have an <code class="literal">~A</code> or similar substring to indicate where to place the actual text
+	      (as if in a call to <code class="function">FORMAT</code>).
+	      The default value is <code class="literal">"\markup{\dynamic{\italic{\bold{~A}}}}"</code>.
+    	    </p></dd><dt><span class="term"><code class="varname"><a id="lily.textnote.markup"></a>:TEXTNOTE-MARKUP</code></span></dt><dd><p>
+	      This is a "wrapper" string specifying <span class="application">LilyPond</span> markup instructions to be used when
+	      printing text above single notes.
+	      The string must have an <code class="literal">~A</code> or similar substring to indicate where to place the actual text
+	      (as if in a call to <code class="function">FORMAT</code>).
+	      The default value is <code class="literal">"\markup{\italic{~A}}"</code>.
+    	    </p></dd><dt><span class="term"><code class="varname"><a id="lily.texttempo.markup"></a>:TEXTTEMPO-MARKUP</code></span></dt><dd><p>
+	      This is a "wrapper" string specifying <span class="application">LilyPond</span> markup instructions to be used when
+	      printing text in a heavy "tempo" font.
+	      The string must have an <code class="literal">~A</code> or similar substring to indicate where to place the actual text
+	      (as if in a call to <code class="function">FORMAT</code>).
+	      The default value is <code class="literal">"\markup{\bold{\huge{~A}}}"</code>.
+    	    </p></dd><dt><span class="term"><code class="varname"><a id="lily.version"></a>:VERSION</code></span></dt><dd><p>
+	      If set to a string (for example, <code class="literal">"2.8"</code>), forces <span class="application">FOMUS</span> to output <span class="application">LilyPond</span> files for that
+	      version.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="lily.view"></a>:VIEW</code></span></dt><dd><p>
+	      If set to <code class="literal">T</code>, indicates that <span class="application">FOMUS</span> should call <span class="application">LilyPond</span>
+	      to process the output file then open the results with a viewer program for immediate viewing.
+	      If set to <code class="literal">NIL</code>, no viewer application is opened.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="lily.view.exe"></a>:VIEW-EXE</code></span></dt><dd><p>
+	      This is a string specifying the path and filename to the executable for the viewer application.
+	      The full pathname may or may not need to be specified depending on the Lisp implementation.
+	      The default application depends on what is installed on the user's machine, and should be
+	      one appropriate for viewing PostScript files.
+	      This overrides the <code class="varname"><a href="ch05s04.html#setting.lilypond.view.exe">LILYPOND-VIEW-EXE</a></code> setting if used.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="lily.view.opts"></a>:VIEW-OPTS</code></span></dt><dd><p>
+	      This is a list of strings representing options to be passed to the viewer application executable.
+	      This overrides the <code class="varname"><a href="ch05s04.html#setting.lilypond.view.opts">LILYPOND-VIEW-OPTS</a></code> setting if used.
+  	  </p></dd></dl></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch07s02.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch07.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch07s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Data&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;MusicXML</td></tr></table></div></body></html>

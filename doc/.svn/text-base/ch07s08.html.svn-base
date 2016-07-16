@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>MIDI</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch07.html" title="Chapter&#160;7.&#160;Outputs" /><link rel="prev" href="ch07s07.html" title="Common Music Notation" /><link rel="next" href="ch07s09.html" title="CHUNK" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">MIDI</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch07s07.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;7.&#160;Outputs</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch07s09.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.outputs14"></a>MIDI</h2></div></div></div><p>
+      This requires <span class="application">Common Music</span> to output MIDI data.  
+      The purpose of this backend is to allow the user to hear the results after any changes and adjustments made to the music
+      (for example, quantizing).
+      It should not be used as input to a score notation program, since the output data will not precisely match the input data.
+      <span class="application">FOMUS</span> attempts to accurately simulate most of <span class="application">FOMUS</span>'s markings (trills, dynamic markings, etc.).
+      Users can override how marks are interpretted by using the <code class="varname"><a href="ch07s08.html#midi.events.fun">EVENTS-FUN</a></code> option to
+      provide their own instructions.
+      Output can also be tweaked using most of the options listed below.
+    </p><p>
+      See the <code class="classname"><a href="ch04s09.html#struct.instr">INSTR</a></code> and <code class="classname"><a href="ch04s10.html#struct.perc">PERC</a></code>
+      structures for information on how to define MIDI data for <span class="application">FOMUS</span>'s instruments.
+    </p><p>
+      MIDI output is be routed either to a file or to <span class="application">Common Music</span>'s realtime scheduler, the latter being advantageous if more than 16
+      channels are necessary (see the <code class="varname"><a href="ch07s08.html#midi.play">PLAY</a></code> option).
+      Also, the <code class="varname"><a href="ch07s08.html#midi.cm.args">CM-ARGS</a></code> option may be used to send <span class="application">Common Music</span> specific
+      arguments to its <code class="function">EVENTS</code> or <code class="function">RTS</code> function, whichever is used.
+      <span class="application">FOMUS</span> uses floating point velocity (or amplitude) values (0.0 to 1.0).
+    </p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="section.outputs15"></a>MIDI Options</h3></div></div></div><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="varname"><a href="ch07s08.html#midi.filename">:FILENAME</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.breath.dur">:BREATH-DUR</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.slur.adddur">:SLUR-ADDDUR</a></code></td></tr><tr><td><code class="varname"><a href="ch07s08.html#midi.midi.filename">:MIDI-FILENAME</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.instr.per.ch">:INSTR-PER-CH</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.staccatissimo.mult">:STACCATISSIMO-MULT</a></code></td></tr><tr><td><code class="varname"><a href="ch07s08.html#midi.play">:PLAY</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.fermata.mults">:FERMATA-MULTS</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.staccato.mult">:STACCATO-MULT</a></code></td></tr><tr><td><code class="varname"><a href="ch07s08.html#midi.cm.args">:CM-ARGS</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.grace.dur.secs">:GRACE-DUR-SECS</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.tenuto.adddur">:TENUTO-ADDDUR</a></code></td></tr><tr><td><code class="varname"><a href="ch07s08.html#midi.events.fun">:EVENTS-FUN</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.harmatt">:HARMATT</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.tramp">:TRAMP</a></code></td></tr><tr><td><code class="varname"><a href="ch07s08.html#midi.delay">:DELAY</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.min.amp">:MIN-AMP</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.trdur.secs">:TRDUR-SECS</a></code></td></tr><tr><td><code class="varname"><a href="ch07s08.html#midi.nports">:NPORTS</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.mindur.secs">:MINDUR-SECS</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.trovlp.adddur">:TROVLP-ADDDUR</a></code></td></tr><tr><td><code class="varname"><a href="ch07s08.html#midi.tempo">:TEMPO</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.pbend.width">:PBEND-WIDTH</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.midi.filename">:MIDI-FILENAME</a></code></td></tr><tr><td><code class="varname"><a href="ch07s08.html#midi.arpatt">:ARPATT</a></code></td><td><code class="varname"><a href="ch07s08.html#midi.portato.mult">:PORTATO-MULT</a></code></td><td>&#160;</td></tr></table></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="section.outputs16"></a>Alphabetical Listing of Options</h3></div></div></div><div class="variablelist"><dl><dt><span class="term"><code class="varname"><a id="midi.arpatt"></a>:ARPATT</code></span></dt><dd><p>
+	      A real number from <code class="literal">0</code> to <code class="literal">1</code> specifying the amount of 
+	      attenuation to apply to arpeggios to make them sound more natural (a crescendo is also added).
+	      The number is subtracted from the velocities of the events. 
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.breath.dur"></a>:BREATH-DUR</code></span></dt><dd><p>
+	      A real number greater than <code class="literal">0</code> specifying the duration in beats of a breath mark.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.cm.args"></a>:CM-ARGS</code></span></dt><dd><p>
+	      This is a list of arguments that are sent to <span class="application">Common Music</span>'s
+	      <code class="function">EVENTS</code> or <code class="function">RTS</code> function, whichever is used.
+	      <span class="application">FOMUS</span> overrides the <code class="literal">:TEMPO</code> and <code class="literal">:PLAY</code> keyword arguments to
+	      these functions.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.delay"></a>:DELAY</code></span></dt><dd><p>
+	      A real number greater than or equal to <code class="literal">0</code> specifying a delay time in seconds to be inserted at the
+	      beginning of the MIDI file or output (useful if the score takes several seconds to appear on the screen).
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.events.fun"></a>:EVENTS-FUN</code></span></dt><dd><p>
+	      This options provides a way of overriding <span class="application">FOMUS</span>'s default interpretation of marks into MIDI events.
+	      It is a function of the form 
+	      <code class="function">(lambda (<strong class="userinput"><code>ev</code></strong> <strong class="userinput"><code>mark</code></strong> <strong class="userinput"><code>arg1</code></strong> <strong class="userinput"><code>arg2</code></strong>) ...)</code>,
+	      where <strong class="userinput"><code>ev</code></strong> is either a single <span class="application">Common Music</span> <code class="classname">MIDI</code> object or a list of such objects, 
+	      <strong class="userinput"><code>mark</code></strong> is a keyword symbol specifying what modifications should occur, and <strong class="userinput"><code>arg1</code></strong> and
+	      <strong class="userinput"><code>arg2</code></strong> are input arguments specific to each mark.
+	      The function may either modify the <code class="classname">MIDI</code> event objects or create new ones using <span class="application">Common Music</span>
+	      functions (or return a mixture of both).  
+	      The return value is either a single <code class="classname">MIDI</code> object, a list of <code class="classname">MIDI</code> objects, 
+	      <code class="literal">NIL</code> or <code class="literal">'(NIL)</code>.
+	      Returning <code class="literal">NIL</code> indicates that <span class="application">FOMUS</span> should use its default function to interpret the mark.
+	      <code class="literal">'(NIL)</code> indicates that the return value actually is an empty list of events (and that the default function should not
+	      be called)--they will then be deleted from the output.
+	    </p><p>  
+	      The user should not worry about how multiple marks will affect either other.  
+	      For example, a note with both <code class="literal">:TREMOLO</code> and <code class="literal">:ACCENT</code> marks will be passed to the user function
+	      first with the <code class="literal">:TREMOLO</code> keyword. Next (assuming the user returned multiple <code class="classname">MIDI</code> events)
+	      only the first note of the tremolo is passed to this function with the <code class="literal">:ACCENT</code> keyword.
+	      The user function should then only deal directly with what it is given and allow <span class="application">FOMUS</span> to handle
+	      the sorting out of these details and applying them to the correct notes.
+	      Also, the dynamic markings <code class="literal">:PPPPPP</code> through <code class="literal">:FFFFFF</code> are translated before any other dynamics-related
+	      markings, so user code should set the amplitudes of <code class="classname">MIDI</code> objects to some initial value in these cases.
+	      Subsequent handling of other dynamics-related marks can then alter MIDI amplitude values in whatever ways are appropriate.
+	    </p><p>  
+	      Marks that are sent via the <strong class="userinput"><code>mark</code></strong> argument are listed here (with <strong class="userinput"><code>arg1</code></strong> and <strong class="userinput"><code>arg2</code></strong>
+	      if appropriate).
+	      Marks beginning with <code class="literal">:SPAN-</code> accompany a list of events to modify and correspond to what are called "spanner" marks in
+	      <a href="ch06.html" title="Chapter&#160;6.&#160;Marks">Marks</a>.
+	      </p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="literal">:FFFFFF</code></td></tr><tr><td><code class="literal">:FFFFF</code></td></tr><tr><td><code class="literal">:FFFF</code></td></tr><tr><td><code class="literal">:FFF</code></td></tr><tr><td><code class="literal">:FF</code></td></tr><tr><td><code class="literal">:F</code></td></tr><tr><td><code class="literal">:MF</code></td></tr><tr><td><code class="literal">:MP</code></td></tr><tr><td><code class="literal">:P</code></td></tr><tr><td><code class="literal">:PP</code></td></tr><tr><td><code class="literal">:PPP</code></td></tr><tr><td><code class="literal">:PPPP</code></td></tr><tr><td><code class="literal">:PPPPP</code></td></tr><tr><td><code class="literal">:PPPPPP</code></td></tr><tr><td><code class="literal">:RFZ</code></td></tr><tr><td><code class="literal">:SFZ</code></td></tr><tr><td><code class="literal">:SPP</code></td></tr><tr><td><code class="literal">:SP</code></td></tr><tr><td><code class="literal">:SFF</code></td></tr><tr><td><code class="literal">:SF</code></td></tr><tr><td><code class="literal">:FP</code></td></tr><tr><td><code class="literal">:STACCATO</code></td></tr><tr><td><code class="literal">:STACCATISSIMO</code></td></tr><tr><td><code class="literal">:PORTATO</code></td></tr><tr><td><code class="literal">:TENUTO</code></td></tr><tr><td><code class="literal">:MARCATO</code></td></tr><tr><td><code class="literal">:ACCENT</code></td></tr><tr><td><code class="literal">:SPAN-SLUR (<strong class="userinput"><code>arg1</code></strong> is the slur level)</code></td></tr><tr><td><code class="literal">:FERMATA (<strong class="userinput"><code>arg1</code></strong> is either <code class="literal">:SHORT</code>, <code class="literal">:LONG</code> or 
+                               <code class="literal">:VERYLONG</code>)</code></td></tr><tr><td><code class="literal">:BREATH</code></td></tr><tr><td><code class="literal">:TREMOLO</code> (<strong class="userinput"><code>arg1</code></strong> is the number of tremolo subdivisions, 
+                               <strong class="userinput"><code>arg2</code></strong> is 1/8 for eighth-note subdivions, 1/16 for sixteenths, etc.)</td></tr><tr><td><code class="literal">:SPAN-TREMFIRST</code> (<strong class="userinput"><code>arg1</code></strong> and <strong class="userinput"><code>arg2</code></strong> 
+                               are the same as with <code class="literal">:TREMOLO</code>)</td></tr><tr><td><code class="literal">:SPAN-TREMSECOND</code> (<strong class="userinput"><code>arg1</code></strong> and <strong class="userinput"><code>arg2</code></strong> 
+                               are the same as with <code class="literal">:TREMOLO</code>)</td></tr><tr><td><code class="literal">:TRILL</code> (<strong class="userinput"><code>arg1</code></strong> is the additional trill pitch)</td></tr><tr><td><code class="literal">:LONGTRILL</code> (<strong class="userinput"><code>arg1</code></strong> is the additional trill pitch)</td></tr><tr><td><code class="literal">:PRALL</code> (<strong class="userinput"><code>arg1</code></strong> is the additional prall pitch)</td></tr><tr><td><code class="literal">:MORDENT</code> (<strong class="userinput"><code>arg1</code></strong> is the additional mordent pitch)</td></tr><tr><td><code class="literal">:SPAN-ARP</code> (<strong class="userinput"><code>arg1</code></strong> is either <code class="literal">:UP</code>, <code class="literal">:DOWN</code> or <code class="literal">NIL</code>, 
+                               <strong class="userinput"><code>arg2</code></strong> is the offset of the previous note)</td></tr><tr><td><code class="literal">:SPAN-PORT</code></td></tr><tr><td><code class="literal">:SPAN-GLISS</code></td></tr><tr><td><code class="literal">:SPAN-WEDGE&lt;</code> (<strong class="userinput"><code>arg1</code></strong> is the destination amplitude or velocity, 
+                               <strong class="userinput"><code>arg2</code></strong> is the offset of the event following the last event of the wedge)</td></tr><tr><td><code class="literal">:SPAN-WEDGE&gt;</code> (<strong class="userinput"><code>arg1</code></strong> and <strong class="userinput"><code>arg2</code></strong> 
+                               are the same as with <code class="literal">:SPAN-WEDGE&lt;</code>)</td></tr><tr><td><code class="literal">:HARMONIC</code> (<strong class="userinput"><code>arg1</code></strong> is either <code class="literal">:SOUNDING</code> or <code class="literal">:TOUCHED</code>, 
+                               <strong class="userinput"><code>arg2</code></strong> is the sounding pitch in either case)</td></tr><tr><td><code class="literal">:ARCO</code></td></tr><tr><td><code class="literal">:PIZZ</code></td></tr><tr><td><code class="literal">:STOPPED</code></td></tr><tr><td><code class="literal">:OPEN</code></td></tr><tr><td><code class="literal">:FLAGEOLET</code></td></tr></table><p>
+  	    </p></dd><dt><span class="term"><code class="varname"><a id="midi.fermata.mults"></a>:FERMATA-MULTS</code></span></dt><dd><p>
+	      This is a list of three real numbers greater than <code class="literal">0</code>, specifying how much to increase (by multiplying) the durations
+	      of notes that have fermatas over them.
+	      The three values each correspond to short, long and very long fermatas.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.filename"></a>:FILENAME</code></span></dt><dd><p>
+	      This is a string representing the output filename.
+	      It overrides the <code class="varname"><a href="ch05s04.html#setting.filename">FILENAME</a></code> setting if used.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.grace.dur.secs"></a>:GRACE-DUR-SECS</code></span></dt><dd><p>
+	      A real number greater than <code class="literal">0</code> specifying the default MIDI grace note duration in seconds.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.harmatt"></a>:HARMATT</code></span></dt><dd><p>
+	      A real number from <code class="literal">0</code> to <code class="literal">1</code> specifying the amount of 
+	      attenuation to apply to harmonics to make them sound closer to what is expected.	      
+	      The number is subtracted from the velocities of the events. 
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.instr.per.ch"></a>:INSTR-PER-CH</code></span></dt><dd><p>
+	      When set to an integer value greater than or equal to <code class="literal">1</code>, specifies how many parts with similar instruments
+	      (ie. with equivalent MIDI program change values) are stuffed into one MIDI channel or track.
+	      A value of <code class="literal">NIL</code> indicates that all parts with the same program change indicated in their 
+	      <code class="classname"><a href="ch04s09.html#struct.instr">INSTR</a></code> objects are to be put into a single channel.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.midi.filename"></a>:MIDI-FILENAME</code></span></dt><dd><p>
+	      This is a part option (see the <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> class).
+	      It is a string representing a filename for a separate output file--<span class="application">FOMUS</span> fills this with 
+	      MIDI data only for the part that it is specified in.
+	      These strings are "merged" with <code class="varname"><a href="ch07s08.html#midi.filename">FILENAME</a></code> using Lisp's <code class="function">MERGE-PATHNAMES</code> function
+	      so that if a full path isn't specified it appears in the same directory as <a href="ch07s08.html#midi.filename">FILENAME</a>.
+	      Parts with the same <code class="varname"><a href="ch07s08.html#midi.midi.filename">MIDI-FILENAME</a></code> are grouped together so that
+	      all of their output is written to one file.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.min.amp"></a>:MIN-AMP</code></span></dt><dd><p>
+	      A real number from <code class="literal">0</code> to <code class="literal">1</code> specifying a minimum velocity value for all midi events.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.mindur.secs"></a>:MINDUR-SECS</code></span></dt><dd><p>
+	      This real number specifies an absolute minimum duration in seconds for all midi events.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.nports"></a>:NPORTS</code></span></dt><dd><p>
+	      If realtime playback is specified using the <code class="varname"><a href="ch07s08.html#midi.play">PLAY</a></code> option, this integer
+	      value specifies the number of ports to use.
+	      The default is <code class="literal">1</code>.
+	      If output is to a MIDI file, then this value will be <code class="literal">1</code> regardless of what is specified.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.pbend.width"></a>:PBEND-WIDTH</code></span></dt><dd><p>
+	      This is equivalent to the <code class="literal">:PITCH-BEND-WIDTH</code> option used when opening MIDI streams in <span class="application">Common Music</span>.
+	      It is a real number greater than <code class="literal">0</code>, specifying the maximum pitch bend range in semitones used to calculate
+	      pitch bend values for quartertone playback.
+	      The default is <code class="literal">2</code>.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.play"></a>:PLAY</code></span></dt><dd><p>
+	      If set to <code class="literal">NIL</code> or <code class="literal">T</code>, specifies that output is to a MIDI file.
+	      <code class="literal">T</code> indicates that the output should be played automatically (equivalent to sending <code class="literal">:PLAY T</code> to
+	      <span class="application">Common Music</span>'s <code class="function">EVENTS</code> function).
+	      If set to a <span class="application">Common Music</span> MIDI stream, indicates that the <code class="function">RTS</code> function should be used
+	      and the MIDI events scheduled for realtime playback.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.portato.mult"></a>:PORTATO-MULT</code></span></dt><dd><p>
+	      A real number greater than <code class="literal">0</code> indicating the amount to increase (by multiplying) the duration
+	      of MIDI events with portato markings.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.slur.adddur"></a>:SLUR-ADDDUR</code></span></dt><dd><p>
+	      A real number greater than or equal to <code class="literal">0</code> indicating the amount of beats to add to the duration
+	      of slurred events (causing them to overlap slightly).
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.staccatissimo.mult"></a>:STACCATISSIMO-MULT</code></span></dt><dd><p>
+	      A real number greater than <code class="literal">0</code> indicating the amount to increase (by multiplying) the duration
+	      of MIDI events with staccatissimo markings.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.staccato.mult"></a>:STACCATO-MULT</code></span></dt><dd><p>
+	      A real number greater than <code class="literal">0</code> indicating the amount to increase (by multiplying) the duration
+	      of MIDI events with staccato markings.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.tempo"></a>:TEMPO</code></span></dt><dd><p>
+	      A real number greater than or equal to <code class="literal">0</code> specifying the MIDI playback tempo.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.tenuto.adddur"></a>:TENUTO-ADDDUR</code></span></dt><dd><p>
+	      A real number greater than or equal to <code class="literal">0</code> indicating the amount of beats to add to the duration
+	      of MIDI events with tenuto markings.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.tramp"></a>:TRAMP</code></span></dt><dd><p>
+	      A real number from <code class="literal">0</code> to <code class="literal">1</code> specifying the amount of 
+	      amplification to apply to MIDI events that are a part of a trill or tremolo.
+	      The number is added to the velocities of the events.
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.trdur.secs"></a>:TRDUR-SECS</code></span></dt><dd><p>
+	      A real number greater than <code class="literal">0</code> indicating the duration in seconds of an individual
+	      MIDI event in a trill or tremolo.
+	      (For tremolos it is the minimum duration of an individual MIDI event.)
+  	  </p></dd><dt><span class="term"><code class="varname"><a id="midi.trovlp.adddur"></a>:TROVLP-ADDDUR</code></span></dt><dd><p>
+	      A real number greater than or equal to <code class="literal">0</code> indicating the amount of beats to add to the duration
+	      of MIDI events that are a part of a trill or tremolo.
+  	  </p></dd></dl></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch07s07.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch07.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch07s09.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Common Music Notation&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;CHUNK</td></tr></table></div></body></html>

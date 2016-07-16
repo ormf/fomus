@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Text File Interface</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch03.html" title="Chapter&#160;3.&#160;Usage" /><link rel="prev" href="ch03s03.html" title="Interface 2" /><link rel="next" href="ch03s05.html" title="Common Music Interface" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Text File Interface</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s03.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Usage</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch03s05.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="interface.text"></a>Text File Interface</h2></div></div></div><p>You may also create a text file where each line of the file executes one of the commands listed in 
+    <a href="ch03s03.html" title="Interface 2">Interface 2</a>.  A simple example file is given below:
+      </p><div class="example"><a id="example.text.input.file"></a><p class="title"><b>Example&#160;3.7.&#160;FOMUS Text Input File</b></p><div class="example-contents"><pre class="programlisting">
+
+init :output (:lilypond :view t)
+(init
+ :filename "outfile"
+ :quality 2)
+
+;; remark
+part 1 :name "Piano" :instr :piano
+
+note 1 :off 0 :dur 1 :note 60
+note 1 :off 1 :dur 1 :note 62 \
+     :marks (:accent) ; remark
+(note 1	
+      :off 2 
+      :dur 1
+      :note 64
+      :marks (:marcato (:textnote "Text")))
+
+off +2
+note 1 :off 2 :dur 1/2 :note c4 ; actual offset is 4
+off -1
+note 1 :off 10 :dur 1/2 :note c4 ; actual offset is 9
+off
+
+note 1 :off 20 :dur 2 :notes (c4 e4 g4 c5)
+	</pre></div></div><p><br class="example-break" />
+      Each element is read using the Lisp <code class="function">READ</code> command (nothing is evaluated), with the exception of expressions that begin with
+      <code class="function">MAKE-</code>.  These are evaluated to avoid having to specify <span class="application">FOMUS</span> classes and/or structures with
+      <code class="literal">#S</code> or <code class="literal">#Z</code> syntax (the Z reader macro is defined by <span class="application">FOMUS</span>).
+      <code class="literal">INIT</code> lines specify values for <span class="application">FOMUS</span> settings and can contain multiple keyword/arguments on a line.
+      As many <code class="literal">INIT</code> lines as needed may appear.
+      The <code class="literal">\</code> character may be used at the end of a line to concatenate it with the following line.
+      Also, as shown in the example above, any "entry" may be surrounded by a set of parenthesis to indicate that all elements inside them are read/parsed together 
+      (like an ordinary Lisp expression)--this can also be used to spread entries across several lines.
+      </p><p>
+        A few extra things are possible with input files to facilitate editing.  Any section of the file may contain an <code class="literal">OFF</code>
+	tag optionally followed by a number.  This tag shifts the offsets of everything that follows by the specified amount.
+	An <code class="literal">OFF</code> tag with no number resets the offset shift to 0.  Also, a <code class="literal">:NOTES</code> keyword is available
+	for specifying chords.  A chord is then specified as a list of notes as shown above.  When <span class="application">FOMUS</span> 
+	reads this it creates a separate note object for each note in the list.
+      </p><p>
+      To process this file, use the <code class="function">FOMUS</code> command as follows:
+      </p><p><code class="function">(<a id="function.fomus2"></a>FOMUS <strong class="userinput"><code>filename</code></strong> &amp;key <strong class="userinput"><code>value</code></strong> ...)</code></p><p>
+      </p><div class="example"><a id="example.fomus.usage7"></a><p class="title"><b>Example&#160;3.8.&#160;FOMUS Usage 7</b></p><div class="example-contents"><pre class="programlisting">
+
+(fomus "/directory/file.fms")
+	</pre></div></div><p><br class="example-break" />
+      </p><div class="example"><a id="example.fomus.usage8"></a><p class="title"><b>Example&#160;3.9.&#160;FOMUS Usage 8</b></p><div class="example-contents"><pre class="programlisting">
+
+(fomus "/directory/file.fms" :output :cmn)
+	</pre></div></div><p><br class="example-break" />
+      Keyword/argument pairs passed to this function override the settings stored in the input file.
+    </p><p> 
+      The <code class="function">FOMUS-FILE</code> function may be used to parse an input file and return the objects specified in that file without processing them:
+      </p><p><code class="function">(FOMUS-FILE <strong class="userinput"><code>filename</code></strong> &amp;key <strong class="userinput"><code>value</code></strong> ...)</code></p><p>
+      Four return values are returned: a list of <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> objects, a sorted list of 
+      <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code>, <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> and
+      <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> objects, a list of <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code>
+      objects (and <code class="classname"><a href="ch04s05.html#class.keysig">KEYSIG</a></code> objects when implemented), 
+      and a list of keyword/argument pairs representing the keywords and values found in the <code class="literal">INIT</code> lines.
+      The following example show how you can edit and resave data using these files:
+      </p><div class="example"><a id="example.fomus.usage9"></a><p class="title"><b>Example&#160;3.10.&#160;FOMUS Usage 9</b></p><div class="example-contents"><pre class="programlisting">
+
+(multiple-value-bind (parts events globals args)
+    (fomus-file "/directory/myfomusfile.fms")
+  ;; user processing...
+  (apply #'fomus "/directory/myfomusfile.fms"
+	 :global globals :parts parts :events events
+	 args))
+	</pre></div></div><p><br class="example-break" />
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s03.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch03s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Interface 2&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Common Music Interface</td></tr></table></div></body></html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>MusicXML</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch07.html" title="Chapter&#160;7.&#160;Outputs" /><link rel="prev" href="ch07s03.html" title="LilyPond" /><link rel="next" href="ch07s05.html" title="MusicXML for Sibelius" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">MusicXML</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch07s03.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;7.&#160;Outputs</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch07s05.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.outputs6"></a>MusicXML</h2></div></div></div><p>
+    <span class="application">FOMUS</span> outputs <span class="application">MusicXML</span> version 1.1 format files when the <code class="literal">:MUSICXML</code>
+    keyword is used in the <code class="varname"><a href="ch05s04.html#setting.output">OUTPUT</a></code> setting.
+    An <code class="filename">.xml</code> extension is automatically added to make the complete output filename.
+    The output file is importable into a number of different notation programs, though the quality of the
+    results will vary.
+    <span class="application">FOMUS</span> doesn't including any information about positioning--this is left up to the program doing the importing
+    to decide.
+    So far, <span class="application">MusicXML</span> has been tested on <span class="application">Sibelius</span> version 4.1
+    and <span class="application">Finale</span> version 2006.  
+    Although the <span class="application">MusicXML</span> format itself can support almost all of the notational elements that <span class="application">FOMUS</span> supports,
+    a few things don't seem to work correctly or don't import at all into either of these programs.  
+    The following major issues were found:
+    </p><div class="itemizedlist"><ul type="disc"><li>Sibelius often imports rhythms incorrectly when they involve tuplets.</li><li>Finale imports tuplets/rhythms incorrectly when they involve nested tuplets.</li><li>There's not much support for importing tremolos.</li></ul></div><p>
+    </p><p>
+    Most of these are easily fixed with the exception of the improper rhythm/tuplet problems.
+    Until there are better solutions for these problems, there are some options for getting around some of them:
+    </p><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="section.outputs7"></a>MusicXML Options</h3></div></div></div><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="varname"><a href="ch07s04.html#musicxml.filename">:FILENAME</a></code></td><td><code class="varname"><a href="ch07s04.html#musicxml.multinote.tremolo.kludge">:XML-MULTINOTE-TREMOLO-KLUDGE</a></code></td><td><code class="varname"><a href="ch07s04.html#musicxml.partgroups.kludge">:XML-PARTGROUPS-KLUDGE</a></code></td></tr><tr><td><code class="varname"><a href="ch07s04.html#musicxml.1note.tremolo.kludge">:XML-1NOTE-TREMOLO-KLUDGE</a></code></td><td><code class="varname"><a href="ch07s04.html#musicxml.harmonic.kludge">:XML-HARMONIC-KLUDGE</a></code></td><td>&#160;</td></tr></table></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="section.outputs8"></a>Alphabetical Listing of Options</h3></div></div></div><div class="variablelist"><dl><dt><span class="term"><code class="varname"><a id="musicxml.filename"></a>:FILENAME</code></span></dt><dd><p>
+	      This is a string representing the output filename.
+	      It overrides the <code class="varname"><a href="ch05s04.html#setting.filename">FILENAME</a></code> setting if used.
+  	    </p></dd><dt><span class="term"><code class="varname"><a id="musicxml.1note.tremolo.kludge"></a>:XML-1NOTE-TREMOLO-KLUDGE</code></span></dt><dd><p>
+	      If set to <code class="literal">T</code>, indicates to insert a <code class="literal">//</code> symbol wherever there is a single-note tremolo.
+	      The number of slashes indicates the number of tremolo lines that would normally be added to the note.
+	      The default is <code class="literal">NIL</code>.
+  	    </p></dd><dt><span class="term"><code class="varname"><a id="musicxml.harmonic.kludge"></a>:XML-HARMONIC-KLUDGE</code></span></dt><dd><p>
+	      If set to <code class="literal">T</code>, <span class="application">FOMUS</span> fudges an artificial harmonic by changing the notehead to a diamond shape.
+	      This appears correct when imported into <span class="application">Finale</span> and <span class="application">Siblius</span>, but
+	      doesn't make use of the special XML tags reserved for specifying this type of harmonic (a minor issue).
+	      The default is <code class="literal">NIL</code>.
+  	    </p></dd><dt><span class="term"><code class="varname"><a id="musicxml.partgroups.kludge"></a>:XML-PARTGROUPS-KLUDGE</code></span></dt><dd><p>
+	      If set to <code class="literal">T</code>, parts are not grouped together by brackets or braces.  These must then be added manually
+	      once the notation data has been imported.
+	      The default is <code class="literal">NIL</code>.
+  	    </p></dd><dt><span class="term"><code class="varname"><a id="musicxml.multinote.tremolo.kludge"></a>:XML-MULTINOTE-TREMOLO-KLUDGE</code></span></dt><dd><p>
+	      If set to <code class="literal">T</code>, indicates to insert a <code class="literal">//-</code> symbol wherever there is a multiple-note tremolo 
+	      (such as those sometimes found in piano scores).
+	      The number of slashes indicates the number of tremolo beam-lines that would normally be added to the beam or beams connecting the two notes or chords.
+	      The default is <code class="literal">NIL</code>.
+  	    </p></dd></dl></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch07s03.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch07.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch07s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">LilyPond&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;MusicXML for Sibelius</td></tr></table></div></body></html>

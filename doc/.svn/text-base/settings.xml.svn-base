@@ -1,0 +1,1489 @@
+<chapter id="settings">
+  <title id="settings.title">Settings</title>
+  <section id="section.settings1">
+  <para>
+    Settings are arguments or parameters used to pass data to <application>FOMUS</application> for processing.
+    There are a lot of them, but only a few of them are really necessary for most users.
+    The most useful ones are listed below--look at these first before searching through the complete list.
+    Many of the ones that aren't on the most useful list exist to provide some way of tweaking output or turning various modules on and off.
+    Setting values can be passed to the <function>FOMUS</function> function as keyword/argument pairs or 
+    bound as special variables, the names of which are derived by surrounding the symbol names with asterisks.
+    All of the variables are exported symbols in the <literal>FOMUS</literal> package.
+  </para>
+  <para>
+   Settings that end in <literal>-MODULE</literal> allow switching and replacing various sections of <application>FOMUS</application>
+   with other algorithms.  The code for these modules is located in the <filename>modules</filename> subdirectory.  Adding new or replacement functionality to
+   <application>FOMUS</application> is done by dropping module files in here.
+   The documentation here only describes built-in functionality--a 
+   complete list of modules to choose from may be obtained with the 
+   <function><link linkend="function.list.fomus.modules">LIST-FOMUS-MODULES</link></function> function.
+  </para>
+  <para>  
+    See <link linkend="init" endterm="init.title"/> for an explanation of how to modify default values for any of these settings.
+  </para>
+  </section>
+  <section id="section.settings2">
+    <title>Most Useful <application>FOMUS</application> Settings</title>
+    <simplelist type="vert" columns="3">
+        <member><varname><link linkend="setting.verbose">:VERBOSE</link></varname></member>
+        <member><varname><link linkend="setting.output">:OUTPUT</link></varname></member>
+        <member><varname><link linkend="setting.filename">:FILENAME</link></varname></member>
+	<member><varname><link linkend="setting.quality">:QUALITY</link></varname></member>    
+        <member><varname><link linkend="setting.global">:GLOBAL</link></varname></member>
+        <member><varname><link linkend="setting.parts">:PARTS</link></varname></member>
+        <member><varname><link linkend="setting.events">:EVENTS</link></varname></member>
+        <member><varname><link linkend="setting.input.beat.value">:INPUT-BEAT-VALUE</link></varname></member>
+        <member><varname><link linkend="setting.input.offset">:INPUT-OFFSET</link></varname></member>
+        <member><varname><link linkend="setting.beat.division">:BEAT-DIVISION</link></varname></member>
+        <member><varname><link linkend="setting.max.tuplet">:MAX-TUPLET</link></varname></member>
+        <member><varname><link linkend="setting.min.tuplet.dur">:MIN-TUPLET-DUR</link></varname></member>
+        <member><varname><link linkend="setting.max.tuplet.dur">:MAX-TUPLET-DUR</link></varname></member>
+        <member><varname><link linkend="setting.quartertones">:QUARTERTONES</link></varname></member>
+        <member><varname><link linkend="setting.acc.throughout.meas">:ACC-THROUGHOUT-MEAS</link></varname></member>
+        <member><varname><link linkend="setting.auto.cautionary.accs">:AUTO-CAUTIONARY-ACCS</link></varname></member>
+        <member><varname><link linkend="setting.auto.percussion.durs">:AUTO-PERCUSSION-DURS</link></varname></member>
+        <member><varname><link linkend="setting.default.grace.dur">:DEFAULT-GRACE-DUR</link></varname></member>
+    </simplelist>
+  </section>
+  <section id="section.settings3">
+    <title>Complete <application>FOMUS</application> Settings</title>
+    <section id="section.settings4">
+      <title>Program Settings</title>
+      <simplelist type="vert" columns="3">
+        <member><varname><link linkend="setting.verbose">:VERBOSE</link></varname></member>
+        <member><varname><link linkend="setting.debug.filename">:DEBUG-FILENAME</link></varname></member>
+        <member><varname><link linkend="setting.use.cm">:USE-CM</link></varname></member>
+        <member><varname><link linkend="setting.cm.scale">:CM-SCALE</link></varname></member>
+        <member><varname><link linkend="setting.output">:OUTPUT</link></varname></member>
+        <member><varname><link linkend="setting.filename">:FILENAME</link></varname></member>
+	<member><varname><link linkend="setting.quality">:QUALITY</link></varname></member>
+      </simplelist>
+    </section>
+    <section id="section.settings5">
+      <title>Backend Options</title>
+      <simplelist type="vert" columns="3">
+        <member><varname><link linkend="setting.lilypond.exe">:LILYPOND-EXE</link></varname></member>
+        <member><varname><link linkend="setting.lilypond.opts">:LILYPOND-OPTS</link></varname></member>
+        <member><varname><link linkend="setting.lilypond.out.ext">:LILYPOND-OUT-EXT</link></varname></member>
+        <member><varname><link linkend="setting.lilypond.view.exe">:LILYPOND-VIEW-EXE</link></varname></member>
+        <member><varname><link linkend="setting.lilypond.view.opts">:LILYPOND-VIEW-OPTS</link></varname></member>
+        <member><varname><link linkend="setting.lilypond.version">:LILYPOND-VERSION</link></varname></member>
+        <member><varname><link linkend="setting.lilypond.filehead">:LILYPOND-FILEHEAD</link></varname></member>
+        <member><varname><link linkend="setting.lilypond.scorehead">:LILYPOND-SCOREHEAD</link></varname></member>
+        <member><varname><link linkend="setting.lilypond.text.markup">:LILYPOND-TEXT-MARKUP</link></varname></member>
+        <member><varname><link linkend="setting.lilypond.textdyn.markup">:LILYPOND-TEXTDYN-MARKUP</link></varname></member>
+        <member><varname><link linkend="setting.lilypond.texttempo.markup">:LILYPOND-TEXTTEMPO-MARKUP</link></varname></member>
+        <member><varname><link linkend="setting.lilypond.textnote.markup">:LILYPOND-TEXTNOTE-MARKUP</link></varname></member>
+
+        <member><varname><link linkend="setting.lilypond.textacc.markup">:LILYPOND-TEXTACC-MARKUP</link></varname></member>
+
+        <member><varname><link linkend="setting.cmn.view.exe">:CMN-VIEW-EXE</link></varname></member>
+        <member><varname><link linkend="setting.cmn.view.opts">:CMN-VIEW-OPTS</link></varname></member>
+      </simplelist>
+    </section>
+    <section id="section.settings6">
+      <title>Global</title>
+      <simplelist type="vert" columns="3">
+        <member><varname><link linkend="setting.title">:TITLE</link></varname></member>
+        <member><varname><link linkend="setting.subtitle">:SUBTITLE</link></varname></member>
+        <member><varname><link linkend="setting.composer">:COMPOSER</link></varname></member>
+        <member><varname><link linkend="setting.timesig.style">:TIMESIG-STYLE</link></varname></member>
+        <member><varname><link linkend="setting.tuplet.style">:TUPLET-STYLE</link></varname></member>
+      </simplelist>
+    </section>
+    <section id="section.settings7">
+      <title>Objects</title>
+      <simplelist type="vert" columns="3">
+        <member><varname><link linkend="setting.global">:GLOBAL</link></varname></member>
+        <member><varname><link linkend="setting.parts">:PARTS</link></varname></member>
+        <member><varname><link linkend="setting.events">:EVENTS</link></varname></member>
+      </simplelist>
+    </section>
+      <section id="section.settings8">
+        <title>Parts</title>
+        <simplelist type="vert" columns="3">
+          <member><varname><link linkend="setting.check.ranges">:CHECK-RANGES</link></varname></member>
+          <member><varname><link linkend="setting.transpose">:TRANSPOSE</link></varname></member>
+          <member><varname><link linkend="setting.instruments">:INSTRUMENTS</link></varname></member>
+          <member><varname><link linkend="setting.percussion">:PERCUSSION</link></varname></member>
+          <member><varname><link linkend="setting.default.instr">:DEFAULT-INSTR</link></varname></member>
+          <member><varname><link linkend="setting.percussion">:PERCUSSION</link></varname></member>
+          <member><varname><link linkend="setting.instr.groups">:INSTR-GROUPS</link></varname></member>
+          <member><varname><link linkend="setting.ensemble.type">:ENSEMBLE-TYPE</link></varname></member>
+        </simplelist>
+      </section>
+      <section id="section.settings9">
+        <title>Time Signatures</title>
+        <simplelist type="vert" columns="3">
+          <member><varname><link linkend="setting.default.timesig">:DEFAULT-TIMESIG</link></varname></member>
+	  <member><varname><link linkend="setting.default.beat">:DEFAULT-BEAT</link></varname></member>
+          <member><varname><link linkend="setting.min.auto.timesig.dur">:MIN-AUTO-TIMESIG-DUR</link></varname></member>
+          <member><varname><link linkend="setting.auto.timesig.comp">:AUTO-TIMESIG-COMP</link></varname></member>
+        </simplelist>
+      </section> 
+    <section id="section.settings10">
+      <title>Plugins</title>
+      <simplelist type="vert" columns="3">
+        <member><varname><link linkend="setting.auto.accs.module">:AUTO-ACCS-MODULE</link></varname></member>
+        <member><varname><link linkend="setting.auto.beam.module">:AUTO-BEAM-MODULE</link></varname></member>
+        <member><varname><link linkend="setting.auto.multivoice.comb.module">:AUTO-MULTIVOICE-COMB-MODULE</link></varname></member>
+        <member><varname><link linkend="setting.auto.distr.rests.module">:AUTO-DISTR-RESTS-MODULE</link></varname></member>
+        <member><varname><link linkend="setting.auto.ottavas.module">:AUTO-OTTAVAS-MODULE</link></varname></member>
+        <member><varname><link linkend="setting.auto.quantize.module">:AUTO-QUANTIZE-MODULE</link></varname></member>
+        <member><varname><link linkend="setting.auto.staff/clefs.module">:AUTO-STAFF/CLEFS-MODULE</link></varname></member>
+        <member><varname><link linkend="setting.auto.voices.module">:AUTO-VOICES-MODULE</link></varname></member>
+        <member><varname><link linkend="setting.split.module">:SPLIT-MODULE</link></varname></member> 
+	<member><varname><link linkend="setting.tuplet.function">:TUPLET-FUNCTION</link></varname></member> 
+      </simplelist>
+    </section>
+    <section id="section.settings11">
+      <title>Plugins On/Off</title>
+      <simplelist type="vert" columns="3">
+        <member><varname><link linkend="setting.auto.accidentals">:AUTO-ACCIDENTALS</link></varname></member>
+        <member><varname><link linkend="setting.auto.cautionary.accs">:AUTO-CAUTIONARY-ACCS</link></varname></member>
+        <member><varname><link linkend="setting.auto.beams">:AUTO-BEAMS</link></varname></member>
+        <member><varname><link linkend="setting.auto.multivoice.notes">:AUTO-MULTIVOICE-NOTES</link></varname></member>
+        <member><varname><link linkend="setting.auto.multivoice.rests">:AUTO-MULTIVOICE-RESTS</link></varname></member>
+        <member><varname><link linkend="setting.auto.grace.slurs">:AUTO-GRACE-SLURS</link></varname></member>
+        <member><varname><link linkend="setting.auto.ottavas">:AUTO-OTTAVAS</link></varname></member>
+        <member><varname><link linkend="setting.auto.override.timesigs">:AUTO-OVERRIDE-TIMESIGS</link></varname></member>
+        <member><varname><link linkend="setting.auto.quantize">:AUTO-QUANTIZE</link></varname></member>
+        <member><varname><link linkend="setting.auto.staff/clef.changes">:AUTO-STAFF/CLEF-CHANGES</link></varname></member>
+        <member><varname><link linkend="setting.auto.voicing">:AUTO-VOICING</link></varname></member>
+        <member><varname><link linkend="setting.auto.percussion.durs">:AUTO-PERCUSSION-DURS</link></varname></member>
+        <member><varname><link linkend="setting.auto.pizz/arco">:AUTO-PIZZ/ARCO</link></varname></member>	
+        <member><varname><link linkend="setting.auto.dyn.nodup">:AUTO-DYN-NODUP</link></varname></member>	
+      </simplelist>
+    </section>
+    <section id="section.settings12">
+      <title>Quantizing</title>
+      <simplelist type="vert" columns="3">
+        <member><varname><link linkend="setting.input.beat.value">:INPUT-BEAT-VALUE</link></varname></member>
+        <member><varname><link linkend="setting.input.offset">:INPUT-OFFSET</link></varname></member>
+        <member><varname><link linkend="setting.beat.division">:BEAT-DIVISION</link></varname></member>
+        <member><varname><link linkend="setting.min.tuplet.dur">:MIN-TUPLET-DUR</link></varname></member>
+        <member><varname><link linkend="setting.max.tuplet.dur">:MAX-TUPLET-DUR</link></varname></member>
+        <member><varname><link linkend="setting.max.tuplet">:MAX-TUPLET</link></varname></member>
+      </simplelist>
+    </section>
+    <section id="section.settings13">
+      <title>Staves</title>
+      <simplelist type="vert" columns="3">
+        <member><varname><link linkend="setting.grandstaff.hide.rests">:GRANDSTAFF-HIDE-RESTS</link></varname></member>
+        <member><varname><link linkend="setting.min.grandstaff.hide.rests.dur">:MIN-GRANDSTAFF-HIDE-RESTS-DUR</link></varname></member>
+        <member><varname><link linkend="setting.min.multivoice.chords.dur">:MIN-MULTIVOICE-CHORDS-DUR</link></varname></member>
+      </simplelist>
+    </section>
+      <section id="section.settings14">
+        <title>Ottavas</title>
+        <simplelist type="vert" columns="3">
+          <member><varname><link linkend="setting.max.ottava.rest.dist">:MAX-OTTAVA-REST-DIST</link></varname></member>
+        </simplelist>
+      </section> 
+    <section id="section.settings15">
+      <title>Accidentals</title>
+      <simplelist type="vert" columns="3">
+        <member><varname><link linkend="setting.quartertones">:QUARTERTONES</link></varname></member>
+        <member><varname><link linkend="setting.acc.throughout.meas">:ACC-THROUGHOUT-MEAS</link></varname></member>
+        <member><varname><link linkend="setting.use.double.accs">:USE-DOUBLE-ACCS</link></varname></member>
+      </simplelist>
+    </section>
+      <section id="section.settings16">
+        <title>Cautionary Accidentals</title>
+        <simplelist type="vert" columns="3">
+          <member><varname><link linkend="setting.acc.caut.acc.dist">:ACC-CAUT-ACC-DIST</link></varname></member>
+          <member><varname><link linkend="setting.caut.acc.next.meas">:CAUT-ACC-NEXT-MEAS</link></varname></member>
+          <member><varname><link linkend="setting.caut.acc.octaves">:CAUT-ACC-OCTAVES</link></varname></member>
+          <member><varname><link linkend="setting.caut.acc.ottavas">:CAUT-ACC-OTTAVAS</link></varname></member>
+        </simplelist>
+      </section>
+    <section id="section.settings17">
+      <title>Grace Notes</title>
+      <simplelist type="vert" columns="3">
+        <member><varname><link linkend="setting.default.grace.dur">:DEFAULT-GRACE-DUR</link></varname></member>
+        <member><varname><link linkend="setting.default.grace.num">:DEFAULT-GRACE-NUM</link></varname></member>
+        <member><varname><link linkend="setting.effective.grace.dur.mul">:EFFECTIVE-GRACE-DUR-MUL</link></varname></member>
+      </simplelist>
+    </section>
+      <section id="section.settings18">
+        <title>Measure/Tuplet Divisions</title>
+        <simplelist type="vert" columns="3">
+          <member><varname><link linkend="setting.default.tuplets">:DEFAULT-TUPLETS</link></varname></member>
+          <member><varname><link linkend="setting.default.meas.divs">:DEFAULT-MEAS-DIVS</link></varname></member>
+          <member><varname><link linkend="setting.default.tuplet.divs">:DEFAULT-TUPLET-DIVS</link></varname></member>
+        </simplelist>
+      </section>
+    <section id="section.settings19">
+      <title>Note Splitting/Tying</title>
+      <simplelist type="vert" columns="3">
+        <member><varname><link linkend="setting.dotted.note.level">:DOTTED-NOTE-LEVEL</link></varname></member>
+        <member><varname><link linkend="setting.double.dotted.notes">:DOUBLE-DOTTED-NOTES</link></varname></member>
+        <member><varname><link linkend="setting.shortlongshort.notes.level">:SHORTLONGSHORT-NOTES-LEVEL</link></varname></member>
+        <member><varname><link linkend="setting.syncopated.notes.level">:SYNCOPATED-NOTES-LEVEL</link></varname></member>
+        <member><varname><link linkend="setting.tuplet.dotted.rests">:TUPLET-DOTTED-RESTS</link></varname></member>
+        <member><varname><link linkend="setting.min.split.all.parts.dur">:MIN-SPLIT-ALL-PARTS-DUR</link></varname></member>
+      </simplelist>
+    </section>
+    <section id="section.settings20">
+      <title>Beams</title>
+      <simplelist type="vert" columns="3">
+        <member><varname><link linkend="setting.long.eighth.beams">:LONG-EIGHTH-BEAMS</link></varname></member>
+        <member><varname><link linkend="setting.long.eighth.beam.count">:LONG-EIGHTH-BEAM-COUNT</link></varname></member>
+        <member><varname><link linkend="setting.comp.long.eighth.beam.count">:COMP-LONG-EIGHTH-BEAM-COUNT</link></varname></member>
+      </simplelist>
+    </section>
+  </section>
+  <section id="section.settings21">
+    <title>Alphabetical Listing of Settings</title>
+    <variablelist>
+      <varlistentry>
+        <term><varname><anchor id="setting.acc.caut.acc.dist"/>:ACC-CAUT-ACC-DIST</varname></term>
+        <listitem>
+          <para>
+  	    This number represents the maximum distance a cautionary accidental may be from the note that causes it.
+  	  </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.acc.throughout.meas"/>:ACC-THROUGHOUT-MEAS</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, accidentals carry to the end of the measure.
+  	  If set to <literal>NIL</literal>, accidentals affect only the note they precede.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.accidentals"/>:AUTO-ACCIDENTALS</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, <application>FOMUS</application> automatically determines note spellings.
+  	  If set to <literal>NIL</literal>, a generic set of note spellings is used (all notes receive flats except for F sharp).
+	  The user may supply note spellings to override <application>FOMUS</application>'s spellings.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.accs.module"/>:AUTO-ACCS-MODULE</varname></term>
+        <listitem>
+          <para>
+  	  Designates which module is to be used for determining note spellings.
+  	  <application>FOMUS</application>'s built-in values are <literal>T</literal>, <literal>:ACC1</literal>, 
+  	  <literal>T</literal> represents the default module and is equivalent to <literal>:ACC1</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.beam.module"/>:AUTO-BEAM-MODULE</varname></term>
+        <listitem>
+          <para>
+  	  Designates which module is to be used for beaming.
+  	  <application>FOMUS</application>'s built-in values are <literal>T</literal> and <literal>:BEAMS1</literal>.
+  	  <literal>T</literal> represents the default module and is equivalent to <literal>:BEAMS1</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.beams"/>:AUTO-BEAMS</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, <application>FOMUS</application> determines beaming based on time signature information and
+  	  decisions it makes regarding irregular measure divisions.
+  	  If set to <literal>NIL</literal>, beaming decisions are made by the backend notation program.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.cautionary.accs"/>:AUTO-CAUTIONARY-ACCS</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, <application>FOMUS</application> inserts several different kinds of cautionary accidentals.
+    	  The user can supply her own cautionary accidentals with the <function><link linkend="mark.cautacc">:CAUTACC</link></function> mark.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.distr.rests.module"/>:AUTO-DISTR-RESTS-MODULE</varname></term>
+        <listitem>
+          <para>
+  	  Designates which module is to be used for determining how rests are distributed among staves.
+  	  <application>FOMUS</application>'s built-in values are <literal>T</literal> and <literal>:RESTS1</literal>.
+  	  <literal>T</literal> represents the default module and is equivalent to <literal>:RESTS1</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.dyn.nodup"/>:AUTO-DYN-NODUP</varname></term>
+        <listitem>
+          <para>
+  	    If set to <literal>T</literal>, indicates that <application>FOMUS</application> should eliminate all redundant dynamic markings.
+  	  </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.grace.slurs"/>:AUTO-GRACE-SLURS</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, <application>FOMUS</application> automatically puts slurs over all grace notes.
+  	  If set to <literal>NIL</literal>, the user must supply all grace note slurs with
+  	  <function><link linkend="mark.graceslur-">:STARTGRACESLUR-</link></function>,
+	  <function><link linkend="mark.graceslur-">:GRACESLUR-</link></function> and <function><link linkend="mark.graceslur-">:ENDGRACESLUR-</link></function> marks.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.multivoice.comb.module"/>:AUTO-MULTIVOICE-COMB-MODULE</varname></term>
+        <listitem>
+          <para>
+  	  Designates which module is to be used for determining how simultaneous notes from different voices are combined into chords on the same staff.
+  	  <application>FOMUS</application>'s built-in values are <literal>T</literal> and <literal>:COMB1</literal>.
+  	  <literal>T</literal> represents the default module and is equivalent to <literal>:COMB1</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.multivoice.notes"/>:AUTO-MULTIVOICE-NOTES</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, <application>FOMUS</application> combines simultaneous notes from different voices into chords.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.multivoice.rests"/>:AUTO-MULTIVOICE-RESTS</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, <application>FOMUS</application> combines equivalent simultaneous rests from different voices into single rests.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.ottavas"/>:AUTO-OTTAVAS</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, <application>FOMUS</application> automatically determines where to place ottava brackets.
+  	  If set to <literal>NIL</literal>, the user must supply all ottava brackets with
+	  <function><link linkend="mark.8up">:8UP</link></function>, <function><link linkend="mark.8down">:8DOWN</link></function>
+  	  and related spanner marks.	  
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.ottavas.module"/>:AUTO-OTTAVAS-MODULE</varname></term>
+        <listitem>
+          <para>
+  	  Designates which module is to be used for determining where ottava brackets occur.
+  	  <application>FOMUS</application>'s built-in values are <literal>T</literal> and <literal>:OTTAVAS1</literal>.
+  	  <literal>T</literal> represents the default module and is equivalent to <literal>:OTTAVAS1</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.override.timesigs"/>:AUTO-OVERRIDE-TIMESIGS</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, <application>FOMUS</application> extends or contracts measures within certain bounds,
+  	  adding new time signatures as necessary to fit measures into the user-supplied time signatures given
+  	  in the <varname><link linkend="setting.global">GLOBAL</link></varname> or <varname><link linkend="setting.parts">PARTS</link></varname> settings.
+  	  If set to <literal>NIL</literal>, <application>FOMUS</application> simply cuts the last measure (also inserting a new time signature)
+  	  before a new time signature change, resulting in measures of arbitrary sizes depending on where the cut occurs.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.percussion.durs"/>:AUTO-PERCUSSION-DURS</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, <application>FOMUS</application> determines the durations of all percussion
+	  instruments that have their <structfield><link linkend="perc.autodur">AUTODUR</link></structfield> slot
+	  set to <literal>T</literal>.
+	  Percussion instruments that don't need to be notated precisely with respect to duration are then notated
+	  with durations that are simpler to read (without tying together groups of notes).
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.pizz/arco"/>:AUTO-PIZZ/ARCO</varname></term>
+        <listitem>
+          <para>
+  	    If set to <literal>T</literal>, indicates that <application>FOMUS</application> should convert each consecutive group of 
+	    <function><link linkend="mark.pizz">:PIZZ</link></function> marks it finds to a single pair of
+	    <function><link linkend="mark.pizz">:PIZZ</link></function> and <function><link linkend="mark.arco">:ARCO</link></function> marks.
+	    This makes it easier to notate pizz. and arco changes by simply attaching <function><link linkend="mark.pizz">:PIZZ</link></function>
+	    marks where they belong.
+  	  </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.timesig.comp"/>:AUTO-TIMESIG-COMP</varname></term>
+        <listitem>
+          <para>
+  	    If set to <literal>T</literal>, <application>FOMUS</application> automatically interprets time signatures such as
+	    6/8, 9/4, etc. as compound meters.  If set to <literal>NIL</literal>, the user must indicate that a meter is
+	    compound by setting the <structfield><link linkend="timesig.comp">COMP</link></structfield> slot in the
+	    appropriate <structfield><link linkend="class.timesig">TIMESIG</link></structfield> object.
+  	  </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.quantize"/>:AUTO-QUANTIZE</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, <application>FOMUS</application> quantizes offsets and durations so that
+  	  everything fits into the closest fitting tuplets and beat divisions possible.
+  	  If set to <literal>NIL</literal>, all offset and duration values must be precise ratios or integers--
+	  floating point numbers are treated with the <function>RATIONALIZE</function> function in this case (this isn't recommended).
+  	  If no quantizing is done and offsets and durations of events don't fit into anything that is "notatable" then 
+	  <application>FOMUS</application> will complain with an error.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.quantize.module"/>:AUTO-QUANTIZE-MODULE</varname></term>
+        <listitem>
+          <para>
+  	  Designates which module is to be used for quantizing.
+  	  <application>FOMUS</application>'s built-in values are <literal>T</literal>, <literal>:QUANTIZE1-RMSE</literal> and <literal>:QUANTIZE1-AVE</literal>.
+	  <literal>:QUANTIZE1-MSE</literal> finds the closest fit to notation by minimizing the root mean squared error 
+	   between the user's values and possible notational values.
+	  <literal>:QUANTIZE1-AVE</literal> finds the closets fit by minimizing average error.
+	  <literal>T</literal> represents the default module and is equivalent to <literal>:QUANTIZE1-RMSE</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.staff/clef.changes"/>:AUTO-STAFF/CLEF-CHANGES</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, <application>FOMUS</application> automatically determines staff and clef changes for voices.
+  	  If set to <literal>NIL</literal>, the user must supply all staff and clef changes with <literal>:STAFF</literal>, <literal>:CLEF</literal>
+  	  and related marks.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.staff/clefs.module"/>:AUTO-STAFF/CLEFS-MODULE</varname></term>
+        <listitem>
+          <para>
+  	  Designates which module is to be used to determine automatic staff and clef changes.
+  	  <application>FOMUS</application>'s built-in values are <literal>T</literal> and <literal>:STAVES/CLEFS1</literal>.
+  	  <literal>T</literal> represents the default module and is equivalent to <literal>:STAVES/CLEFS1</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.voices.module"/>:AUTO-VOICES-MODULE</varname></term>
+        <listitem>
+          <para>
+  	  Designates which module is to be used for determining how notes are distributed into separate voices.
+  	  <application>FOMUS</application>'s built-in values are <literal>T</literal> and <literal>:VOICES1</literal>.
+  	  <literal>T</literal> represents the default module and is equivalent to <literal>:VOICES1</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.auto.voicing"/>:AUTO-VOICING</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, <application>FOMUS</application> automatically decides how to distribute notes among multiple voices,
+  	  given the choices specified in the <classname>NOTE</classname>, <classname>REST</classname> and <classname>MARK</classname> objects.
+  	  If set to <literal>NIL</literal>, the user must specify explicitly which voice an event belongs to.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.beat.division"/>:BEAT-DIVISION</varname></term>
+        <listitem>
+          <para>
+  	  The value of this setting is used by the quantizing algorithm to determine how to round offsets and durations.  
+  	  If only an integer is given, it represents the number of divisions per beat in a non-compound meter--
+  	  the compound meter value is then calculated by multiplying the first number by 3/2.
+  	  If specified as a list of two integers, the first integer represents the number of divisions per beat in a non-compound meter while
+  	  the second represents the number of divisions in a compound meter.
+  	  The first number must be a power of 2 while the second number 3/2 or 3/4 times a power of 2.
+  	</para>
+	<para>
+	  A <varname><link linkend="setting.beat.division">BEAT-DIVISION</link></varname> of 2, for example, tells <application>FOMUS</application>
+	  to quantize to eighth-note values (if the current beat is a quarter-note).  
+	  In a compound 12/4 meter, this setting also tells <application>FOMUS</application> to quantize to an eighth-note value (2 multiplied by 3/2 
+	  is 3, and there are 3 eighth-notes per beat).
+	  In the same compound 12/4 meter, a setting of <literal>'(4 6)</literal> would cause durations to be quantized to sixteenth notes (there
+	  are 6 sixteenth notes per beat).
+	</para>
+	<para>
+	  <varname><link linkend="setting.beat.division">BEAT-DIVISION</link></varname> specifies only approximately how durations are quantized inside tuplets.
+	  It is completely predictable only when the <varname><link linkend="setting.max.tuplet">MAX-TUPLET</link></varname>
+	  setting is set to <literal>NIL</literal> or the notation contains nothing that would generate any kind of tuplet.
+	  When tuplets are allowed and <application>FOMUS</application> tries to create them, it divides them into units that are as
+	  close as possible in duration to the non-tuplet divisional units.
+	  For example, if <varname><link linkend="setting.beat.division">BEAT-DIVISION</link></varname> is set to <literal>16</literal> and it's allowable for
+	  <application>FOMUS</application> to try to divide one beat into a septuplet, then it's possible for notes to be quantized to either 16 or 14
+	  divisions per beat (since a septuplet divides evenly into 14 units and 1/14 is the closest septuplet divisional duration to 1/16).
+	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.caut.acc.next.meas"/>:CAUT-ACC-NEXT-MEAS</varname></term>
+        <listitem>
+          <para>
+	  When set to <literal>NIL</literal>, indicates that cautionary accidentals may occur only in the same measure as the note that causes them.
+	  When set to <literal>1</literal>, specifies that cautionary accidentals may occur only if they are in the measure immediately after the note that causes them.
+    	  When set to <literal>T</literal> or <literal>2</literal>, specifies that cautionary accidentals may occur in any measure after the note that causes them.  
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.caut.acc.octaves"/>:CAUT-ACC-OCTAVES</varname></term>
+        <listitem>
+          <para>
+  	  When set to <literal>T</literal>, the cautionary accidental algorithm places cautionary accidentals at all octave transpositions
+  	  from the note that causes them.
+  	  When set to the integer <literal>1</literal> or greater, specifies the maximum number of octaves a cautionary accidental
+  	  can be from the note that causes it.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.caut.acc.ottavas"/>:CAUT-ACC-OTTAVAS</varname></term>
+        <listitem>
+          <para>
+  	  When set to <literal>T</literal>, the cautionary accidental algorithm considers the presence of ottava brackets, placing
+  	  cautionary accidentals where apparent octave transpositions might cause confusion.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.check.ranges"/>:CHECK-RANGES</varname></term>
+        <listitem>
+          <para>
+  	  When set to <literal>T</literal>, activates a check that prints warnings if it finds notes out of range for their instruments.
+  	  The <structfield>MINP</structfield> and <structfield>MAXP</structfield> slots in the appropriate <classname>INSTR</classname>
+  	  object must be set for this to have any effect.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.cm.scale"/>:CM-SCALE</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, indicates that the value of <varname><link linkend="setting.cm.scale">CM-SCALE</link></varname> will be used
+  	  to parse note symbols (as the value of the <literal>:IN</literal> keyword argument) if <application>CM</application> is present and being used.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.cmn.view.exe"/>:CMN-VIEW-EXE</varname></term>
+        <listitem>
+          <para>
+	      This is a string specifying the path and filename to the executable for the <application>Common Music Notation</application> viewer application.
+	      The full pathname may or may not need to be specified depending on the Lisp implementation.
+	      The default application depends on what is installed on the user's machine, and should be
+	      an application appropriate for viewing PostScript or EPS files.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.cmn.view.opts"/>:CMN-VIEW-OPTS</varname></term>
+        <listitem>
+          <para>
+	      This is a list of strings representing options to be passed to the <application>CMN</application> viewer application executable.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.comp.long.eighth.beam.count"/>:COMP-LONG-EIGHTH-BEAM-COUNT</varname></term>
+        <listitem>
+          <para>
+  	  This is set to an integer greater than <literal>0</literal>, specifying the number of eighth notes that need to be present
+  	  to be beamed as groups of 6 in compound meters.
+  	  This setting is only effective if <varname><link linkend="setting.long.eighth.beams">LONG-EIGHTH-BEAMS</link></varname> is set to <literal>T</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.composer"/>:COMPOSER</varname></term>
+        <listitem>
+          <para>
+  	  This is an optional string value containing the composer's name.	  
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.debug.filename"/>:DEBUG-FILENAME</varname></term>
+        <listitem>
+          <para>
+  	  If set to a string, represents the name of a file to which debug information is dumped each time the <function>FOMUS</function>
+  	  function is called.
+  	  If you wish to report a bug, please send the contents of this file.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.default.beat"/>:DEFAULT-BEAT</varname></term>
+        <listitem>
+          <para>
+	    Specifies a default value for the <structfield><link linkend="timesig.beat">BEAT</link></structfield> slot of
+	    <structfield><link linkend="class.timesig">TIMESIG</link></structfield> objects that are not compound time signatures.
+	    This setting is <literal>1/4</literal> by default, specifying that for non-compound meters a quarternote is
+	    equivalent to 1 beat.
+	    In compound time signatures the beat is always infered from the denominator (for example, in a 12/8 meter the
+	    beat is 3/8).
+  	  </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.default.grace.dur"/>:DEFAULT-GRACE-DUR</varname></term>
+        <listitem>
+          <para>
+  	  If <application>FOMUS</application> needs to convert a note into a grace note, this value is used as the grace note's duration.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.default.grace.num"/>:DEFAULT-GRACE-NUM</varname></term>
+        <listitem>
+          <para>
+  	  If <application>FOMUS</application> needs to convert a note into a grace note, this value is used as the grace note's default position number.
+	  This value together with the grace note's context determines the actual position (when necessary, <application>FOMUS</application> will
+	  increment or decrement this value to determine the actual position number).
+	  See the <structfield><link linkend="note.dur">DUR</link></structfield> slot in class <classname><link linkend="class.note">NOTE</link></classname>
+	  for more information.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.default.instr"/>:DEFAULT-INSTR</varname></term>
+        <listitem>
+          <para>
+	    This is a default <classname><link linkend="struct.instr">INSTR</link></classname> object to be used in cases when
+	    another instrument isn't specified.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.default.meas.divs"/>:DEFAULT-MEAS-DIVS</varname></term>
+        <listitem>
+          <para>
+  	  This list is a table containing possible ways of dividing measures into smaller segments or divisions.
+	  These segments affect how notes are split, tied and beamed.
+  	  Entries in this list replace entries in <application>FOMUS</application>'s own default table if they exist.
+  	  Each member of this list is itself a list, containing an integer or ratio lookup value as the first element followed by one or more lists of integers/ratios
+  	  that each add up to the first number.
+    	  <example id="example.default.meas.divs.setting">
+              <title>DEFAULT-MEAS-DIVS Setting</title>
+              <programlisting>
+<![CDATA[
+:default-meas-divs
+  '((3 (2 1) (1 2))
+    (4 (2 2))
+    (5 (3 2) (2 3))
+    (6 (4 2) (2 4))
+    (7 (4 3) (3 4)))]]>
+              </programlisting>
+  	  </example>
+  	</para>
+  	<para>  
+  	  The numbers in these lists correspond to the number of beats in a measure, multiplied or divided by 2 if necessary.
+	  In most cases, only specify integers should be necessary, though ratios may also be used.
+  	  For example, if a 7/8 measure with a quarter-note beat is processed, <application>FOMUS</application>
+	  first tries to lookup a set of divisions using the index number 7/2, then 7, 14, etc..
+	  This way the lookup value <literal>7</literal> is sufficient for any meter with a numerator of 7, though it's possible to supply
+	  more specific entries such as <literal>7/2</literal> (for measures that contain 3 + 1/2 beats).
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.default.timesig"/>:DEFAULT-TIMESIG</varname></term>
+        <listitem>
+          <para>
+  	  If no time signature is specified in the <varname><link linkend="setting.global">GLOBAL</link></varname> or
+	  <varname><link linkend="setting.parts">PARTS</link></varname> lists, this default one is used.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.default.tuplet.divs"/>:DEFAULT-TUPLET-DIVS</varname></term>
+        <listitem>
+          <para>
+  	  This list is a table containing possible ways of dividing tuplets into smaller segments or divisions.
+	  These segments affect how notes are split, tied and beamed.
+  	  Entries in this replace entries in <application>FOMUS</application>'s own default table if they exist.
+  	  Each member of this list is itself a list, containing an integer lookup value as the first element followed by one or more lists of integers
+  	  that each add up to the first number.
+    	  <example id="example.default.tuplet.divs.setting">
+              <title>DEFAULT-TUPLET-DIVS Setting</title>
+              <programlisting>
+<![CDATA[
+:default-meas-divs
+  '((3 (2 1) (1 2))
+    (4 (2 2))
+    (5 (3 2) (2 3) (4 1) (1 4))
+    (6 (4 2) (2 4))
+    (7 (4 3) (3 4)))]]>
+              </programlisting>
+  	  </example>
+  	</para>
+  	<para>  
+  	  The numbers in this list correspond to numerators of tuplet ratios (or multiples or divisions of two).
+	  When <application>FOMUS</application> needs to find possible divisions for a triplet, for example, it uses the entries
+	  in the list corresponding to lookup value <literal>3</literal>.
+	  If it needs to lookup divisions for a sextuplet, it will first try to lookup the number <literal>6</literal> and then use
+	  <literal>3</literal> if an entry for <literal>6</literal> doesn't exist.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.default.tuplets"/>:DEFAULT-TUPLETS</varname></term>
+        <listitem>
+          <para>
+	    This list is a lookup table indicating what ratios <application>FOMUS</application> should use when deciding how to notate tuplets.
+	    Each list element is itself a list of two integers specifying a tuplet ratio, or how many durational units should be used in place of another.
+	    <literal>'(7 4)</literal> thus specifies that septuplet eighth notes are to be used in place of 4 eighth notes.  <application>FOMUS</application> 
+	    searches this table by finding a match for number of tuplet divisions (the first integer in each pair) and checking the second integer to see if it's
+	    appropriate for the context it is in (a power of 2 of the actual number of durational units).  
+	    Thus, several entries for septuplets might exist: <literal>'(7 4)</literal> for the majority of cases and <literal>'(7 5)</literal> for 
+	    cases where, for example, 7 eighth notes might span an entire 5/8 measure or a section of a larger tuplet.
+    	  <example id="example.default.tuplets.setting">
+              <title>DEFAULT-TUPLETS Setting</title>
+              <programlisting>
+<![CDATA[
+:default-meas-divs '((3 2) (6 5) (5 4) (7 4) (7 5) (13 8) (13 10))]]>
+              </programlisting>
+  	  </example>
+	  </para>
+	  <para> 
+	    The default value is <literal>NIL</literal>.
+	    If <application>FOMUS</application> doesn't find an entry for a tuplet division here, it determines its own depending on the value
+	    of <varname><link linkend="setting.tuplet.function">TUPLET-FUNCTION</link></varname>.
+  	  </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.dotted.note.level"/>:DOTTED-NOTE-LEVEL</varname></term>
+        <listitem>
+          <para>
+  	  Indicates how dotted notes are allowed to appear.
+  	  Possible values are <literal>T</literal>, <literal>:ALL</literal>, <literal>:TOP</literal> and <literal>:SIG</literal>.
+  	  <literal>:ALL</literal> specifies that they can appear anywhere, <literal>:TOP</literal> specifies that they can appear
+  	  only if they occupy an entire measure, and <literal>:SIG</literal> specifies that they can appear if they occupy durations
+  	  larger than a beat.
+  	  <literal>T</literal> is equivalent to <literal>:ALL</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.double.dotted.notes"/>:DOUBLE-DOTTED-NOTES</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, indicates that double-dotted notes are allowed.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.effective.grace.dur.mul"/>:EFFECTIVE-GRACE-DUR-MUL</varname></term>
+        <listitem>
+          <para>
+  	  If <application>FOMUS</application> needs to determine the effective duration of a grace note (for scoring or comparison purposes),
+	  it multiplies the value of this setting
+	  with the duration given in the grace note's <structfield><link linkend="note.dur">DUR</link></structfield> slot.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.ensemble.type"/>:ENSEMBLE-TYPE</varname></term>
+        <listitem>
+          <para>
+  	  This setting determines how parts are both ordered and grouped
+	  together with brackets and barlines in the score.
+  	  Setting this to a symbol specifies a lookup value for a ordering/grouping table entry specified
+	  in the <varname><link linkend="setting.instr.groups">INSTR-GROUPS</link></varname> setting or
+	  <application>FOMUS</application>'s own default table.
+  	  It may also be set to an ordering/grouping data structure, in which case this specified ordering/grouping is used instead.
+	  An ordering/grouping data structure is a list of symbols or nested lists of symbols that specify both the groups and the layout order of parts.
+  	  A symbol specifies an instrument while a list contains a group type
+	  (a symbol designating what type of bracket is to appear on the left-hand margin
+	  of the score and how barlines are to appear) followed by more instrument symbols or lists (see the example below).
+  	  A group type is one of the symbols <literal>:GROUP</literal>, <literal>:GRANDSTAFF</literal> or <literal>:CHOIRGROUP</literal>.
+  	</para>
+  	<para>
+  	  A look at the following examples might make this clearer:
+    	  <example id="example.ensemble.type.setting1">
+              <title>ENSEMBLE-TYPE Setting 1</title>
+              <programlisting>
+<![CDATA[
+:ensemble-type :orchestra]]>
+              </programlisting>
+  	  </example>
+    	  <example id="example.ensemble.type.setting2">
+              <title>ENSEMBLE-TYPE Setting 2</title>
+              <programlisting>
+<![CDATA[
+:ensemble-type
+  '((:my-orchestra
+     (:group (:group :piccolo :flute) (:group :oboe :english-horn)
+             (:group :bf-clarinet :a-clarinet :bass-clarinet)
+             (:group :bassoon :contra-bassoon))
+     (:group (:group :horn) (:group :c-trumpet :bf-trumpet)
+             (:group :alto-trombone :tenor-trombone :bass-trombone)
+             (:group :tuba))
+      :timpani :percussion
+     (:grandstaff :piano) 
+     (:group (:group :violin) (:group :viola) (:group :violoncello)
+             (:group :contrabass))))]]>
+              </programlisting>
+  	  </example>
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.events"/>:EVENTS</varname></term>
+        <listitem>
+          <para>
+  	  This is a global list of events to be processed by <application>FOMUS</application>.
+  	  An event can be a <classname><link linkend="class.note">NOTE</link></classname>,
+	  <classname><link linkend="class.rest">REST</link></classname> or <classname><link linkend="class.mark">MARK</link></classname> object.
+  	  A <classname><link linkend="class.note">NOTE</link></classname> or
+	  <classname><link linkend="class.rest">REST</link></classname> object must have a symbol or number in its
+	  <structfield><link linkend="note.partid">PARTID</link></structfield>
+  	  slot specifying which part it belongs to.
+	  A <classname><link linkend="class.mark">MARK</link></classname> object may have a default <structfield><link linkend="note.partid">PARTID</link></structfield>
+	  value of <literal>NIL</literal> to specify all parts or
+	  a symbol/number or list of symbols/numbers to specify only those parts.
+	  (Note that specifying part ID information isn't necessary when event objects are listed in the 
+	  <structfield><link linkend="part.events">EVENTS</link></structfield> slot of a
+	  <classname><link linkend="class.part">PART</link></classname> object.
+  	  Including these objects in the events list provides an alternative to listing them inside <classname><link linkend="class.part">PART</link></classname> objects.)
+  	  See <link linkend="objects" endterm="objects.title"/> for more detailed descriptions of these objects and their uses.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.filename"/>:FILENAME</varname></term>
+        <listitem>
+          <para>
+  	  This string represents the path and filename to which <application>FOMUS</application> adds an appropriate extension when it saves
+  	  output in various formats.
+  	  This setting in combination with the <varname><link linkend="setting.output">OUTPUT</link></varname> setting determines the actual output filenames.
+    	  <example id="example.filename.setting">
+              <title>FILENAME Setting</title>
+              <programlisting>
+<![CDATA[
+:filename "path_to_output_directory/myoutput"]]>
+              </programlisting>
+  	  </example>
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.global"/>:GLOBAL</varname></term>
+        <listitem>
+          <para>
+  	  This is a list of objects that have "global" influence over other events in the <varname><link linkend="setting.parts">PARTS</link></varname>
+  	  and <varname><link linkend="setting.events">EVENTS</link></varname> settings.
+  	  Only objects of type <classname><link linkend="class.timesig">TIMESIG</link></classname> and
+	  <classname><link linkend="class.keysig">KEYSIG</link></classname> are allowed here (<classname><link linkend="class.keysig">KEYSIG</link></classname>
+  	  isn't implemented yet).
+	  When a global object's <structfield><link linkend="timesig.partids">PARTIDS</link></structfield> slot is set to the default value of <literal>NIL</literal>
+  	  the object affects all parts that don't already have a <classname><link linkend="class.timesig">TIMESIG</link></classname> or
+	  <classname><link linkend="class.keysig">KEYSIG</link></classname> attached to them at that point.
+	  When its <structfield><link linkend="timesig.partids">PARTIDS</link></structfield> slot is set to symbol or list of symbols the
+	  object affects those parts only.
+  	  This enables the specification of multiple simultaneous time signatures and polymeters (not implemented yet).
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.grandstaff.hide.rests"/>:GRANDSTAFF-HIDE-RESTS</varname></term>
+        <listitem>
+          <para>
+  	  When set to <literal>T</literal> or <literal>:SOME</literal>, indicates that <application>FOMUS</application> hides some rests
+  	  when combining multiple voices in a grand staff.
+	  This makes the notation easier to read for multi-staff instruments by eliminating rests that aren't necessary.
+  	  When set to <literal>:ALL</literal> indicates that all rests in all parts are hidden (this could be more useful in the future
+	  when proportional notation is supported).
+  	  When set to <literal>NIL</literal> indicates that no rests are hidden.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.input.beat.value"/>:INPUT-BEAT-VALUE</varname></term>
+        <listitem>
+          <para>
+	    When set to some real number greater than <literal>0</literal>, indicates that this durational value is to be interpreted as one beat.
+	    <application>FOMUS</application> scales all input objects by dividing offsets and durations by this value before doing any other processing.
+	    A value of <literal>NIL</literal> is the default and is equivalent to <literal>1</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.input.offset"/>:INPUT-OFFSET</varname></term>
+        <listitem>
+          <para>
+	    When set to some real number, indicates that this durational value is to be interpreted as one beat.
+	    <application>FOMUS</application> shifts all input objects by adding this value to all offsets before doing any other processing.
+	    A value of <literal>NIL</literal> is the default and is equivalent to <literal>0</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.instr.groups"/>:INSTR-GROUPS</varname></term>
+        <listitem>
+          <para>
+  	  The value of this setting is a table in the form of a list that provides a way of adding instrument orderings and groupings
+	  to <application>FOMUS</application>'s own default table.
+	  These tables map symbol lookup values to ordering/grouping data structures which specify how parts are both ordered and grouped
+	  together with brackets and barlines in the score.
+  	  The user may choose one of these groupings by setting <varname><link linkend="setting.ensemble.type">ENSEMBLE-TYPE</link></varname> to
+	  a symbol lookup value.
+  	  The user-supplied list is searched first so user-supplied orderings/groupings can override <application>FOMUS</application>'s
+	  default orderings/groupings.
+	</para>
+	<para>	  
+	  The setting is a list of lists, the first element in each inner list containing a symbol specifying a unique lookup name.
+	  These are followed by grouping/ordering definitions:
+	  symbols or nested lists of symbols that specify both the groups and the layout order of parts.
+  	  In this data structure a symbol specifies an instrument while a list contains a group type
+	  (a symbol designating what type of bracket is to appear on the left-hand margin
+	  of the score and how barlines are to appear) followed by more instrument symbols or lists (see the example below).
+  	  A group type is one of the symbols <literal>:GROUP</literal>, <literal>:GRANDSTAFF</literal> or <literal>:CHOIRGROUP</literal>.
+  	</para>
+  	<para>
+  	  A look at the following example might make this clearer:
+    	  <example id="example.instr.groups.setting">
+              <title>INSTR-GROUPS Setting</title>
+              <programlisting>
+<![CDATA[
+:instr-groups
+  '((:orchestra
+     (:group (:group :piccolo :flute) (:group :oboe :english-horn)
+             (:group :bf-clarinet :a-clarinet :bass-clarinet)
+             (:group :bassoon :contra-bassoon))
+     (:group (:group :horn) (:group :c-trumpet :bf-trumpet)
+             (:group :alto-trombone :tenor-trombone :bass-trombone)
+             (:group :tuba))
+      :timpani :percussion
+     (:grandstaff :piano) 
+     (:group (:group :violin) (:group :viola) (:group :violoncello)
+             (:group :contrabass)))
+    (:ensemble
+     :piccolo :flute :oboe :english-horn :bf-clarinet :a-clarinet :bassoon
+     :contra-bassoon (:grandstaff :piano)))]]>
+              </programlisting>
+  	  </example>
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.instruments"/>:INSTRUMENTS</varname></term>
+        <listitem>
+          <para>
+  	  The user can use this setting to specify additional <classname><link linkend="struct.instr">INSTR</link></classname>
+	  objects that are added to the default instrument list.
+  	  <application>FOMUS</application> searches this list before its own default list when resolving symbols to instrument definitions, so they may 
+  	  be replacements or modifications of existing instruments.
+	  The contents are either instrument objects created with <function><link linkend="function.make.instr">MAKE-INSTR</link></function>
+	  or lists specifying modifications to <application>FOMUS</application>'s default instruments (or a combination of both).
+	  If a list is specified, it contains a symbol specifying a default instrument followed by keyword/argument pairs indicating slot values that replace 
+	  existing default values (see the <structfield><link linkend="part.instr">INSTR</link></structfield> slot in the
+	  <classname><link linkend="class.part">PART</link></classname> object
+	  and <link linkend="example.part.instr.slot.setting" endterm="example.part.instr.slot.setting"/> for an example of this).
+    	  <example id="example.instrument.setting">
+              <title>INSTRUMENT Setting</title>
+              <programlisting>
+<![CDATA[
+:instrument
+  (list (make-instr :recorder :clefs :treble)
+        '(:piano :staves 3 :simultlim 6))]]>
+              </programlisting>
+  	  </example>
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.lilypond.exe"/>:LILYPOND-EXE</varname></term>
+        <listitem>
+          <para>
+	      This is a string specifying the path and filename to the <application>LilyPond</application> executable.
+	      The full pathname may or may not need to be specified depending on the Lisp implementation.	    
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.lilypond.filehead"/>:LILYPOND-FILEHEAD</varname></term>
+        <listitem>
+          <para>
+	      This is a string or list of strings representing text to be inserted directly into a <application>LilyPond</application> output file.
+	      Each string in the list is followed by a carriage return.
+	      The text is inserted near the top of the file at a point before any score or part data appears.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.lilypond.opts"/>:LILYPOND-OPTS</varname></term>
+        <listitem>
+          <para>
+	      This is a list of strings representing options to be passed to the <application>LilyPond</application> executable.
+	      The default is currently <literal>'("--ps")</literal> for Linux or <literal>'("--pdf")</literal> for OS X/Windows,
+	      specifying that <application>LilyPond</application> should generate either a PostScript or PDF format file.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.lilypond.out.ext"/>:LILYPOND-OUT-EXT</varname></term>
+        <listitem>
+          <para>
+	      This is a string specifying the extension for the output filename that is created when <application>LilyPond</application> is run.
+	      The default is <literal>"ps"</literal> for Linux and <literal>"pdf"</literal> for OS X/Windows.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.lilypond.scorehead"/>:LILYPOND-SCOREHEAD</varname></term>
+        <listitem>
+          <para>
+	      This is a string or list of strings representing text to be inserted directly into a <application>LilyPond</application> output file 
+	      at the beginning of a score block.  Each string in the list is followed by a carriage return.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.lilypond.text.markup"/>:LILYPOND-TEXT-MARKUP</varname></term>
+        <listitem>
+          <para>
+	      This is a "wrapper" string specifying <application>LilyPond</application> markup instructions to be used when
+	      printing text above or below the staff.
+	      The string must have an <literal>~A</literal> or similar substring to indicate where to place the actual text
+	      (as if in a call to <function>FORMAT</function>).
+	      The default value is <literal>"\markup{\italic{~A}}"</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.lilypond.textacc.markup"/>:LILYPOND-TEXTACC-MARKUP</varname></term>
+        <listitem>
+          <para>
+	      This is a "wrapper" string specifying <application>LilyPond</application> markup instructions to be used when
+	      engraving accidentals as text.
+	      The string must have an <literal>~A</literal> or similar substring to indicate where to place the actual text
+	      (as if in a call to <function>FORMAT</function>).
+	      The default value is <literal>"\\markup{\\tiny{~A}}"</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.lilypond.textdyn.markup"/>:LILYPOND-TEXTDYN-MARKUP</varname></term>
+        <listitem>
+          <para>
+	      This is a "wrapper" string specifying <application>LilyPond</application> markup instructions to be used when
+	      printing text in a dynamic-type font.
+	      The string must have an <literal>~A</literal> or similar substring to indicate where to place the actual text
+	      (as if in a call to <function>FORMAT</function>).
+	      The default value is <literal>"\markup{\dynamic{\italic{\bold{~A}}}}"</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.lilypond.textnote.markup"/>:LILYPOND-TEXTNOTE-MARKUP</varname></term>
+        <listitem>
+          <para>
+	      This is a "wrapper" string specifying <application>LilyPond</application> markup instructions to be used when
+	      printing text above single notes.
+	      The string must have an <literal>~A</literal> or similar substring to indicate where to place the actual text
+	      (as if in a call to <function>FORMAT</function>).
+	      The default value is <literal>"\markup{\italic{~A}}"</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.lilypond.texttempo.markup"/>:LILYPOND-TEXTTEMPO-MARKUP</varname></term>
+        <listitem>
+          <para>
+	      This is a "wrapper" string specifying <application>LilyPond</application> markup instructions to be used when
+	      printing text in a heavy "tempo" font.
+	      The string must have an <literal>~A</literal> or similar substring to indicate where to place the actual text
+	      (as if in a call to <function>FORMAT</function>).
+	      The default value is <literal>"\markup{\bold{\huge{~A}}}"</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.lilypond.version"/>:LILYPOND-VERSION</varname></term>
+        <listitem>
+          <para>
+	      If set to a string (for example, <literal>"2.8"</literal>), forces <application>FOMUS</application> to output <application>LilyPond</application> files for that
+	      version.
+  	  </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.lilypond.view.exe"/>:LILYPOND-VIEW-EXE</varname></term>
+        <listitem>
+          <para>
+	      This is a string specifying the path and filename to the executable for the <application>LilyPond</application> viewer application.
+	      The full pathname may or may not need to be specified depending on the Lisp implementation.
+	      The default application depends on what is installed on the user's machine, and should be
+	      one appropriate for viewing PostScript files.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.lilypond.view.opts"/>:LILYPOND-VIEW-OPTS</varname></term>
+        <listitem>
+          <para>
+	      This is a list of strings representing options to be passed to the <application>LilyPond</application> viewer application executable.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.long.eighth.beam.count"/>:LONG-EIGHTH-BEAM-COUNT</varname></term>
+        <listitem>
+          <para>
+  	  This is set to an integer greater than <literal>0</literal>, specifying the number of eighth notes that need to be present
+  	  to be beamed as a group of 4.
+  	  This setting is only effective if <varname><link linkend="setting.long.eighth.beams">LONG-EIGHTH-BEAMS</link></varname> is set to <literal>T</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.long.eighth.beams"/>:LONG-EIGHTH-BEAMS</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, specifies that the beaming algorithm should beam eighth notes into groups of up
+  	  to 4 under certain conditions (if enough of them are present).
+  	  If set to <literal>:ALWAYS</literal>, specifies that eighth notes are always beamed in groups of 4.
+  	  If set to <literal>NIL</literal>, specifies that eighth notes are never beamed in groups of 4.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.max.ottava.rest.dist"/>:MAX-OTTAVA-REST-DIST</varname></term>
+        <listitem>
+          <para>
+  	  This is a real number greater than <literal>0</literal>, specifying the maximum distance an ottava bracket will span over a group
+  	  of contiguous rests.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.max.tuplet"/>:MAX-TUPLET</varname></term>
+        <listitem>
+          <para>
+  	  If set to an integer, represents the largest tuplet allowed.
+  	  If set to a list of integers, represents the largest tuplets allowed for each nested tuplet level (and also specifies how many levels of
+  	  tuplet nesting are allowed by the length of the list).
+  	  A value of <literal>'(7 3)</literal>, for example, specifies two levels of tuplet nesting with septuplets being the maximum
+  	  allowed in the outer level and triplets being the maximum in the inner level.
+	  A value of <literal>NIL</literal> specifies that no tuplets are to be used.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.max.tuplet.dur"/>:MAX-TUPLET-DUR</varname></term>
+        <listitem>
+          <para>
+  	  This is the largest duration in beats that a tuplet can span.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.min.auto.timesig.dur"/>:MIN-AUTO-TIMESIG-DUR</varname></term>
+        <listitem>
+          <para>
+  	  if <varname><link linkend="setting.auto.override.timesigs">AUTO-OVERRIDE-TIMESIGS</link></varname> is set to <literal>T</literal>,
+	  <application>FOMUS</application> automatically generates new time signatures as necessary to fit measures into the
+  	  time signatures specified in the <varname><link linkend="setting.global">GLOBAL</link></varname> and 
+	  <varname><link linkend="setting.parts">PARTS</link></varname> list.
+  	  The value of this setting represents the smallest duration (in beats) of any such time signature that is generated.
+  	  See <link linkend="class.timesig">TIMESIG</link> and <link linkend="class.timesig.repl">TIMESIG-REPL</link> for more information.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.min.grandstaff.hide.rests.dur"/>:MIN-GRANDSTAFF-HIDE-RESTS-DUR</varname></term>
+        <listitem>
+          <para>
+  	  This is a real number greater than <literal>0</literal>, specifying the minimum duration that a group of simultaneous rests must occupy
+  	  in order for some of them to be hidden.
+  	  This is applicable only when there are multiple voices on a staff, in cases where several simultaneous rests can be
+	  shown as one rest.
+	  <varname><link linkend="setting.auto.multivoice.rests">AUTO-MULTIVOICE-RESTS</link></varname> must also be set to <literal>T</literal>
+	  for this to have any effect.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.min.multivoice.chords.dur"/>:MIN-MULTIVOICE-CHORDS-DUR</varname></term>
+        <listitem>
+          <para>
+  	  This is a real number greater than <literal>0</literal>, specifying the minimum duration a group of simultaneous notes in separate
+  	  voices must span to be combined into chords. 
+	  This is applicable only when there are multiple voices on a staff, and if 
+	  <varname><link linkend="setting.auto.multivoice.notes">AUTO-MULTIVOICE-NOTES</link></varname> is set to <literal>T</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.min.split.all.parts.dur"/>:MIN-SPLIT-ALL-PARTS-DUR</varname></term>
+        <listitem>
+          <para>
+  	  This is the smallest duration that <application>FOMUS</application> will consider when deciding whether or
+	  not to "split" or divide all parts together or separately.
+	  (Splitting means splitting and tying notes as necessary to properly notate a given rhythm in a given measure.)
+	  A unit of music must be larger than this value to be considered--units equal to or smaller than this duration are not considered.
+	  <application>FOMUS</application> splits measures in all parts together up to a certain point to insure that the notation is
+	  consistently divided in all parts.
+	  A 5/8 measure, for example, will be consistently divided as either 3 + 2 to 2 + 3 in all parts together 
+	  (as long as the value of this setting is smaller than the duration of a 5/8 measure).
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.min.tuplet.dur"/>:MIN-TUPLET-DUR</varname></term>
+        <listitem>
+          <para>
+  	  This is the smallest duration in beats that a tuplet can span.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.parts"/>:PARTS</varname></term>
+        <listitem>
+          <para>
+  	  This is a list of <classname><link linkend="class.part">PART</link></classname> objects, each representing a stave or grand staff in the score.
+  	  At least one part must be specified.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.output"/>:OUTPUT</varname></term>
+        <listitem>
+          <para>
+  	  This is either a list or a list of lists specifying one or more output files with optional keyword/argument pairs for tweaking their contents.
+  	  <application>FOMUS</application>'s built-in output symbols are <literal>:DATA</literal> or <literal>:FOMUS</literal>, <literal>:RAW</literal>, <literal>:MUSICXML</literal>, 
+	  <literal>:MUSICXML-SIBELIUS</literal>, <literal>:MUSICXML-FINALE</literal>, <literal>:CMN</literal>, <literal>:LILYPOND</literal> and <literal>:MIDI</literal>.
+  	  More information on these is given in <link linkend="outputs" endterm="outputs.title"/>.
+  	  The following are examples of valid output specifications:
+  	  <example id="example.output.setting1">
+              <title>OUTPUT Setting 1</title>
+              <programlisting>
+<![CDATA[
+:output '(:data (:lilypond :view t))]]>
+              </programlisting>
+  	  </example>
+  	  <example id="example.output.setting2">
+              <title>OUTPUT Setting 2</title>
+              <programlisting>
+<![CDATA[
+:output '(:lilypond :filename "myfile.ly" :view nil)]]>
+              </programlisting>
+  	  </example>
+  	  <example id="example.output.setting3">
+              <title>OUTPUT Setting 3</title>
+              <programlisting>
+<![CDATA[
+:output :cmn]]>
+              </programlisting>
+  	  </example>
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.percussion"/>:PERCUSSION</varname></term>
+        <listitem>
+          <para>
+  	  This is a list of <classname><link linkend="struct.perc">PERCUSSION</link></classname> objects serving as a lookup table for information pertaining to
+  	  percussion notation.
+  	  <classname><link linkend="struct.perc">PERCUSSION</link></classname> objects are listed in
+	  <classname><link linkend="struct.instr">INSTR</link></classname> objects to define
+	  collections of percussion instruments that are notated together on a single staff.
+  	  <application>FOMUS</application> searches this user setting list before its own default list when 
+	  resolving symbols to percussion instrument definitions, so they may 
+  	  be replacements or modifications of <application>FOMUS</application>'s predefined percussion instruments.
+	  The contents are either percussion objects created with <function><link linkend="function.make.perc">MAKE-PERC</link></function>
+	  or lists specifying modifications to <application>FOMUS</application>'s default percussion objects (or a combination of both).
+	  If a list is specified, it contains a symbol specifying a default percussion instrument followed by keyword/argument pairs indicating slot values that replace 
+	  existing default values (see the <structfield><link linkend="instr.percs">PERCS</link></structfield> slot in the
+	  <classname><link linkend="struct.instr">INSTR</link></classname> object for an example of this).          
+    	  <example id="example.percussion.setting">
+              <title>PERCUSSION Setting</title>
+              <programlisting>
+<![CDATA[
+:instrument
+  (list (make-perc :anvil :note -3 :voice 2 :midinote-ex 79)
+        '(:triangle :note 0 :voice 1))]]>
+              </programlisting>
+  	  </example>
+  	  See the documentation for <classname><link linkend="struct.perc">PERCUSSION</link></classname> objects for more information.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.quality"/>:QUALITY</varname></term>
+        <listitem>
+          <para>
+	    This is a real number indicating how much <application>FOMUS</application> should trade 
+	    speed of computation for "quality" of output.
+	    Setting it lower increases speed while setting it higher gives better results.
+	    The default is <literal>1</literal>, which is reasonable for relatively uncomplicated scores with a small number of parts.
+	    The most effective values are between approximately <literal>-3</literal> and <literal>3</literal>, though complex
+	    scores might show a little improvement (better guesses within a larger context) with values of <literal>5</literal> or more.
+	    After a certain point increasing this value only makes the program run slower with no noticeable improvement in output. 
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.quartertones"/>:QUARTERTONES</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, <application>FOMUS</application> rounds pitches to quartertone values
+	  and uses quartertone notation in the score.
+	  This only works if the algorithm specified by the <varname><link linkend="setting.auto.accs.module">AUTO-ACCS-MODULE</link></varname> setting
+	  supports it.
+	  <application>FOMUS</application>'s default module <literal>:NOKEY1</literal> supports quartertones.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.shortlongshort.notes.level"/>:SHORTLONGSHORT-NOTES-LEVEL</varname></term>
+        <listitem>
+          <para>
+  	  Indicates how "short-long-short" note patterns are allowed to appear.
+  	  An example of such a pattern is an eighth note followed by a quarter note then an eighth note, and is treated as
+  	  an exception to insure that the middle note isn't split in the middle and tied.
+  	  Possible values are <literal>T</literal>, <literal>:ALL</literal>, <literal>:TOP</literal> and <literal>:SIG</literal>.
+  	  <literal>:ALL</literal> specifies that this pattern can appear anywhere, <literal>:TOP</literal> specifies that it can appear
+  	  only if it occupies an entire measure, and <literal>:SIG</literal> specifies that it can appear if it occupies a duration
+  	  larger than a beat.
+  	  <literal>T</literal> is equivalent to <literal>:ALL</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.split.module"/>:SPLIT-MODULE</varname></term>
+        <listitem>
+          <para>
+  	  Designates which module is to be used for splitting and tying notes.
+  	  <application>FOMUS</application>'s built-in values are <literal>T</literal> and <literal>:SPLIT1</literal>.
+  	  <literal>T</literal> represents the default module and is equivalent to <literal>:SPLIT1</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.subtitle"/>:SUBTITLE</varname></term>
+        <listitem>
+          <para>
+  	  This is an optional string value containing the subtitle of the composition.	  
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.syncopated.notes.level"/>:SYNCOPATED-NOTES-LEVEL</varname></term>
+        <listitem>
+          <para>
+  	  When set to <literal>T</literal>, indicates that a certain syncopated note pattern,
+	  a short note followed by any number of long notes then a short note, may appear.
+  	  An example of such a pattern is an eighth note followed by several quarter notes then an eighth note.
+	  This can only occur if the pattern occupies the duration of an entire measure.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.timesig.style"/>:TIMESIG-STYLE</varname></term>
+        <listitem>
+          <para>
+  	  This indicates how time signature are printed.
+  	  It can be set to <literal>:FRACTION</literal> or <literal>:COMMON</literal>, specifying that either fractional or common
+  	  time signatures are to be used in the backend (given the choice).
+  	  The default value of <literal>NIL</literal> is equivalent to specifying <literal>:FRACTION</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.title"/>:TITLE</varname></term>
+        <listitem>
+          <para>
+  	  This is an optional string value containing the title of the composition.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.transpose"/>:TRANSPOSE</varname></term>
+        <listitem>
+          <para>
+  	  When set to <literal>T</literal>, activates a transposition function that automatically transposes note values.
+  	  The <structfield><link linkend="instr.tpose">TPOSE</link></structfield> slot of the appropriate <classname><link linkend="struct.instr">INSTR</link></classname>
+	  objects must be set for this to have any effect.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.tuplet.dotted.rests"/>:TUPLET-DOTTED-RESTS</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, specifies whether or not dotted rests are allowed inside tuplets of irregular (ie. not a power of 2)
+  	  divisions.
+  	  For example, a quintuplet might be divided into a dotted eight rest followed by an eighth note if
+	  <varname><link linkend="setting.tuplet.dotted.rests">TUPLET-DOTTED-RESTS</link></varname> is true. 
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.tuplet.function"/>:TUPLET-FUNCTION</varname></term>
+        <listitem>
+          <para>
+  	  Designates which function is to be used for determining tuplet ratios.
+  	  <application>FOMUS</application>'s built-in values are <literal>T</literal>, <literal>:POW2</literal> and <literal>:DUR</literal>.
+  	  <literal>T</literal> represents the default function and is equivalent to <literal>:POW2</literal>.
+	  <literal>:POW2</literal> determines tuplet ratios based on the rule that the number of tuplet divisions replace (in most cases)
+	  the number of durational units equaling the next lowest power of two.  <application>FOMUS</application> thus notates 7 in the time of 4
+	  and 13 in the time of 8. <literal>:DUR</literal> determines ratios
+	  by finding the closest number of durational units to the number of tuplet divisions.  <application>FOMUS</application> then notates
+	  7 in the time of 8 and 13 in the time of 16.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.tuplet.style"/>:TUPLET-STYLE</varname></term>
+        <listitem>
+          <para>
+  	  Specifies how tuplets are to be printed.
+  	  The possible values are <literal>:RATIO</literal> or <literal>:SINGLE</literal>.
+  	  The default value of <literal>NIL</literal> is equivalent to <literal>:SINGLE</literal>.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.use.cm"/>:USE-CM</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, indicates that <application>FOMUS</application> should use <application>Common Music</application> functions if present.
+  	  Note symbols are then parsed by <application>CM</application> using the value of
+  	  <varname><link linkend="setting.cm.scale">CM-SCALE</link></varname> as if it were passed as the <literal>:IN</literal> argument to 
+	  <application>CM</application>'s <function>KEYNUM</function> function.
+  	  Also, durations specified as symbols indicate notational durations and are interpreted
+  	  as such using <application>CM</application>'s <function>RHYTHM</function> function.
+	  Numbers are still interpreted by <application>FOMUS</application> in terms of beats.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.use.double.accs"/>:USE-DOUBLE-ACCS</varname></term>
+        <listitem>
+          <para>
+  	  If set to <literal>T</literal>, the note spelling algorithm considers double sharps and double flats in addition to
+	  single sharps and flats.
+  	</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><varname><anchor id="setting.verbose"/>:VERBOSE</varname></term>
+        <listitem>
+          <para>
+  	  This must be set to a value from <literal>0</literal> to <literal>2</literal>, indicating the amount of printed output.
+  	  A value of <literal>0</literal> represents minimal output while a value of <literal>2</literal> represents maximal output.
+  	</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </section>      
+</chapter>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Class TIMESIG</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch04.html" title="Chapter&#160;4.&#160;Objects" /><link rel="prev" href="ch04s02.html" title="Class PART" /><link rel="next" href="ch04s04.html" title="Class TIMESIG-REPL" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Class TIMESIG</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04s02.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;4.&#160;Objects</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch04s04.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.objects3"></a>Class TIMESIG</h2></div></div></div><p>
+      A <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> object indicates a time signature change in the score.
+      They may also be used to indicate special barlines and a few other changes.
+      <span class="application">FOMUS</span> uses <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> objects to determine where to place measures and
+      how to format the events that appear in them.
+      If new time signatures appear in the middle of a measure, <span class="application">FOMUS</span> either splits the measure
+      or expands it to a larger size depending on the values of <code class="varname"><a href="ch05s04.html#setting.auto.override.timesigs">AUTO-OVERRIDE-TIMESIGS</a></code>
+      and <code class="varname"><a href="ch05s04.html#setting.min.auto.timesig.dur">MIN-AUTO-TIMESIG-DUR</a></code>.
+    </p><p>
+      Each time signature either specifies or implies a value that specifies what notational value is equivalent to 1 "beat" duration.
+      <span class="application">FOMUS</span> uses this value to determine how all durational events are notated and where they appear in the score.
+      Unless otherwise indicated, all offsets and durations are expressed in beat units.
+      See the <em class="structfield"><code><a href="ch04s03.html#timesig.beat">BEAT</a></code></em> slot for information on how to specify it.
+    </p><p>
+      Time signatures are passed to <span class="application">FOMUS</span> by including them either
+      in the <code class="varname"><a href="ch05s04.html#setting.global">GLOBAL</a></code> list or the <em class="structfield"><code><a href="ch04s02.html#part.events">EVENTS</a></code></em>
+      slot list of a <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> object.
+      <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> objects listed inside a part apply only to that part
+      (unless the <em class="structfield"><code><a href="ch04s03.html#timesig.partids">PARTIDS</a></code></em> slot
+      indicates otherwise).
+      This method most likely won't be used.
+      <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> objects in the <code class="varname"><a href="ch05s04.html#setting.global">GLOBAL</a></code>
+      list affect parts according to the contents of their <em class="structfield"><code><a href="ch04s03.html#timesig.partids">PARTIDS</a></code></em> slot values.
+      A symbol or list of symbols in the <em class="structfield"><code><a href="ch04s03.html#timesig.partids">PARTIDS</a></code></em> slot applies the time signature to the parts
+      that match those symbols.
+      A default <em class="structfield"><code><a href="ch04s03.html#timesig.partids">PARTIDS</a></code></em> slot value of <code class="literal">NIL</code> indicates that the time signature be
+      applied to all parts that don't have any other time signature specified at that exact offset.
+      This way you can specify that a certain <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> object be applied to only several
+      <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> objects while another <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code>
+      object by applied to all of the remaining parts.
+    </p><p>Constructor: 
+      <code class="function">(MAKE-TIMESIG &amp;key
+        :ID <strong class="userinput"><code>id</code></strong>
+	:PARTIDS <strong class="userinput"><code>partids</code></strong>
+        :OFF <strong class="userinput"><code>off</code></strong>
+	:TIME <strong class="userinput"><code>time</code></strong>
+	:COMP <strong class="userinput"><code>comp</code></strong>
+	:BEAT <strong class="userinput"><code>beat</code></strong>
+	:DIV <strong class="userinput"><code>div</code></strong>
+	:REPL <strong class="userinput"><code>repl</code></strong>
+	:PROPS <strong class="userinput"><code>props</code></strong>)</code>
+    </p><p>Copy Function: 
+      <code class="function">(COPY-TIMESIG <strong class="userinput"><code>timesig</code></strong> &amp;key
+        :ID <strong class="userinput"><code>id</code></strong>
+	:PARTIDS <strong class="userinput"><code>partids</code></strong>
+        :OFF <strong class="userinput"><code>off</code></strong>
+	:TIME <strong class="userinput"><code>time</code></strong>
+	:COMP <strong class="userinput"><code>comp</code></strong>
+	:BEAT <strong class="userinput"><code>beat</code></strong>
+	:DIV <strong class="userinput"><code>div</code></strong>
+	:REPL <strong class="userinput"><code>repl</code></strong>
+	:PROPS <strong class="userinput"><code>props</code></strong>)</code>
+    </p><p>Predicate Function: <code class="function">(TIMESIGP <strong class="userinput"><code>obj</code></strong>)</code></p><p>Accessors:
+      </p><div class="variablelist"><dl><dt><span class="term"><code class="function"><a id="timesig.id"></a>OBJ-ID</code></span></dt><dd><p>
+	      This slot isn't used by FOMUS. 
+            </p></dd><dt><span class="term"><code class="function"><a id="timesig.partids"></a>TIMESIG-PARTIDS</code></span></dt><dd><p>
+	      This is a reference to a particular part or group of parts.
+	      If the value of this slot is <code class="literal">NIL</code>, the time signature is applied to
+	      all parts that don't have some another <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> object
+	      defined for them if this <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> object is included in the
+	      <code class="varname"><a href="ch05s04.html#setting.global">GLOBAL</a></code> list.
+	      If the <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> object is in a
+	      <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> object's <em class="structfield"><code><a href="ch04s02.html#part.events">EVENTS</a></code></em> slot,
+	      the time signature is applied to the part.
+   	      If the value is a symbol, number, or list of symbols or numbers, these values are used to lookup which part or parts the event belongs to.
+	    </p></dd><dt><span class="term"><code class="function"><a id="timesig.off"></a>TIMESIG-OFF</code></span></dt><dd><p>
+	      This is a number (real, ratio or integer) specifying the absolute position for the onset for this note.
+	      The offset is measured in "beats," which may indicate different notational positions depending on 
+	      previous time signatures and what values are present in their <em class="structfield"><code><a href="ch04s03.html#timesig.beat">BEAT</a></code></em> slots.
+	      The number must be precise and "notatable" (floating point numbers are not recommended and values like 10/3 that don't
+	      occur on regular beat divisions are currently impossible for <span class="application">FOMUS</span> to notate).
+	    </p></dd><dt><span class="term"><code class="function"><a id="timesig.time"></a>TIMESIG-TIME</code></span></dt><dd><p>
+	      This is a required list of two integers, specifying the numerator and denominator of the printed time signature.
+	    </p></dd><dt><span class="term"><code class="function"><a id="timesig.comp"></a>TIMESIG-COMP</code></span></dt><dd><p>
+	      If this slot is set to <code class="literal">T</code>, indicates that the measure is a compound meter.
+	      <span class="application">FOMUS</span> then derives the beat value from the denominator of the time signature.
+	      Setting this to <code class="literal">T</code> or <code class="literal">NIL</code> always overrides whatever default action is
+	      specified in the <code class="varname"><a href="ch05s04.html#setting.auto.timesig.comp">AUTO-TIMESIG-COMP</a></code> setting.
+	    </p></dd><dt><span class="term"><code class="function"><a id="timesig.beat"></a>TIMESIG-BEAT</code></span></dt><dd><p>
+	      The <em class="structfield"><code><a href="ch04s03.html#timesig.beat">BEAT</a></code></em> slot value determines how events are mapped from beat units to notational durations.
+	      It is a ratio that specifies what notational duration is equivalent to 1 beat.
+	      This duration is expressed as a fraction of a whole note (1/4, for example, specifies a quarter note, 1/2 specifies
+	      a half note, and 3/8 specifies three eight notes).
+	      If the time signature is a compound time signature, the value of this slot is ignored and the
+	      beat value is calculated from the denominator (for example, the beat value of a 12/8 signature is 3/8).
+	      If the slot contains the default value of <code class="literal">NIL</code>, the beat value is either the
+	      value of <code class="varname"><a href="ch05s04.html#setting.default.beat">DEFAULT-BEAT</a></code> or it is calculated from the
+	      denominator (a non-compound 4/8 or 7/8 time signature would have a beat value of 1/8).
+	      The beat value of a measure effects how notes are are divided and laid out.
+	    </p></dd><dt><span class="term"><code class="function"><a id="timesig.div"></a>TIMESIG-DIV</code></span></dt><dd><p>
+	      This is a single list or list of lists containing ratios or integers that add up to the total number of beats
+	      in a measure (as specified by either the <em class="structfield"><code><a href="ch04s03.html#timesig.time">TIME</a></code></em> or
+	      <em class="structfield"><code><a href="ch04s03.html#timesig.beat">BEAT</a></code></em> slots).
+	      It represents all of the choices available for dividing up measures following this time signature.
+	      If the slot contains the default value of <code class="literal">NIL</code>, <span class="application">FOMUS</span> looks up
+	      divisions first in a user-supplied table if one exists (see the <code class="varname"><a href="ch05s04.html#setting.default.meas.divs">DEFAULT-MEAS-DIVS</a></code>
+	      setting) then in <span class="application">FOMUS</span>'s default table.
+	      A value usually only needs to be specified here if the user wants to force <span class="application">FOMUS</span>
+	      to divide measures in a specific way rather than choosing between several choices.
+	      The following example shows what might be specified for a 7/8 meter:
+       	    </p><div class="example"><a id="example.timesig.div.slot.setting"></a><p class="title"><b>Example&#160;4.2.&#160;TIMESIG-DIV Slot Setting</b></p><div class="example-contents"><pre class="programlisting">
+
+'((4 3) (3 4))
+                </pre></div></div><p><br class="example-break" />
+	      As another example, setting the <em class="structfield"><code><a href="ch04s03.html#timesig.div">TIMESIG-DIV</a></code></em> slot to <code class="literal">'(1 1 1)</code> in a 3/4
+	      time signature forces <span class="application">FOMUS</span> to beam measures in groups of 3 (the default is equivalent to
+	      a <em class="structfield"><code><a href="ch04s03.html#timesig.div">TIMESIG-DIV</a></code></em> setting of <code class="literal">'((2 1) (1 2))</code>)/
+	    </p></dd><dt><span class="term"><code class="function"><a id="timesig.repl"></a>TIMESIG-REPL</code></span></dt><dd><p>
+	      This is a list of <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> or
+	      <code class="classname"><a href="ch04s04.html#class.timesig.repl">TIMESIG-REPL</a></code> objects
+	      that are chosen to replace this <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> object when <span class="application">FOMUS</span>
+	      needs to change the length of a measure.
+	      This gives the user some control over how <span class="application">FOMUS</span> fudges measures to make them fit.
+	      When <span class="application">FOMUS</span> changes the length of a measure, it will look here first and then in
+	      the (not implemented yet) setting for a replacement that fits (has the correct number of beats).
+	      If none is found, <span class="application">FOMUS</span> will create a new <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> object
+	      from the current one, modifying the <em class="structfield"><code><a href="ch04s03.html#timesig.div">DIV</a></code></em> slot by adding on extra beats if necessary.
+	    </p><p>
+	      <code class="classname"><a href="ch04s04.html#class.timesig.repl">TIMESIG-REPL</a></code> objects are simply
+	      <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> objects with missing
+	      <em class="structfield"><code><a href="ch04s03.html#timesig.off">OFF</a></code></em>,
+	      <em class="structfield"><code><a href="ch04s03.html#timesig.partids">PARTIDS</a></code></em> and
+	      <em class="structfield"><code><a href="ch04s03.html#timesig.repl">REPL</a></code></em> slots, all
+	      of them unnecessary in this context.
+	      The use of these is optional.
+	      If <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> objects are given, these slots are just ignored.
+	    </p></dd><dt><span class="term"><code class="function"><a id="timesig.props"></a>TIMESIG-PROPS</code></span></dt><dd><p>
+	      This slot behaves like the <em class="structfield"><code><a href="ch04s06.html#note.marks">MARKS</a></code></em> slot in
+	      <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> or
+	      <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> objects.
+	      Extra time signature or measure properties may be specified here.
+	      See FIXME for more details and the <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> class for an example of how to specify properties.
+	    </p></dd></dl></div><p>
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04s02.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch04s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Class PART&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Class TIMESIG-REPL</td></tr></table></div></body></html>

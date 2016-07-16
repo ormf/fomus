@@ -1,0 +1,37 @@
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd" [
+<!ENTITY copy "&#xA9;">
+<!ENTITY intro SYSTEM "intro.xml">
+<!ENTITY install SYSTEM "install.xml">
+<!ENTITY usage SYSTEM "usage.xml">
+<!ENTITY objects SYSTEM "objects.xml">
+<!ENTITY settings SYSTEM "settings.xml">
+<!ENTITY marks SYSTEM "marks.xml">
+<!ENTITY backends SYSTEM "backends.xml">
+<!ENTITY init SYSTEM "init.xml">
+<!ENTITY examples SYSTEM "examples.xml">
+]>
+<book>
+  <bookinfo>
+    <title>FOMUS Documentation</title>
+    <releaseinfo>Version 0.2.26</releaseinfo>
+    <date>5/24/2007</date>
+    <author>
+      <firstname>David</firstname>
+      <surname>Psenicka</surname>
+      <email>dpsenick(at)uiuc(dot)edu</email>
+    </author>
+    <legalnotice>
+      <para>Copyright &copy; 2005, 2006, 2007 David Psenicka, All Rights Reserved</para>
+      <para>See file "COPYING" for terms of use and distribution.</para>
+    </legalnotice>
+  </bookinfo>
+  &intro;
+  &install;
+  &usage;
+  &objects;
+  &settings;
+  &marks;
+  &backends;
+  &init;
+  &examples;
+</book>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Simple Emacs Interface</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch02.html" title="Chapter&#160;2.&#160;Installation" /><link rel="prev" href="ch02s04.html" title="Customizing the Installation" /><link rel="next" href="ch03.html" title="Chapter&#160;3.&#160;Usage" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Simple Emacs Interface</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch02s04.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;2.&#160;Installation</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch03.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.install4"></a>Simple Emacs Interface</h2></div></div></div><p>
+      Here are a few simple lines that you can put in your <code class="filename">.emacs</code> file.  They associate <code class="filename">.fms</code> files
+      with Lisp (actually, this example assumes <span class="application">SLIME</span> is being used) and bind the key sequence <code class="literal">"\C-c\C-o"</code> to run the 
+      <span class="application">FOMUS</span> command-line program.
+      </p><div class="example"><a id="example.emacs.init1"></a><p class="title"><b>Example&#160;2.7.&#160;Emacs Init Lines 1</b></p><div class="example-contents"><pre class="programlisting">
+
+;; fomus extension--editing works well enough in lisp mode
+(add-to-list 'auto-mode-alist '("\\.fms$" . lisp-mode))
+
+;; save buffers &amp; invoke fomus
+(setq fomus-args "")
+(defun run-fomus ()
+  (interactive)
+  (save-some-buffers)
+  (let ((a (read-from-minibuffer "FOMUS arguments: " fomus-args)))
+    (setq fomus-args a)
+    (shell-command (format "fomus %s %S" a buffer-file-name))))
+
+;; add slime mode hook
+(defun custom-slime-mode-hook ()
+  (local-set-key "\C-c\C-o" 'run-fomus))
+(add-hook 'slime-mode-hook 'custom-slime-mode-hook)
+	</pre></div></div><p><br class="example-break" />
+    </p><p>
+      Another option would be to use <span class="application">SLIME</span>'s <code class="function">SLIME-INTERACTIVE-EVAL</code> function instead of
+      <code class="function">SHELL-COMMAND</code>:
+      </p><div class="example"><a id="example.emacs.init2"></a><p class="title"><b>Example&#160;2.8.&#160;Emacs Init Lines 2</b></p><div class="example-contents"><pre class="programlisting">
+
+;; save buffers and invoke fomus in the default Lisp
+(setq fomus-args "")
+(defun run-fomus ()
+  (interactive)
+  (save-some-buffers)
+  (let ((a (read-from-minibuffer "FOMUS arguments: " fomus-args)))
+    (setq fomus-args a)
+    (slime-interactive-eval (format "(fomus %S %s)" buffer-file-name a))))
+       </pre></div></div><p><br class="example-break" />
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch02s04.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch02.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Customizing the Installation&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Chapter&#160;3.&#160;Usage</td></tr></table></div></body></html>

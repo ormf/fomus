@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Chunks</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch03.html" title="Chapter&#160;3.&#160;Usage" /><link rel="prev" href="ch03s06.html" title="Command Line Interface" /><link rel="next" href="ch03s08.html" title="Other Interface Functions" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chunks</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s06.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Usage</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch03s08.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="interface.chunks"></a>Chunks</h2></div></div></div><p>
+      <span class="application">FOMUS</span> can "splice" together the outputs of two or more runs of the <code class="function"><a href="ch03s02.html#function.fomus">FOMUS</a></code>
+      command.  This allows sections or parts ("chunks") to be produced separately and put together later into a complete score.  This allows the user
+      to use different arguments and settings values with different sections of the score.  
+    </p><p>
+      This feature is "experimental" at the moment (it will be fully functional soon).
+      <span class="application">FOMUS</span> outputs a chunk object automatically on each successful run of the <code class="function">FOMUS</code> command.  
+      If no outputs are specified, then <code class="literal">:CHUNK</code> or <code class="literal">:NONE</code> must be given as a backend.
+      A chunk is actually all of the measures in the processed output that contain anything other than a measure rest (ie. all of the measures that
+      contain notation).  So it can include either a part, several parts in a range of measures, every other measure over a certain range, etc..
+      Chunks can only be merged together if there are no notational overlaps.  (At the moment, they can't be "relocated" or given an offset--this 
+      will be added soon.)  <span class="application">FOMUS</span> considers parts with matching 
+      <em class="structfield"><code><a href="ch04s06.html#note.partid">PARTID</a></code></em> values to be the same and will match them accordingly.  New (or non-matching) parts
+      may also be merged tegether into one score--<span class="application">FOMUS</span> matches, adds, and reorders all of them automatically.
+    </p><p>
+      There are several ways to tell <span class="application">FOMUS</span> to merge chunks.  Some examples are given here in both
+      Lisp and command-line syntax:
+      </p><div class="example"><a id="example.fomus.usage13"></a><p class="title"><b>Example&#160;3.14.&#160;FOMUS Usage 13</b></p><div class="example-contents"><pre class="programlisting">
+
+(fomus (list (fomus ...fomus_args_chunk1...) (fomus ...fomus_args_chunk2...)) :filename "path_to/myoutputfile" :output :musicxml-finale)
+	</pre></div></div><p><br class="example-break" />
+      </p><div class="example"><a id="example.fomus.usage14"></a><p class="title"><b>Example&#160;3.15.&#160;FOMUS Usage 14</b></p><div class="example-contents"><pre class="programlisting">
+
+(fomus (list "path_to/myfomuschunk1.fms" (fomus ...fomus_args_chunk2...) "path_to/myfomuschunk3.fms") :filename "path_to/myoutputfile" :output :cmn)
+	</pre></div></div><p><br class="example-break" />
+      </p><div class="example"><a id="example.fomus.usage15"></a><p class="title"><b>Example&#160;3.16.&#160;FOMUS Usage 15 (Command Line)</b></p><div class="example-contents"><pre class="programlisting">
+
+fomus -lw path_to/myfomuschunk1.fms path_to/myfomuschunk2.fms path_to/myfomuschunk3.fms
+	</pre></div></div><p><br class="example-break" />
+      In each case, two or three chunks are either created from another <code class="function"><a href="ch03s02.html#function.fomus">FOMUS</a></code>
+      command or read in from an input file.  The chunks are then combined together and output as one file.
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s06.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch03s08.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Command Line Interface&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Other Interface Functions</td></tr></table></div></body></html>

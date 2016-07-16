@@ -1,0 +1,554 @@
+<chapter id="usage">
+  <title id="usage.title">Usage</title>
+  <section id="section.usage1">
+  <para>
+    Using <application>FOMUS</application> requires defining at least one part, filling these parts with events, then calling
+    <application>FOMUS</application>'s main function to process everything and output a score file for importing.
+    There are several ways of doing this.
+    The following sections explain these different approaches: 
+  </para>
+  </section>
+  <section id="section.usage2">
+    <title>Interface 1</title>
+    <para>
+      The first approach involves creating all the necessary objects and assembling lists, then calling <application>FOMUS</application>'s
+      main function to process everything.
+      The main function is <function>FOMUS</function> and has the following format:
+    </para>
+    <para><function>(<anchor id="function.fomus"/>FOMUS &amp;key <userinput>setting</userinput> <userinput>value</userinput> ...)</function></para>
+    <para>
+      <userinput>setting</userinput> above is one of the setting keywords listed in chapter <link linkend="settings" endterm="settings.title"/>, and
+      <userinput>value</userinput> is its value.
+      Every piece of information <application>FOMUS</application> needs can be included in this function call.
+      The most important settings are <varname><link linkend="setting.global">GLOBAL</link></varname>, <varname><link linkend="setting.parts">PARTS</link></varname>
+      and <varname><link linkend="setting.events">EVENTS</link></varname>, which contain all of the <classname><link linkend="class.part">PART</link></classname>,
+      <classname><link linkend="class.timesig">TIMESIG</link></classname>, <classname><link linkend="class.note">NOTE</link></classname>,
+      <classname><link linkend="class.rest">REST</link></classname> and other objects that directly affect what appears on the score.
+      See the individual documentation for these for an explanation of how to use them.
+      A few examples are given below (illustrations are "raw" output processed with <application>LilyPond</application> version 2.4.2):
+      <example id="example.fomus.usage1">
+        <title>FOMUS Usage 1</title>
+	<programlisting>
+<![CDATA[
+(fomus
+ :output '(:lilypond :view t)
+ :ensemble-type :orchestra
+ :parts
+ (list
+  (make-part
+   :name "Piano"
+   :instr :piano
+   :events
+   (loop
+    for off from 0 to 10 by 1/2
+    collect (make-note :off off
+		       :dur (if (< off 10) 1/2 1)
+		       :note (+ 48 (random 25))
+		       :marks (when (<= (random 3) 0)
+				'(:staccato)))))))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="usage_ex1.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.fomus.usage2">
+        <title>FOMUS Usage 2</title>
+	<programlisting>
+<![CDATA[
+(fomus
+ :output '(:lilypond :view t)
+ :ensemble-type :orchestra
+ :default-beat 1/4
+ :global (list (make-timesig :off 0 :time '(3 4))
+	       (make-timesig :off 7 :time '(5 8)))
+ :parts
+ (list (make-part
+	:name "Piano"
+	:instr :piano
+	:events
+	(loop
+	 for basenote in '(54 42)
+	 nconc (loop for off = 0 then (+ off dur)
+		     and dur = (/ (1+ (random 4)) 2)
+		     while (< (+ off dur) 12)
+		     collect (make-note :voice '(1 2)
+					:off off
+					:dur dur
+					:note (+ basenote (random 25))))))))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="usage_ex2.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.fomus.usage3">
+        <title>FOMUS Usage 3</title>
+	<programlisting>
+<![CDATA[
+(fomus
+ :output '(:lilypond :view t)
+ :ensemble-type :orchestra
+ :beat-division 4
+ :quartertones t
+ :parts (list
+	 (make-part
+	  :partid 'flute
+	  :name "Flute"
+	  :instr :flute)
+	 (make-part
+	  :partid 'tuba
+	  :name "Tuba"
+	  :instr :tuba))
+ :events (loop repeat 5
+	       for off = (random 1.0) then (+ off (1+ (random 1.0)))
+	       and dur = (random 1.0)
+	       and inst = (if (eq inst 'flute) 'tuba 'flute)
+	       collect (make-note :partid inst
+				  :off off
+				  :dur dur
+				  :note (+ (case inst
+					     (flute 72)
+					     (tuba 36))
+					   (/ (random 25) 2))
+				  :marks (case (random 3)
+					   (0 '(:accent))
+					   (1 '(:staccato))))))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="usage_ex3.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+    </para>
+    <para>
+      All of these settings are also present as special variables (see chapter <link linkend="settings" endterm="settings.title"/>).
+      The following example accomplishes exactly the same thing as example <link linkend="example.fomus.usage1" endterm="example.fomus.usage1"/> above:
+      <example id="example.fomus.usage4">
+        <title>FOMUS Usage 4</title>
+	<programlisting>
+<![CDATA[
+(setf *output* '(:lilypond :view t))
+(fomus
+ :ensemble-type :orchestra
+ :parts
+ (list
+  (make-part
+   :name "Piano"
+   :instr :piano
+   :events
+   (loop
+    for off from 0 to 10 by 1/2
+    collect (make-note :off off
+		       :dur (if (< off 10) 1/2 1)
+		       :note (+ 48 (random 25))
+		       :marks (when (<= (random 3) 0)
+				'(:staccato)))))))]]>
+	</programlisting>
+      </example>
+      Specifying keywords in the <function><link linkend="function.fomus">FOMUS</link></function> function always overrides what is contained in the special variables.
+      Also, <function><link linkend="function.fomus">FOMUS</link></function> accepts one additional key, <literal>:ALLOW-OTHER-KEYS</literal>.
+      Passing a value of <literal>T</literal> to this argument allows other keys that <application>FOMUS</application> doesn't recognize
+      to be present in the call.
+      By default, <function><link linkend="function.fomus">FOMUS</link></function> accepts only keywords listed in <link linkend="settings" endterm="settings.title"/>.
+    </para>
+  </section>
+  <section id="interface2">
+    <title id="interface2.title">Interface 2</title>
+    <para>
+      <application>FOMUS</application> also provides several functions that are wrappers to the first method described above.
+      They create and store the objects internally so the user doesn't have to maintain lists of objects and data.
+      The functions are:
+    </para>
+    <para><function>(<anchor id="function.fomus.init"/>FOMUS-INIT
+      &amp;key <userinput>setting</userinput> <userinput>value</userinput> ...)</function></para>
+    <para><function>(<anchor id="function.fomus.newpart"/>FOMUS-NEWPART
+      <userinput>partid</userinput> &amp;key <userinput>slot</userinput> <userinput>value</userinput> ...)</function></para>
+    <para><function>(<anchor id="function.fomus.newtimesig"/>FOMUS-NEWTIMESIG
+      <userinput>partids</userinput> &amp;key <userinput>slot</userinput> <userinput>value</userinput> ...)</function></para>
+    <para><function>(<anchor id="function.fomus.newnote"/>FOMUS-NEWNOTE
+      <userinput>partid</userinput> &amp;key <userinput>slot</userinput> <userinput>value</userinput> ...)</function></para>
+    <para><function>(<anchor id="function.fomus.newrest"/>FOMUS-NEWREST
+      <userinput>partid</userinput> &amp;key <userinput>slot</userinput> <userinput>value</userinput> ...)</function></para>
+    <para><function>(<anchor id="function.fomus.newmark"/>FOMUS-NEWMARK
+      <userinput>partid</userinput> &amp;key <userinput>slot</userinput> <userinput>value</userinput> ...)</function></para>
+    <para><function>(<anchor id="function.fomus.exec"/>FOMUS-EXEC
+      &amp;key <userinput>setting</userinput> <userinput>value</userinput> ...)</function></para>
+    <para>
+      The user first calls <function>FOMUS-INIT</function>, which initializes settings and insures that <application>FOMUS</application> is ready to
+      accept new data.
+      Setting values may be passed to this function in exactly the same way as the <function><link linkend="function.fomus">FOMUS</link></function>
+      function above, though it isn't necessary in this case to include <varname><link linkend="setting.global">GLOBAL</link></varname>,
+      <varname><link linkend="setting.parts">PARTS</link></varname>
+      or <varname><link linkend="setting.events">EVENTS</link></varname>.
+      The functions <function><link linkend="function.fomus.newpart">FOMUS-NEWPART</link></function>,
+      <function><link linkend="function.fomus.newtimesig">FOMUS-NEWTIMESIG</link></function>,
+      <function><link linkend="function.fomus.newnote">FOMUS-NEWNOTE</link></function>,
+      <function><link linkend="function.fomus.newrest">FOMUS-NEWREST</link></function> and
+      <function><link linkend="function.fomus.newmark">FOMUS-NEWMARK</link></function> are then used to create and store all of the
+      objects that are normally included in the <varname><link linkend="setting.global">GLOBAL</link></varname>,
+      <varname><link linkend="setting.parts">PARTS</link></varname>
+      and <varname><link linkend="setting.events">EVENTS</link></varname> settings.
+      The required <userinput>partid</userinput> or <userinput>partids</userinput> arguments correspond directly to the
+      slots of the corresponding objects (see the documentation for each of these in <link linkend="objects" endterm="objects.title"/> for more information).
+      The <structfield>PARTID</structfield> argument to <function><link linkend="function.fomus.newpart">FOMUS-NEWPART</link></function>
+      must be unique or objects that use them to refer to parts will refer to more than one.
+      The <userinput>slot</userinput> keywords can be any of the constructor slot keywords in the corresponding object, and the <userinput>value</userinput>
+      argument is the appropriate value for that slot.
+      Internally, <application>FOMUS</application> stores all <classname><link linkend="class.timesig">TIMESIG</link></classname> objects
+      in the <varname><link linkend="setting.global">GLOBAL</link></varname> setting list, all
+      <classname><link linkend="class.part">PART</link></classname> objects in the <varname><link linkend="setting.parts">PARTS</link></varname>
+      list and all other objects (<classname><link linkend="class.note">NOTE</link></classname>,
+      <classname><link linkend="class.rest">REST</link></classname> and <classname><link linkend="class.mark">MARK</link></classname>)
+      in the <varname><link linkend="setting.events">EVENTS</link></varname> list.
+      This means that the user may specify <literal>NIL</literal> or a list of part IDs in the <structfield>PARTID</structfield>/<structfield>PARTIDS</structfield>
+      slots of <classname><link linkend="class.mark">TIMESIG</link></classname> and <classname><link linkend="class.mark">MARK</link></classname> objects.
+      When the user is finished calling the <function>FOMUS-NEW</function> functions, the last thing to do is call
+      <function><link linkend="function.fomus.exec">FOMUS-EXEC</link></function>.
+      This again accepts setting keywords and values (overriding any previous setting values) and passes all information to the
+      <function><link linkend="function.fomus">FOMUS</link></function> function which does the rest of the processing.
+      After <function><link linkend="function.fomus.exec">FOMUS-EXEC</link></function> is called, all internal data is reinitialized as if
+      <function><link linkend="function.fomus.init">FOMUS-INIT</link></function> were called with no arguments.
+    </para>
+    <para>
+      Following are the interface 2 equivalents to some of the examples above:
+      <example id="example.fomus.usage5">
+        <title>FOMUS Usage 5</title>
+	<programlisting>
+<![CDATA[
+(To be completed.)]]>
+	</programlisting>
+      </example>
+      <example id="example.fomus.usage6">
+        <title>FOMUS Usage 6</title>
+	<programlisting>
+<![CDATA[
+(To be completed.)]]>
+	</programlisting>
+      </example>
+    </para>
+  </section>  
+  <section id="interface.text">
+  <title id="interface.text.title">Text File Interface</title>
+  <para>You may also create a text file where each line of the file executes one of the commands listed in 
+    <link linkend="interface2" endterm="interface2.title"/>.  A simple example file is given below:
+      <example id="example.text.input.file">
+        <title>FOMUS Text Input File</title>
+	<programlisting>
+<![CDATA[
+init :output (:lilypond :view t)
+(init
+ :filename "outfile"
+ :quality 2)
+
+;; remark
+part 1 :name "Piano" :instr :piano
+
+note 1 :off 0 :dur 1 :note 60
+note 1 :off 1 :dur 1 :note 62 \
+     :marks (:accent) ; remark
+(note 1	
+      :off 2 
+      :dur 1
+      :note 64
+      :marks (:marcato (:textnote "Text")))
+
+off +2
+note 1 :off 2 :dur 1/2 :note c4 ; actual offset is 4
+off -1
+note 1 :off 10 :dur 1/2 :note c4 ; actual offset is 9
+off
+
+note 1 :off 20 :dur 2 :notes (c4 e4 g4 c5)]]>
+	</programlisting>
+      </example>
+      Each element is read using the Lisp <function>READ</function> command (nothing is evaluated), with the exception of expressions that begin with
+      <function>MAKE-</function>.  These are evaluated to avoid having to specify <application>FOMUS</application> classes and/or structures with
+      <literal>#S</literal> or <literal>#Z</literal> syntax (the Z reader macro is defined by <application>FOMUS</application>).
+      <literal>INIT</literal> lines specify values for <application>FOMUS</application> settings and can contain multiple keyword/arguments on a line.
+      As many <literal>INIT</literal> lines as needed may appear.
+      The <literal>\</literal> character may be used at the end of a line to concatenate it with the following line.
+      Also, as shown in the example above, any "entry" may be surrounded by a set of parenthesis to indicate that all elements inside them are read/parsed together 
+      (like an ordinary Lisp expression)--this can also be used to spread entries across several lines.
+      </para>
+      <para>
+        A few extra things are possible with input files to facilitate editing.  Any section of the file may contain an <literal>OFF</literal>
+	tag optionally followed by a number.  This tag shifts the offsets of everything that follows by the specified amount.
+	An <literal>OFF</literal> tag with no number resets the offset shift to 0.  Also, a <literal>:NOTES</literal> keyword is available
+	for specifying chords.  A chord is then specified as a list of notes as shown above.  When <application>FOMUS</application> 
+	reads this it creates a separate note object for each note in the list.
+      </para>
+      <para>
+      To process this file, use the <function>FOMUS</function> command as follows:
+      <para><function>(<anchor id="function.fomus2"/>FOMUS <userinput>filename</userinput> &amp;key <userinput>value</userinput> ...)</function></para>
+      <example id="example.fomus.usage7">
+        <title>FOMUS Usage 7</title>
+	<programlisting>
+<![CDATA[
+(fomus "/directory/file.fms")]]>
+	</programlisting>
+      </example>
+      <example id="example.fomus.usage8">
+        <title>FOMUS Usage 8</title>
+	<programlisting>
+<![CDATA[
+(fomus "/directory/file.fms" :output :cmn)]]>
+	</programlisting>
+      </example>
+      Keyword/argument pairs passed to this function override the settings stored in the input file.
+    </para>
+    <para> 
+      The <function>FOMUS-FILE</function> function may be used to parse an input file and return the objects specified in that file without processing them:
+      <para><function>(FOMUS-FILE <userinput>filename</userinput> &amp;key <userinput>value</userinput> ...)</function></para>
+      Four return values are returned: a list of <classname><link linkend="class.part">PART</link></classname> objects, a sorted list of 
+      <classname><link linkend="class.note">NOTE</link></classname>, <classname><link linkend="class.rest">REST</link></classname> and
+      <classname><link linkend="class.mark">MARK</link></classname> objects, a list of <classname><link linkend="class.timesig">TIMESIG</link></classname>
+      objects (and <classname><link linkend="class.keysig">KEYSIG</link></classname> objects when implemented), 
+      and a list of keyword/argument pairs representing the keywords and values found in the <literal>INIT</literal> lines.
+      The following example show how you can edit and resave data using these files:
+      <example id="example.fomus.usage9">
+        <title>FOMUS Usage 9</title>
+	<programlisting>
+<![CDATA[
+(multiple-value-bind (parts events globals args)
+    (fomus-file "/directory/myfomusfile.fms")
+  ;; user processing...
+  (apply #'fomus "/directory/myfomusfile.fms"
+	 :global globals :parts parts :events events
+	 args))]]>
+	</programlisting>
+      </example>
+    </para>
+  </section>
+  <section id="section.usage3">
+    <title>Common Music Interface</title>
+    <para>
+      <application>FOMUS</application> may be executed as a backend to <application>Common Music</application> using
+      <application>CM</application>'s <function>EVENTS</function> function.
+      Appending a <literal>".ly"</literal> or <literal>".xml"</literal> extension to the filename routes the processing to
+      <application>FOMUS</application>.  Parts and time signatures may also defined in <application>CM</application> 
+      with the <literal>NEW</literal> macro and passed with all of <application>FOMUS</application>'s settings to <function>EVENTS</function>.
+      A description of this interface is given
+      <application><ulink url="http://commonmusic.sf.net/doc/dict/fomus-file-cls.html">here</ulink></application> in the
+      <application>Common Music</application> online documentation.  Several examples are given below:
+    </para>
+      <example id="example.fomus.usage10">
+        <title>FOMUS Usage 10</title>
+	<programlisting>
+<![CDATA[
+(To be completed.)]]>
+	</programlisting>
+      </example>
+      <example id="example.fomus.usage11">
+        <title>FOMUS Usage 11</title>
+	<programlisting>
+<![CDATA[
+(To be completed.)]]>
+	</programlisting>
+      </example>
+  </section>
+  <section id="interface.cmd">
+  <title id="interface.cmd.title">Command Line Interface</title>
+    <para>
+      If installed as a command-line executable program (see <link linkend="install.cmd" endterm="install.cmd.title"/>), 
+      <application>FOMUS</application> can be invoked from a UNIX shell prompt to process a text file
+      in the format described above in <link linkend="interface.text" endterm="interface.text.title"/>. This is intended for users who
+      don't want to use or learn Lisp and can generate the data some other way.
+    </para>
+      <example id="example.fomus.usage12">
+        <title>FOMUS Usage 12</title>
+	<programlisting>
+<![CDATA[
+fomus my_data_file.fms]]>
+	</programlisting>
+      </example>
+      <para>
+        Type <literal>fomus -h</literal> to display the command format and list all of the available options.  Examples of the file format are
+	given in <link linkend="interface.text" endterm="interface.text.title"/> and <link linkend="examples.textinput" endterm="examples.textinput.title"/>.
+      </para>
+  </section>
+  <section id="interface.chunks">
+    <title id="interface.chunks.title">Chunks</title>
+    <para>
+      <application>FOMUS</application> can "splice" together the outputs of two or more runs of the <function><link linkend="function.fomus">FOMUS</link></function>
+      command.  This allows sections or parts ("chunks") to be produced separately and put together later into a complete score.  This allows the user
+      to use different arguments and settings values with different sections of the score.  
+    </para>
+    <para>
+      This feature is "experimental" at the moment (it will be fully functional soon).
+      <application>FOMUS</application> outputs a chunk object automatically on each successful run of the <function>FOMUS</function> command.  
+      If no outputs are specified, then <literal>:CHUNK</literal> or <literal>:NONE</literal> must be given as a backend.
+      A chunk is actually all of the measures in the processed output that contain anything other than a measure rest (ie. all of the measures that
+      contain notation).  So it can include either a part, several parts in a range of measures, every other measure over a certain range, etc..
+      Chunks can only be merged together if there are no notational overlaps.  (At the moment, they can't be "relocated" or given an offset--this 
+      will be added soon.)  <application>FOMUS</application> considers parts with matching 
+      <structfield><link linkend="note.partid">PARTID</link></structfield> values to be the same and will match them accordingly.  New (or non-matching) parts
+      may also be merged tegether into one score--<application>FOMUS</application> matches, adds, and reorders all of them automatically.
+    </para>
+    <para>
+      There are several ways to tell <application>FOMUS</application> to merge chunks.  Some examples are given here in both
+      Lisp and command-line syntax:
+      <example id="example.fomus.usage13">
+        <title>FOMUS Usage 13</title>
+	<programlisting>
+<![CDATA[
+(fomus (list (fomus ...fomus_args_chunk1...) (fomus ...fomus_args_chunk2...)) :filename "path_to/myoutputfile" :output :musicxml-finale)]]>
+	</programlisting>
+      </example>
+      <example id="example.fomus.usage14">
+        <title>FOMUS Usage 14</title>
+	<programlisting>
+<![CDATA[
+(fomus (list "path_to/myfomuschunk1.fms" (fomus ...fomus_args_chunk2...) "path_to/myfomuschunk3.fms") :filename "path_to/myoutputfile" :output :cmn)]]>
+	</programlisting>
+      </example>
+      <example id="example.fomus.usage15">
+        <title>FOMUS Usage 15 (Command Line)</title>
+	<programlisting>
+<![CDATA[
+fomus -lw path_to/myfomuschunk1.fms path_to/myfomuschunk2.fms path_to/myfomuschunk3.fms]]>
+	</programlisting>
+      </example>
+      In each case, two or three chunks are either created from another <function><link linkend="function.fomus">FOMUS</link></function>
+      command or read in from an input file.  The chunks are then combined together and output as one file.
+    </para>
+  </section>
+  <section id="section.usage4">
+    <title>Other Interface Functions</title>
+    <section id="section.usage5">
+      <para><function>(<anchor id="function.list.fomus.settings"/>LIST-FOMUS-SETTINGS)</function></para>
+      <para>
+        Lists all <application>FOMUS</application> settings, their expected types and their default values. 
+      </para>
+    </section>
+    <section id="section.usage6">
+      <para><function>(<anchor id="function.list.fomus.modules"/>LIST-FOMUS-MODULES &amp;rest <userinput>type</userinput>)</function></para>
+      <para>
+        Lists all working <application>FOMUS</application> modules and additional backends that can be selected as replacements or additions
+	to <application>FOMUS</application>'s own functionality.
+	An example of a module might be an alternate note-spelling algorithm,
+	a different quantizing algorithm or another backend that extends the number of output formats available.
+	The code for these modules is located in the <filename>modules</filename> subdirectory.  Adding new or replacement functionality to
+	<application>FOMUS</application> is done by dropping files in here. 
+	When <application>FOMUS</application> loads it automatically finds all of these files and tries to compile the ones that are out of date.  Only the ones that
+	compile successfully are used, and modules are loaded only on demand when they are called.
+      </para>
+      <para>
+        An API documentation for writing modules will be available sometime in the future.  
+      </para>
+    </section>
+    <section id="section.usage7">
+      <para><function>(<anchor id="function.list.fomus.instruments"/>LIST-FOMUS-INSTRUMENTS)</function></para>
+      <para>
+        Lists all <application>FOMUS</application> instruments, merging/replacing <application>FOMUS</application>'s own default instruments
+	with the user-specified contents of the <varname><link linkend="setting.instruments">INSTRUMENTS</link></varname> setting.
+      </para>
+    </section>
+    <section id="section.usage8">
+      <para><function>(<anchor id="function.get.instr.syms"/>GET-INSTR-SYMS)</function></para>
+      <para>
+        Returns a list of available <application>FOMUS</application> instrument ID symbols.
+      </para>
+    </section>
+    <section id="section.usage9">
+      <para><function>(<anchor id="function.list.fomus.percussion"/>LIST-FOMUS-PERCUSSION)</function></para>
+      <para>
+        Lists all <application>FOMUS</application> percussion instruments (the contents of the <varname><link linkend="setting.percussion">PERCUSSION</link></varname>
+	setting).
+      </para>
+    </section>
+    <section id="section.usage10">
+      <para><function>(<anchor id="function.get.perc.syms"/>GET-PERC-SYMS)</function></para>
+      <para>
+        Returns a list of available <application>FOMUS</application> percussion ID symbols.
+      </para>
+    </section>
+    <section id="section.usage11">
+      <para><function>(<anchor id="function.list.fomus.instrgroups"/>LIST-FOMUS-INSTRGROUPS &amp;key :FORMAT <userinput>format</userinput>)</function></para>
+      <para>
+        Lists <application>FOMUS</application> instrument ordering/grouping data, merging/replacing <application>FOMUS</application>'s own defaults
+	with the contents of the <varname><link linkend="setting.instr.groups">INSTR-GROUPS</link></varname> setting.
+	If the <literal>FORMAT</literal> argument is <literal>T</literal> (the default), <application>FOMUS</application> formats the results
+	by listing the instruments for each grouping in a vertical score-order arrangement surrounded by <literal>[]</literal>, <literal>{}</literal>
+	and <literal>||</literal> brackets, denoting whether instruments are grouped by brackets, curly braces or barlines only.
+	If <literal>FORMAT</literal> is <literal>NIL</literal>, <application>FOMUS</application> outputs the data as nested lists of symbols
+	(see the <varname><link linkend="setting.instr.groups">INSTR-GROUPS</link></varname> setting for details).
+      </para>
+    </section>
+    <section id="section.usage12">
+      <para><function>(<anchor id="function.list.fomus.clefs"/>LIST-FOMUS-CLEFS)</function></para>
+      <para>
+        Prints a list of <application>FOMUS</application> clef symbols.
+      </para>
+    </section>
+    <section id="section.usage13">
+      <para><function>(<anchor id="function.list.fomus.meas.divs"/>LIST-FOMUS-MEAS-DIVS)</function></para>
+      <para>
+        Lists all default measure divisions , merging/replacing <application>FOMUS</application>'s own defaults
+	with the contents of the <varname><link linkend="setting.default.meas.divs">DEFAULT-MEAS-DIVS</link></varname> setting.
+	(See <varname><link linkend="setting.default.meas.divs">DEFAULT-MEAS-DIVS</link></varname> for more information.)
+      </para>
+    </section>
+    <section id="section.usage14">
+      <para><function>(<anchor id="function.list.fomus.tuplet.divs"/>LIST-FOMUS-TUPLET-DIVS)</function></para>
+      <para>
+        Lists all default tuplet divisions , merging/replacing <application>FOMUS</application>'s own defaults
+	with the contents of the <varname><link linkend="setting.default.tuplet.divs">DEFAULT-TUPLET-DIVS</link></varname> setting.
+	(See <varname><link linkend="setting.default.tuplet.divs">DEFAULT-TUPLET-DIVS</link></varname> for more information.)
+      </para>
+    </section>
+    <section id="section.usage15">
+      <para><function>(<anchor id="function.load.init.file"/>LOAD-INIT-FILE)</function></para>
+      <para>
+        Reloads the <filename>.fomus</filename> initialization file in the user's home directory.
+      </para>
+    </section>
+    <section id="section.usage16">
+      <para><function>(<anchor id="function.get.midi.instr"/>GET-MIDI-INSTR <userinput>program-change</userinput> &amp;key 
+        :DEFAULT <userinput>default-instr</userinput>)</function></para>
+      <para>
+        Returns an instrument to match the given MIDI program change value.
+	The first <classname><link linkend="struct.instr">INSTR</link></classname> structure 
+	with this number in its <structfield><link linkend="instr.midiprgch.im">MIDIPRGCH-IM</link></structfield>
+	slot is returned.
+	If no appropriate instrument is found, the value of either the <varname><link linkend="setting.default.instr">DEFAULT-INSTR</link></varname> 
+	setting or (if set) the <literal>DEFAULT</literal> argument is returned.
+      </para>
+    </section>
+    <section id="section.usage17">
+      <para><function>(<anchor id="function.addmark"/>ADDMARK <userinput>event</userinput> <userinput>mark</userinput>)</function></para>
+      <para><function>(<anchor id="function.getmark"/>GETMARK <userinput>event</userinput> <userinput>markid</userinput>)</function></para>
+      <para><function>(<anchor id="function.getmarks"/>GETMARKS <userinput>event</userinput> <userinput>markid</userinput>)</function></para>
+      <para><function>(<anchor id="function.rmmark"/>RMMARK <userinput>event</userinput> <userinput>markid</userinput>)</function></para>
+      <para><function>(<anchor id="function.combmarks"/>COMBMARKS <userinput>event-list</userinput>)</function></para>
+      <para><function>(<anchor id="function.addprop"/>ADDPROP <userinput>object</userinput> <userinput>prop</userinput>)</function></para>
+      <para><function>(<anchor id="function.getprop"/>GETPROP <userinput>object</userinput> <userinput>propid</userinput>)</function></para>
+      <para><function>(<anchor id="function.getprops"/>GETPROPS <userinput>object</userinput> <userinput>propid</userinput>)</function></para>
+      <para><function>(<anchor id="function.rmprop"/>RMPROP <userinput>object</userinput> <userinput>propid</userinput>)</function></para>
+      <para><function>(<anchor id="function.combprops"/>COMBPROPS <userinput>object-list</userinput>)</function></para>
+      <para>
+        These are utility functions for adding, removing and combining marks and properties in <structfield><link linkend="mark.marks">MARKS</link></structfield>
+	and <structfield><link linkend="timesig.props">PROPS</link></structfield> slots.
+	<function><link linkend="function.addmark">ADDMARK</link></function> and <function><link linkend="function.addprop">ADDPROP</link></function>
+	insert a mark or property (a symbol or list of symbols and arguments values) in the appropriate slot of the object.
+	<function><link linkend="function.getmark">GETMARK</link></function> and <function><link linkend="function.getprop">GETPROP</link></function>
+	find a mark or property given an identifier.
+	The identifier is a symbol or list specifying the mark/property symbol and any number of the arguments following it.
+	The function returns the first mark that matches the specified symbols/values up to the number of symbols/values given.
+	(For example, <literal>'(:STARTSLUR- 2)</literal> will return the starting mark for a "level 2" slur.)
+	<function><link linkend="function.getmarks">GETMARKS</link></function> and <function><link linkend="function.getprops">GETPROPS</link></function>
+	return all matching marks/properties.
+	<function><link linkend="function.rmmark">RMMARK</link></function> and <function><link linkend="function.rmprop">RMPROP</link></function>
+	remove (as a side-effect) all matching marks/properties from the objects.
+	<function><link linkend="function.combmarks">COMBMARKS</link></function> and <function><link linkend="function.combprops">COMBPROPS</link></function>
+	returns a new mark/property list that is a combination of all marks/properties objects in the supplied list (with duplicates removed).
+      </para>
+    </section>
+  </section>
+</chapter>

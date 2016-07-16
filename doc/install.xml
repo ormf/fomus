@@ -1,0 +1,170 @@
+<chapter id="install">
+  <title id="install.title">Installation</title>
+  <section id="section.install1">
+    <title>Downloading</title>
+    <para>
+      <application>FOMUS</application> is available in tarball form <ulink url="http://common-lisp.net/project/fomus/download">here</ulink>.
+      Download the latest version and type something similar to the following at a UNIX prompt:
+    <example id="example.unzip.tarball">
+      <title>Unzipping the Tarball</title>
+      <programlisting>
+<![CDATA[
+cd path_to_install_directory
+tar -zxf path_to_tarball/fomus-0.2.0.tgz]]>
+      </programlisting>
+    </example>
+    </para>
+    <para>
+      The current version is also available via Subversion, hosted at <ulink url="http://common-lisp.net/">Common-Lisp.net</ulink>.
+      Type the following command at a UNIX prompt to download the latest version (you must have Subversion installed on your machine):
+    <example id="example.download.svn">
+      <title>Downloading from Subversion Repository</title>
+      <programlisting>
+<![CDATA[
+mkdir fomus
+svn checkout svn://common-lisp.net/project/fomus/svn/fomus/tags/current fomus]]>
+      </programlisting>
+    </example>
+    </para>
+    <para>
+      The development/unstable version can be downloaded as follows:
+    <example id="example.download.dev">
+      <title>Downloading the Development Version from Subversion Repository</title>
+      <programlisting>
+<![CDATA[
+mkdir fomus
+svn checkout svn://common-lisp.net/project/fomus/svn/fomus/trunk fomus]]>
+      </programlisting>
+    </example>
+    </para>
+    <para>
+      Future updates will then only require typing <literal>svn update</literal> in the <application>FOMUS</application> directory.
+    </para>
+  </section>
+  <section id="section.install2">
+    <title>Compiling/Loading</title>
+  <para>
+    The program may be compiled and loaded by loading the file <filename>load.lisp</filename>.
+    <example id="example.compandload">
+      <title>Compiling and Loading</title>
+      <programlisting>
+<![CDATA[
+CL-USER> (load "path_to_fomus_directory/load.lisp")]]>
+      </programlisting>
+      <para>...</para>
+      <programlisting>
+<![CDATA[
+CL-USER> (use-package :fm)]]>
+      </programlisting>
+    </example>
+    The package name is <function>FOMUS</function>, and can also be referred to with the abbreviations <function>FMS</function> and <function>FM</function>.
+  </para>
+  <para>
+    A system definition file <filename>fomus.asd</filename> is also provided for use with <application><ulink url="http://www.cliki.net/asdf">ASDF</ulink></application>.
+    To use it, make sure <application>ASDF</application>'s central registry parameter contains the necessary path information and
+    load it using the <function>OPERATE</function> function (see the <application>ASDF</application> documentation for more information).
+  </para>
+  </section>
+  <section id="install.cmd">
+    <title id="install.cmd.title">Installing as an Executable</title>
+    <para>
+      The script file <filename>install.sh</filename> can be run at a UNIX command prompt to install <application>FOMUS</application> as a command-line
+      executable program.  Right now this can only be done with <application>SBCL</application>, <application>CMUCL</application>, <application>CLISP</application> and 
+      <application>OpenMCL</application> in UNIX (it's been tested in OS X and Linux).
+      </para>
+      <para>
+       Type the following to get a list of installation options:
+      <example id="example.run.install1">
+        <title>Running the Installation Script 1</title>
+        <programlisting>
+<![CDATA[
+cd path_to_install_directory
+./install.sh --help]]>
+       </programlisting>
+      </example>
+      By default, the script tries to install the program into the subdirectories in <literal>/usr/local</literal>.  The commands for a default installation using SBCL 
+      would look like this:
+      <example id="example.run.install2">
+        <title>Running the Installation Script 2</title>
+        <programlisting>
+<![CDATA[
+su -
+cd path_to_install_directory
+./install.sh --sbcl]]>
+       </programlisting>
+      </example>
+      There is also an option for uninstalling.  To see how to run <application>FOMUS</application> as an executable, 
+      see <link linkend="interface.cmd" endterm="interface.cmd.title"/> and <link linkend="interface.text" endterm="interface.text.title"/>.
+    </para>
+  </section>
+  <section id="section.install3">
+    <title>Customizing the Installation</title>
+    <para>
+      By default, <application>FOMUS</application> compiles and loads all of the backends listed in this documentation.  You
+      can leave any one of these out by adding noe the following keywords to the <literal>*FEATURES*</literal> list (using <literal>PUSH</literal>
+      or <literal>PUSHNEW</literal>):
+      <simplelist>
+        <member><literal>:FOMUS-NOCMN</literal></member>
+        <member><literal>:FOMUS-NOLILYPOND</literal></member>
+        <member><literal>:FOMUS-NOMUSICXML</literal></member>
+        <member><literal>:FOMUS-NOMIDI</literal></member>
+      </simplelist>
+      These must be added before loading or compiling.
+      If you are recompiling with different keywords, be sure to delete all <filename>.fasl</filename> files first to insure 
+      that all parts of the program are consistent.
+    </para>
+    <para>
+      Also, <application>FOMUS</application> automatically tries to register modules by default when it loads into Lisp.
+      Adding the feature <literal>:FOMUS-NOAUTOREG</literal> tells the application to skip this step.  Modules will then be
+      inaccessible so only <application>FOMUS</application>'s built-in functions can be used.
+    </para>
+  </section>
+  <section id="section.install4">
+    <title>Simple Emacs Interface</title>
+    <para>
+      Here are a few simple lines that you can put in your <filename>.emacs</filename> file.  They associate <filename>.fms</filename> files
+      with Lisp (actually, this example assumes <application>SLIME</application> is being used) and bind the key sequence <literal>"\C-c\C-o"</literal> to run the 
+      <application>FOMUS</application> command-line program.
+      <example id="example.emacs.init1">
+        <title>Emacs Init Lines 1</title>
+	<programlisting>
+<![CDATA[
+;; fomus extension--editing works well enough in lisp mode
+(add-to-list 'auto-mode-alist '("\\.fms$" . lisp-mode))
+
+;; save buffers & invoke fomus
+(setq fomus-args "")
+(defun run-fomus ()
+  (interactive)
+  (save-some-buffers)
+  (let ((a (read-from-minibuffer "FOMUS arguments: " fomus-args)))
+    (setq fomus-args a)
+    (shell-command (format "fomus %s %S" a buffer-file-name))))
+
+;; add slime mode hook
+(defun custom-slime-mode-hook ()
+  (local-set-key "\C-c\C-o" 'run-fomus))
+(add-hook 'slime-mode-hook 'custom-slime-mode-hook)]]>
+	</programlisting>
+      </example>
+    </para>
+    <para>
+      Another option would be to use <application>SLIME</application>'s <function>SLIME-INTERACTIVE-EVAL</function> function instead of
+      <function>SHELL-COMMAND</function>:
+      <example id="example.emacs.init2">
+        <title>Emacs Init Lines 2</title>
+       <programlisting>
+<![CDATA[
+;; save buffers and invoke fomus in the default Lisp
+(setq fomus-args "")
+(defun run-fomus ()
+  (interactive)
+  (save-some-buffers)
+  (let ((a (read-from-minibuffer "FOMUS arguments: " fomus-args)))
+    (setq fomus-args a)
+    (slime-interactive-eval (format "(fomus %S %s)" buffer-file-name a))))]]>
+       </programlisting>
+      </example>
+    </para>
+  </section>
+</chapter>

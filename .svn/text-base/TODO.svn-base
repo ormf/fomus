@@ -1,0 +1,51 @@
+TODO LIST
+
+Immediate:
+
+    Bugs:
+      Weird number choices for some tuplets (12 instead of 6, 10 instead of 5, etc.)--should check neighboring tuplet numbers for consistency
+      Double brackets shouldn't appear in the same place (6 violins example)
+      Send list of XML issues to Sibelius/Finale tech. support
+      In CLISP/Cygwin output from executables isn't suppressed (fixable?)
+    Documentation:
+      Module interface
+      Proofreading
+      More examples (eventually indexed and covering most/all features)
+    Backends:
+      MusicXML invisible rests (possible?)
+      CMN grace notes preceding rests
+      CMN tremolos
+      CMN cautionary accidentals on chords
+      CMN part groups/brackets
+      MIDI output testing/adjusting/fine tuning
+    Improvements:
+      Shortcuts for some marks (example: (:slurto 1) to slur to next note, (:slurto 2) for next two, etc.)
+      Check Finale and Siblius updates for changes in MusicXML import
+      Laissez vibrer ties (options to automatically add l.v. ties with autodurs)
+      Finish chunks support
+      Finish implementing :invisible mark
+      Allow forcing of staff choices (individual notes and entire voice)
+      More control over harmonics
+      Quantization modules
+    Additions:
+      Onset-to-onset durations
+      Specifying percussion from MIDI info
+      Automatic percussion instrument changes
+      Splitting chords across staves
+      Presets for customizing auto-algorithms
+      Some more marks:
+        pedal on/off
+        double/triple tongue
+        bartok pizz.
+      Number of lines in staff (single-line for percussion)
+
+Short Term:
+
+    Ornaments/trills with accidentals greater than a whole/half step (if notatable in backends)
+    Proportional notation
+    Support for polymeters in backends
+
+Long Term:
+
+    Fractional meters and tuplets
+

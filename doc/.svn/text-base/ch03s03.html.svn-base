@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Interface 2</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch03.html" title="Chapter&#160;3.&#160;Usage" /><link rel="prev" href="ch03s02.html" title="Interface 1" /><link rel="next" href="ch03s04.html" title="Text File Interface" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Interface 2</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s02.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Usage</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch03s04.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="interface2"></a>Interface 2</h2></div></div></div><p>
+      <span class="application">FOMUS</span> also provides several functions that are wrappers to the first method described above.
+      They create and store the objects internally so the user doesn't have to maintain lists of objects and data.
+      The functions are:
+    </p><p><code class="function">(<a id="function.fomus.init"></a>FOMUS-INIT
+      &amp;key <strong class="userinput"><code>setting</code></strong> <strong class="userinput"><code>value</code></strong> ...)</code></p><p><code class="function">(<a id="function.fomus.newpart"></a>FOMUS-NEWPART
+      <strong class="userinput"><code>partid</code></strong> &amp;key <strong class="userinput"><code>slot</code></strong> <strong class="userinput"><code>value</code></strong> ...)</code></p><p><code class="function">(<a id="function.fomus.newtimesig"></a>FOMUS-NEWTIMESIG
+      <strong class="userinput"><code>partids</code></strong> &amp;key <strong class="userinput"><code>slot</code></strong> <strong class="userinput"><code>value</code></strong> ...)</code></p><p><code class="function">(<a id="function.fomus.newnote"></a>FOMUS-NEWNOTE
+      <strong class="userinput"><code>partid</code></strong> &amp;key <strong class="userinput"><code>slot</code></strong> <strong class="userinput"><code>value</code></strong> ...)</code></p><p><code class="function">(<a id="function.fomus.newrest"></a>FOMUS-NEWREST
+      <strong class="userinput"><code>partid</code></strong> &amp;key <strong class="userinput"><code>slot</code></strong> <strong class="userinput"><code>value</code></strong> ...)</code></p><p><code class="function">(<a id="function.fomus.newmark"></a>FOMUS-NEWMARK
+      <strong class="userinput"><code>partid</code></strong> &amp;key <strong class="userinput"><code>slot</code></strong> <strong class="userinput"><code>value</code></strong> ...)</code></p><p><code class="function">(<a id="function.fomus.exec"></a>FOMUS-EXEC
+      &amp;key <strong class="userinput"><code>setting</code></strong> <strong class="userinput"><code>value</code></strong> ...)</code></p><p>
+      The user first calls <code class="function">FOMUS-INIT</code>, which initializes settings and insures that <span class="application">FOMUS</span> is ready to
+      accept new data.
+      Setting values may be passed to this function in exactly the same way as the <code class="function"><a href="ch03s02.html#function.fomus">FOMUS</a></code>
+      function above, though it isn't necessary in this case to include <code class="varname"><a href="ch05s04.html#setting.global">GLOBAL</a></code>,
+      <code class="varname"><a href="ch05s04.html#setting.parts">PARTS</a></code>
+      or <code class="varname"><a href="ch05s04.html#setting.events">EVENTS</a></code>.
+      The functions <code class="function"><a href="ch03s03.html#function.fomus.newpart">FOMUS-NEWPART</a></code>,
+      <code class="function"><a href="ch03s03.html#function.fomus.newtimesig">FOMUS-NEWTIMESIG</a></code>,
+      <code class="function"><a href="ch03s03.html#function.fomus.newnote">FOMUS-NEWNOTE</a></code>,
+      <code class="function"><a href="ch03s03.html#function.fomus.newrest">FOMUS-NEWREST</a></code> and
+      <code class="function"><a href="ch03s03.html#function.fomus.newmark">FOMUS-NEWMARK</a></code> are then used to create and store all of the
+      objects that are normally included in the <code class="varname"><a href="ch05s04.html#setting.global">GLOBAL</a></code>,
+      <code class="varname"><a href="ch05s04.html#setting.parts">PARTS</a></code>
+      and <code class="varname"><a href="ch05s04.html#setting.events">EVENTS</a></code> settings.
+      The required <strong class="userinput"><code>partid</code></strong> or <strong class="userinput"><code>partids</code></strong> arguments correspond directly to the
+      slots of the corresponding objects (see the documentation for each of these in <a href="ch04.html" title="Chapter&#160;4.&#160;Objects">Objects</a> for more information).
+      The <em class="structfield"><code>PARTID</code></em> argument to <code class="function"><a href="ch03s03.html#function.fomus.newpart">FOMUS-NEWPART</a></code>
+      must be unique or objects that use them to refer to parts will refer to more than one.
+      The <strong class="userinput"><code>slot</code></strong> keywords can be any of the constructor slot keywords in the corresponding object, and the <strong class="userinput"><code>value</code></strong>
+      argument is the appropriate value for that slot.
+      Internally, <span class="application">FOMUS</span> stores all <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> objects
+      in the <code class="varname"><a href="ch05s04.html#setting.global">GLOBAL</a></code> setting list, all
+      <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> objects in the <code class="varname"><a href="ch05s04.html#setting.parts">PARTS</a></code>
+      list and all other objects (<code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code>,
+      <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> and <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code>)
+      in the <code class="varname"><a href="ch05s04.html#setting.events">EVENTS</a></code> list.
+      This means that the user may specify <code class="literal">NIL</code> or a list of part IDs in the <em class="structfield"><code>PARTID</code></em>/<em class="structfield"><code>PARTIDS</code></em>
+      slots of <code class="classname"><a href="ch04s08.html#class.mark">TIMESIG</a></code> and <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> objects.
+      When the user is finished calling the <code class="function">FOMUS-NEW</code> functions, the last thing to do is call
+      <code class="function"><a href="ch03s03.html#function.fomus.exec">FOMUS-EXEC</a></code>.
+      This again accepts setting keywords and values (overriding any previous setting values) and passes all information to the
+      <code class="function"><a href="ch03s02.html#function.fomus">FOMUS</a></code> function which does the rest of the processing.
+      After <code class="function"><a href="ch03s03.html#function.fomus.exec">FOMUS-EXEC</a></code> is called, all internal data is reinitialized as if
+      <code class="function"><a href="ch03s03.html#function.fomus.init">FOMUS-INIT</a></code> were called with no arguments.
+    </p><p>
+      Following are the interface 2 equivalents to some of the examples above:
+      </p><div class="example"><a id="example.fomus.usage5"></a><p class="title"><b>Example&#160;3.5.&#160;FOMUS Usage 5</b></p><div class="example-contents"><pre class="programlisting">
+
+(To be completed.)
+	</pre></div></div><p><br class="example-break" />
+      </p><div class="example"><a id="example.fomus.usage6"></a><p class="title"><b>Example&#160;3.6.&#160;FOMUS Usage 6</b></p><div class="example-contents"><pre class="programlisting">
+
+(To be completed.)
+	</pre></div></div><p><br class="example-break" />
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s02.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch03s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Interface 1&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Text File Interface</td></tr></table></div></body></html>

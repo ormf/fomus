@@ -1,0 +1,31 @@
+FOMUS
+Lisp music notation formatter
+See file "COPYING" for terms of use and distribution.
+
+
+
+Fomus is alpha software, and still has a lot of testing and bug fixing to go 
+before all of its features are useable.  Not all features that appear in the 
+documentation are implemented or working yet.
+
+
+The program is available via anonymous CVS.  To download it, type the following:
+
+    cd path_to_install_directory
+    cvs -z3 -d :pserver:anonymous:anonymous@common-lisp.net:/project/fomus/cvsroot co fomus
+
+
+See the file "fomus.html" in the doc directory for instructions on how to use 
+the program.  The following command loads FOMUS into lisp:
+
+    (load "path_to_fomus_directory/load.lisp")
+    (use-package :fm)
+
+
+The program is being developed in CMUCL, but should also compile in SBCL and 
+OpenMCL.  It will eventually run in Allegro Common Lisp and CLISP.
+
+
+If you wish to report a bug, make FOMUS generate a debug file (the default 
+filename is "/tmp/fomus.dbg") and send it to dpsenick(at)uiuc(dot)edu.  See the 
+DEBUG-FILENAME setting in the FOMUS documentation for more information.

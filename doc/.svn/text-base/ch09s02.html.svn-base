@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Lisp Examples</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch09.html" title="Chapter&#160;9.&#160;Examples" /><link rel="prev" href="ch09.html" title="Chapter&#160;9.&#160;Examples" /><link rel="next" href="ch09s03.html" title="Common Music Examples" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Lisp Examples</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch09.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;9.&#160;Examples</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch09s03.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.examples2"></a>Lisp Examples</h2></div></div></div><div class="example"><a id="example.simp"></a><p class="title"><b>Example&#160;9.1.&#160;Simple Example</b></p><div class="example-contents"><pre class="programlisting">
+
+(fomus
+ :output '(:lilypond :view t)
+ :parts
+ (list
+  (make-part
+   :name "Piano"
+   :instr :piano
+   :events
+   (loop
+    for off from 0 to 10 by 1/2
+    collect (make-note :off off
+		       :dur (if (&lt; off 10) 1/2 1)
+		       :note (+ 48 (random 25)))))))
+	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_simp_ex.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.accents"></a><p class="title"><b>Example&#160;9.2.&#160;Staccato and Accent Marks</b></p><div class="example-contents"><pre class="programlisting">
+
+(fomus
+ :output '(:lilypond :view t)
+ :parts
+ (list
+  (make-part
+   :name "Piano"
+   :instr :piano
+   :events
+   (loop
+    for off from 0 to 10 by 1/2
+    collect (make-note :off off
+		       :dur (if (&lt; off 10) 1/2 1)
+		       :note (+ 48 (random 25))
+		       :marks (case (random 3)
+				(0 nil)
+				(1 '(:staccato))
+				(2 '(:accent))))))))
+	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_accents.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.qtones"></a><p class="title"><b>Example&#160;9.3.&#160;Quartertones</b></p><div class="example-contents"><pre class="programlisting">
+
+(fomus
+ :output '(:lilypond :view t)
+ :quartertones t
+ :parts
+ (list
+  (make-part
+   :name "Flute"
+   :instr :flute
+   :events
+   (loop
+    for off from 0 to 10 by 1/2
+    collect (make-note :off off
+		       :dur (if (&lt; off 10) 1/2 1)
+		       :note (+ 70 (/ (random 4) 2)))))))
+	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_qtones.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.poly.slurs"></a><p class="title"><b>Example&#160;9.4.&#160;Polyphony with Slurs</b></p><div class="example-contents"><pre class="programlisting">
+
+(fomus
+ :output '(:lilypond :view t)
+ :verbose 1
+ :parts
+ (list
+  (make-part
+   :name "Piano"
+   :instr :piano
+   :events
+   (loop for v from 1 to 2
+	 nconc (loop
+		for off from 0 to 10 by 1/2
+		collect (make-note :off off
+				   :dur (if (&lt; off 10) 1/2 1)
+				   :note (+ 60 (random 25))
+				   :voice v
+				   :marks (when (= (random 3) 0)
+					    '(:startslur-))))))))
+	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_poly_slurs.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.pno.chords"></a><p class="title"><b>Example&#160;9.5.&#160;Piano Chords</b></p><div class="example-contents"><pre class="programlisting">
+
+(fomus
+ :output '(:lilypond :view t)
+ :verbose 1
+ :ensemble-type :orchestra
+ :parts
+ (list
+  (make-part
+   :name "Piano"
+   :instr :piano
+   :events
+   (loop repeat 3
+	 nconc (loop
+		for off from 0 to 10 by 1/2
+		collect (make-note :off off
+				   :dur (if (&lt; off 10) 1/2 1)
+				   :note (+ 48 (random 25))
+				   :voice '(1 2)))))))
+	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_pno_chords.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.chords2"></a><p class="title"><b>Example&#160;9.6.&#160;Quantizing/Chords</b></p><div class="example-contents"><pre class="programlisting">
+
+(fomus
+ :output '(:lilypond :view t)
+ :parts
+ (list
+  (make-part
+   :name "Piano"
+   :instr :piano
+   :events
+   (loop repeat 10
+	 for off = (random 30.0)
+	 and dur = (1+ (random 3.0))
+	 collect (make-note :off off :dur dur :note (+ 60 (random 25)))))))
+	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_chords.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.mark.objs"></a><p class="title"><b>Example&#160;9.7.&#160;Mark Objects</b></p><div class="example-contents"><pre class="programlisting">
+
+(fomus
+ :output '(:lilypond :view t)
+ :parts (list
+	 (make-part
+	  :partid :flute
+	  :name "Flute"
+	  :instr :flute
+	  :events (loop for o from 0 to 20 by 1/2
+			collect (make-note :off o :dur 1/2 :note 72)))
+	 (make-part
+	  :partid :tuba
+	  :name "Tuba"
+	  :instr :tuba
+	  :events (loop for o from 0 to 20 by 1/2
+			collect (make-note :off o :dur 1/2 :note 48))))
+ :events (loop repeat 10
+	       collect (make-mark :partid (case (random 2) (0 :flute) (1 :tuba))
+				  :off (random 20.0)
+				  :marks '(:accent))))
+	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_mark_objs.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.perc1"></a><p class="title"><b>Example&#160;9.8.&#160;Percussion 1</b></p><div class="example-contents"><pre class="programlisting">
+
+(fomus
+ :output '(:lilypond :view t)
+ :parts (list
+	 (make-part
+	  :name "Percussion"
+	  :instr (list :percussion :percs (list (make-perc :woodblock :note 'e4)
+						(make-perc :snaredrum :note 'a3)))
+	  :events (loop for o from 0 to 20 by 1/2 collect
+			(make-note :off o :dur 1/2
+				   :note (case (random 2)
+					   (0 :woodblock)
+					   (1 :snaredrum)))))))
+	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_perc1.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.perc2"></a><p class="title"><b>Example&#160;9.9.&#160;Percussion 2</b></p><div class="example-contents"><pre class="programlisting">
+
+(fomus
+ :output '(:lilypond :view t)
+ :parts (list
+	 (make-part
+	  :name "Percussion"
+	  :instr (list :percussion :percs (list (make-perc :woodblock :voice 1 :note 'e4)
+						(make-perc :snaredrum :voice 2 :note 'a3)))
+	  :events (loop for o from 0 to 20 by 1/2 collect
+			(make-note :off o :dur 1/2
+				   :note (case (random 2)
+					   (0 :woodblock)
+					   (1 :snaredrum)))))))
+	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_perc2.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.perc.autodurs"></a><p class="title"><b>Example&#160;9.10.&#160;Percussion with Automatic Durations</b></p><div class="example-contents"><pre class="programlisting">
+
+(fomus
+ :output '(:lilypond :view t)
+ :parts (list
+	 (make-part
+	  :name "Snare Drum"
+	  :instr '(:percussion :percs ((:snare-drum :note a3)))
+	  :events (loop for o from 0 to 40 by 1/2 when (= (random 2) 0) collect
+			(make-note :off o
+				   :note :snare-drum)))))
+	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_perc_autodurs.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.orch.sco"></a><p class="title"><b>Example&#160;9.11.&#160;Semi-Orchestra Score</b></p><div class="example-contents"><pre class="programlisting">
+
+(fomus
+ :output '(:lilypond :view t)
+ :ensemble-type :orchestra
+ :global (list (make-timesig :off 0 :time '(3 4)))
+ :parts (list
+	 (make-part
+	  :name "Flute 1"
+	  :instr :flute
+	  :events (list (make-note :off 0 :dur 1 :note 60)))
+	 (make-part
+	  :partid 'fl2
+	  :name "Flute 2"
+	  :instr :flute
+	  :events (list (make-note :off 0 :dur 1 :note 60)))
+	 (make-part
+	  :partid 'cl1
+	  :name "Clarinet 1"
+	  :instr :bf-clarinet
+	  :events (list (make-note :off 0 :dur 1 :note 60)))
+	 (make-part
+	  :name "Clarinet 2"
+	  :instr :bf-clarinet
+	  :events (list (make-note :off 0 :dur 1 :note 60)))
+	 (make-part
+	  :name "Violin 1"
+	  :instr :violin
+	  :events (list (make-note :off 0 :dur 1 :note 60)))
+	 (make-part
+	  :name "Violin 2"
+	  :instr :violin
+	  :events (list (make-note :off 0 :dur 1 :note 60)))
+	 (make-part
+	  :name "Cello 1"
+	  :instr :cello
+	  :events (list (make-note :off 0 :dur 1 :note 48)))
+	 (make-part
+	  :name "Cello 2"
+	  :instr :cello
+	  :events (list (make-note :off 0 :dur 1 :note 48)))
+	 (make-part
+	  :name "Tuba"
+	  :instr :tuba
+	  :events (list (make-note :off 0 :dur 1 :note 36)))))
+	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_orch_sco.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.txtmarks2"></a><p class="title"><b>Example&#160;9.12.&#160;Key Signatures</b></p><div class="example-contents"><pre class="programlisting">
+
+(fomus
+ :output '(:lilypond :view t)
+ :filename "test.xxx"
+ :verbose 1
+ :global (list (make-timesig :off 0 :time '(5 8) :div '(3/2 1) :props '((:keysig :dmaj))))
+ :auto-cautionary-accs t
+ :parts
+ (list
+  (make-part
+   :name "Piano"
+   :instr '(:piano :simultlim 1)
+   :events
+   (loop
+    for off from 0 to 8 by 1/2
+    collect (make-note :off off
+		       :dur (if (&lt; off 10) 1/2 1)
+		       :note (+ 48 (random 25)))))))
+	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_keysigs1.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch09.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch09.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch09s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&#160;9.&#160;Examples&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Common Music Examples</td></tr></table></div></body></html>

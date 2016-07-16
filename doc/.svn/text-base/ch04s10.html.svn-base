@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Structure PERC</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch04.html" title="Chapter&#160;4.&#160;Objects" /><link rel="prev" href="ch04s09.html" title="Structure INSTR" /><link rel="next" href="ch05.html" title="Chapter&#160;5.&#160;Settings" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Structure PERC</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04s09.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;4.&#160;Objects</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch05.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.objects10"></a>Structure PERC</h2></div></div></div><p>
+    </p><p>Constructor: 
+      <code class="function">(<a id="function.make.perc"></a>MAKE-PERC &amp;key 
+        :SYM <strong class="userinput"><code>sym</code></strong>
+	:STAFF <strong class="userinput"><code>staff</code></strong>
+        :VOICE <strong class="userinput"><code>voice</code></strong>
+	:NOTE <strong class="userinput"><code>note</code></strong>
+	:AUTODUR <strong class="userinput"><code>autodur</code></strong>
+	:MARKS <strong class="userinput"><code>marks</code></strong>
+	:MIDINOTE-IM <strong class="userinput"><code>midinote-im</code></strong>
+	:MIDINOTE-EX <strong class="userinput"><code>midinote-ex</code></strong>)</code>
+    </p><p>Copy Function: 
+      <code class="function">(COPY-PERC <strong class="userinput"><code>perc</code></strong> &amp;key
+        :SYM <strong class="userinput"><code>sym</code></strong>
+	:STAFF <strong class="userinput"><code>staff</code></strong>
+        :VOICE <strong class="userinput"><code>voice</code></strong>
+	:NOTE <strong class="userinput"><code>note</code></strong>
+	:AUTODUR <strong class="userinput"><code>autodur</code></strong>
+	:MARKS <strong class="userinput"><code>marks</code></strong>
+	:MIDINOTE-IM <strong class="userinput"><code>midinote-im</code></strong>
+	:MIDINOTE-EX <strong class="userinput"><code>midinote-ex</code></strong>)</code>
+    </p><p>Accessors:
+      </p><div class="variablelist"><dl><dt><span class="term"><code class="function"><a id="perc.sym"></a>PERC-SYM</code></span></dt><dd><p>
+	      This is a unique symbol identifying the percussion instrument.
+	      It is used as a lookup value so that it may easily be specified in <code class="classname"><a href="ch04s09.html#struct.instr">INSTR</a></code> structures.
+	    </p></dd><dt><span class="term"><code class="function"><a id="perc.staff"></a>PERC-STAFF</code></span></dt><dd><p>
+	      This is an integer of <code class="literal">1</code> or greater specifying on which staff the
+	      instrument appears on.
+	    </p></dd><dt><span class="term"><code class="function"><a id="perc.voice"></a>PERC-VOICE</code></span></dt><dd><p>
+	      This is an integer of <code class="literal">1</code> or greater specifying a voice that this
+	      instrument belongs to.
+	      Specifying different voices prevents notes belonging to different instruments from being beamed together.
+	    </p></dd><dt><span class="term"><code class="function"><a id="perc.note"></a>PERC-NOTE</code></span></dt><dd><p>
+	      This is an integer or symbol designating where the instrument's notes are to appear on the staff.
+	      The value is interpreted with middle C in the center as if notated with an alto clef signature.
+	      See <code class="function">EVENT-NOTE</code> in the <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> class for information on
+	      specifying notes with symbols.
+	      Percussion notes should not require flats or sharps.
+	    </p></dd><dt><span class="term"><code class="function"><a id="perc.autodur"></a>PERC-AUTODUR</code></span></dt><dd><p>
+	      If set to <code class="literal">T</code>, indicates that <span class="application">FOMUS</span> should determine
+	      durations for this instrument.
+	      This is appropriate for percussion instruments that don't have long sustain times
+	      and can therefore be notated with durations that are simpler to read.
+	      Notes containing certain marks such as trills and tremolos are left unchanged.
+	      This slot is <code class="literal">T</code> by default.
+	    </p></dd><dt><span class="term"><code class="function"><a id="perc.marks"></a>PERC-MARKS</code></span></dt><dd><p>
+	      Contains a list of <em class="structfield"><code><a href="ch04s06.html#note.marks">MARKS</a></code></em> to be added to
+	      <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> objects that specify this percussion instrument.
+	      An example value to put here might be <code class="literal">((:text "R.S." :up))</code> for a "rim shot" percussion instrument.
+	    </p></dd><dt><span class="term"><code class="function"><a id="perc.midinote.im"></a>PERC-MIDINOTE-IM</code></span></dt><dd><p>
+	      Represents the MIDI note or notes used to import MIDI data.
+	      This can either be an integer from <code class="literal">0</code> to <code class="literal">127</code> or a list of such integers.
+	    </p></dd><dt><span class="term"><code class="function"><a id="perc.midinote.ex"></a>PERC-MIDINOTE-EX</code></span></dt><dd><p>
+	      An integer value from <code class="literal">0</code> to <code class="literal">127</code> representing the MIDI note used when exporting MIDI data.
+	    </p></dd></dl></div><p>
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04s09.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Structure INSTR&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Chapter&#160;5.&#160;Settings</td></tr></table></div></body></html>

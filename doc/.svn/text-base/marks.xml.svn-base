@@ -1,0 +1,376 @@
+<chapter id="marks">
+  <title id="marks.title">Marks</title>
+  <section id="section.marks1">
+    <para>
+      Marks are symbols or lists of symbols with arguments that appear in the <structfield><link linkend="mark.marks">MARKS</link></structfield> slots of
+      <classname><link linkend="class.note">NOTE</link></classname>,
+      <classname><link linkend="class.rest">REST</link></classname> and
+      <classname><link linkend="class.mark">MARK</link></classname> objects.
+      All extra information (articulations, ornamentations, etc.) that doesn't have a special slot in these objects is indicated with marks.
+      A few "marks" can also appear in <classname><link linkend="class.timesig">TIMESIG</link></classname> and 
+      <classname><link linkend="class.part">PART</link></classname> objects, but are called properties--for these, the syntax is exactly the same.
+    </para>
+    <para>
+      Two types of marks exist:
+      <itemizedlist>
+	<listitem><para>
+	  Simple marks that apply only to the <classname><link linkend="class.note">NOTE</link></classname>,
+	  <classname><link linkend="class.rest">REST</link></classname> or
+	  <classname><link linkend="class.mark">MARK</link></classname> object
+	  they are included in.
+        </para></listitem>
+	<listitem><para>
+	  Marks that indicate they are to be applied over a range of these objects.
+	  These marks are distinguished by a trailing dash character at the end of the symbol (for example, 
+	  <function><link linkend="mark.slur-">:STARTSLUR-</link></function>
+	  and <function><link linkend="mark.slur-">:ENDSLUR-</link></function>).  
+	  Exceptions that don't have a trailing dash are <function><link linkend="mark.wedge.gt">:STARTWEDGE&gt;</link></function> and 
+	  <function><link linkend="mark.wedge.lt">:STARTWEDGE&lt;</link></function> and related marks.
+        </para></listitem>
+      </itemizedlist>
+    </para>
+    <para>
+      The second type is mostly used to indicate "spanners," or items in the score that occur across a range of notes such as slurs or ottava brackets.
+      Most of them come in a group of three, one prefixed with the string <function>START</function>, another with no prefix, and the last one with the prefix
+      <function>END</function>. (For example, <function>:STARTSLUR-</function>, <function>:SLUR-</function> and <function>:ENDSLUR-</function>.) 
+      Spanner marks may be indicated in two different ways:
+      <itemizedlist>
+        <listitem><para>
+	  The <function>START</function> and <function>END</function> marks are inserted in the objects that occur where the spanner begins and ends.
+	</para></listitem>
+        <listitem><para>
+	  The <function>START</function> mark is inserted in the object at the point where the spanner starts and the mark without a prefix
+	  is placed in subsequent objects up to the point where the spanner ends.
+	  The last object with a mark in it before a new <function>START</function> mark is found is considered to be the end of the spanner.
+	</para></listitem>
+      </itemizedlist>
+      In either case, care must be taken to insert all marks that belong together either in the same voice or the same
+      staff, depending on the type of mark.
+    </para>
+  </section>
+  <section id="section.marks2">
+    <title>FOMUS Marks</title>
+    <section id="section.marks3">
+      <para>
+        Formats for marks and their arguments are shown in a pseudo lambda-list style format with <literal>&amp;optional</literal> symbols to designate optional arguments.
+	Some arguments are shown as a choice between several options or symbols, each separated by a pipe character.
+	In most cases, it doesn't matter in what order the arguments appear--<application>FOMUS</application> figures out which is which by the data types
+	(reorderable arguments like this are shown by a double arrow figure).
+	Also, spanner marks that belong together are shown together and separated with forward slashes.
+        The following list is a reference for the some of the arguments given in the following sections:
+	<variablelist>
+	  <varlistentry>
+	    <term><userinput><anchor id="markarg.art.order"/>art-order</userinput></term>
+	    <listitem>An integer for articulations specifying relative closeness to the notehead (lower numbered articulations are closer than higher numbered ones).</listitem>
+	  </varlistentry> 
+	  <varlistentry>
+	    <term><userinput><anchor id="markarg.clef"/>clef</userinput></term>
+	    <listitem>A valid clef symbol (see the <structfield><link linkend="instr.clefs">CLEFS</link></structfield> slot in structure
+	      <classname><link linkend="struct.instr">INSTR</link></classname> for a list of these symbols).</listitem>
+	  </varlistentry> 
+	  <varlistentry>
+	    <term><userinput><anchor id="markarg.level"/>level</userinput></term>
+	    <listitem>
+	      This integer distinguishes between inner and outer levels of spanner markings.  The default value is 1.
+	      Smaller numbers are "inner" markings occurring close to the staff while larger numbers are "outer" markings
+	      occurring farther away from the staff.  There are two methods of designating which level a mark is to appear on.
+	      The first is to use the same few level numbers repeatedly (for example, <literal>1</literal> may be used to designate the 1st or innermost level
+	      and <literal>2</literal> to designate the 2nd level, as in two levels of slur markings).  
+	      This method allows the user to be "lazy" and leave out matching <literal>START</literal> and
+	      <literal>END</literal> marks--<application>FOMUS</application> can supply the missing marks by finding the next <literal>START</literal> or
+	      <literal>END</literal> marks in that level.  The second method is to use a separate number for each start/end pair--in this case, all
+	      <literal>START</literal> marks must have matching <literal>END</literal> marks or <application>FOMUS</application> will try to supply missing
+	      marks for each individual "level" and create a mess.
+	    </listitem>
+	  </varlistentry> 
+	  <varlistentry>
+	    <term><userinput><anchor id="markarg.note"/>note</userinput></term>
+	    <listitem>A valid note symbol or number (see the <structfield><link linkend="note.note">NOTE</link></structfield>
+	      slot in the <classname><link linkend="class.note">NOTE</link></classname> class).</listitem>
+	  </varlistentry> 
+	  <varlistentry>
+	    <term><userinput><anchor id="markarg.staff"/>staffnum(s)</userinput></term>
+	    <listitem>One or more valid staff numbers (numbering starts at 1, indicating the topmost staff).</listitem>
+	  </varlistentry> 
+	  <varlistentry>
+	    <term><userinput><anchor id="markarg.string"/>string</userinput></term>
+	    <listitem>A text string.</listitem>
+	  </varlistentry> 
+	  <varlistentry>
+	    <term><userinput><anchor id="markarg.trem.subdiv"/>trem-subdiv</userinput></term>
+	    <listitem>A durational value (a ratio or integer) for a tremolo subdivision.  It is specified in beats (for example, if one beat equals
+	    a quarter note value, a tremolo with a value of <literal>1/2</literal> indicates an eighth-note tremolo, <literal>1/4</literal>
+	    indicates a sixteenth-note tremolo, etc.). 
+	    If the optional <literal>:NOTATED</literal> keyword is given, the number is instead interpreted as
+	    a written duration regardless of the beat value (so in this case, 1/8 indicates an eighth-note tremolo, 1/16 indicates a sixteenth-note
+	    tremolo, etc.).  The absence of a number indicates an unmeasured tremolo and is notated with three tremolo beams.</listitem>
+	  </varlistentry> 
+	</variablelist>
+      </para>
+      <para>
+        Marks with no arguments can always be indicated with a symbol only (the enclosing list isn't necessary).
+        Also, many of these symbols closely correspond to symbols used in some of the backend formats (<application>MusicXML</application>
+	and <application>LilyPond</application>). 
+	Not all symbols are supported in all of the backends.
+      </para> 
+    </section>
+    <section id="section.marks4">
+      <title>Articulations</title>
+      <para>
+        These marks add articulation symbols to notes. Multiple levels of slurs may be specified (<application>FOMUS</application> 
+	applies extra sorting to slurs to insure that smaller ones occur in the "innermost" level while larger ones occur in the "outermost" level).
+	The <function><link linkend="mark.graceslur-">:GRACESLUR-</link></function> marks are slurs reserved for gracenotes, and
+	are automatically added by <application>FOMUS</application> by default.
+      </para>
+      <simplelist>
+	<member><function>(<anchor id="mark.staccato"/>:STACCATO &amp;optional <userinput><link linkend="markarg.art.order">art-order</link></userinput>)</function></member>
+	<member><function>(<anchor id="mark.staccatissimo"/>:STACCATISSIMO &amp;optional
+	  <userinput><link linkend="markarg.art.order">art-order</link></userinput>)</function></member>
+	<member><function>(<anchor id="mark.accent"/>:ACCENT &amp;optional <userinput><link linkend="markarg.art.order">art-order</link></userinput>)</function></member>
+	<member><function>(<anchor id="mark.marcato"/>:MARCATO &amp;optional <userinput><link linkend="markarg.art.order">art-order</link></userinput>)</function></member>
+	<member><function>(<anchor id="mark.tenuto"/>:TENUTO &amp;optional <userinput><link linkend="markarg.art.order">art-order</link></userinput>)</function></member>
+	<member><function>(<anchor id="mark.portato"/>:PORTATO &amp;optional <userinput><link linkend="markarg.art.order">art-order</link></userinput>)</function></member>
+	<member><function>(<anchor id="mark.slur-"/>:STARTSLUR- &amp;optional
+	  <userinput><link linkend="markarg.level">level</link></userinput> &lt;-&gt; <literal>:DOTTED</literal>)</function> / <function>(:SLUR- &amp;optional
+	  <userinput><link linkend="markarg.level">level</link></userinput>)</function> / <function>(:ENDSLUR- &amp;optional
+	  <userinput><link linkend="markarg.level">level</link></userinput>)</function></member>
+        <member><function><anchor id="mark.graceslur-"/>:STARTGRACESLUR-</function> / <function>:GRACESLUR-</function> / <function>:ENDGRACESLUR-</function></member>
+      </simplelist>
+    </section>  
+    <section id="section.marks5">
+      <title>Dynamics</title>
+      <para>
+	These add common dynamic markings. The <function><link linkend="mark.wedge.gt">:WEDGE&gt;</link></function> and 
+	<function><link linkend="mark.wedge.lt">:WEDGE&lt;</link></function> marks create wedge-shaped crescendo and decrescendo markings.
+      </para>
+      <para>
+        All of the dynamics marks may be appended with an asterisk (for example <function>FFF*</function> or <function>:STARTWEDGE&lt;*</function>).
+	These marks are equivalent to the non-asterisk versions, the only difference being that during MIDI playback dynamics changes will affect all voices in a part.
+	This allows the user to specify one set of notated dynamics markings for a part with multiple voices 
+	(using <classname><link linkend="class.mark">MARK</link></classname> objects, for example), but have the MIDI playback rendered more accurately.
+      </para>
+      <simplelist>
+        <member><function><anchor id="mark.ffffff"/>:FFFFFF</function></member>
+        <member><function><anchor id="mark.fffff"/>:FFFFF</function></member>
+        <member><function><anchor id="mark.ffff"/>:FFFF</function></member>
+        <member><function><anchor id="mark.fff"/>:FFF</function></member>
+        <member><function><anchor id="mark.ff"/>:FF</function></member>
+        <member><function><anchor id="mark.f"/>:F</function></member>
+        <member><function><anchor id="mark.mf"/>:MF</function></member>
+        <member><function><anchor id="mark.mp"/>:MP</function></member>
+        <member><function><anchor id="mark.p"/>:P</function></member>
+        <member><function><anchor id="mark.pp"/>:PP</function></member>
+        <member><function><anchor id="mark.ppp"/>:PPP</function></member>
+        <member><function><anchor id="mark.pppp"/>:PPPP</function></member>
+        <member><function><anchor id="mark.ppppp"/>:PPPPP</function></member>
+        <member><function><anchor id="mark.pppppp"/>:PPPPPP</function></member>
+        <member><function><anchor id="mark.sfz"/>:SFZ</function></member>
+        <member><function><anchor id="mark.sff"/>:SFF</function></member>
+        <member><function><anchor id="mark.rfz"/>:RFZ</function></member>
+        <member><function><anchor id="mark.fp"/>:FP</function></member>
+        <member><function><anchor id="mark.sf"/>:SF</function></member>
+        <member><function><anchor id="mark.sp"/>:SP</function></member>
+        <member><function><anchor id="mark.spp"/>:SPP</function></member>
+        <member><function><anchor id="mark.wedge.gt"/>:STARTWEDGE&gt;</function> / <function>:WEDGE&gt;</function> / <function>:ENDWEDGE&gt;</function></member>
+        <member><function><anchor id="mark.wedge.lt"/>:STARTWEDGE&lt;</function> / <function>:WEDGE&lt;</function> / <function>:ENDWEDGE&lt;</function></member>
+      </simplelist>
+    </section>  
+    <section id="section.marks6">
+      <title>Tempo/Duration</title>
+      <para>
+        These are notation symbols that affect duration. Three different types of fermatas may be specified (the default is <literal>:SHORT</literal> if none is specified).
+	Breath marks may be set to occur before or after the note it's attached to (the default is <literal>:AFTER</literal>).
+	The <literal>:AUTODUR</literal> mark indicates that <application>FOMUS</application> should determine the duration of the
+	note, appropriate for events such as pizzicatos or other percussive-type attacks that don't require a specific duration but only a simply notated one.
+	This has an effect only if the <varname><link linkend="setting.auto.percussion.durs">AUTO-PERCUSSION-DURS</link></varname> setting
+	is set to <literal>T</literal>.
+      </para>
+      <simplelist>
+        <member><function>(<anchor id="mark.fermata"/>:FERMATA &amp;optional <literal>:SHORT</literal>|<literal>:LONG</literal>|<literal>:VERYLONG</literal>)</function></member>
+        <member><function>(<anchor id="mark.breath"/>:BREATH &amp;optional <literal>:BEFORE</literal>|<literal>:AFTER</literal>)</function></member>
+	<member><function>(<anchor id="mark.autodur"/>:AUTODUR)</function></member>
+      </simplelist>
+    </section>
+    <section id="section.marks7">
+      <title>Ornamentations</title>
+      <para>
+        These marks add common ornamentation markings. 
+	Glissandi and portamenti may be set to occur before or after a note (the default for both is <literal>:BEFORE</literal>).
+	A <function><link linkend="mark.tremolo">:TREMOLO</link></function> mark is notated by placing slashes over the note stems while the
+	<function><link linkend="mark.tremolofirst">:TREMOLOFIRST</link></function> and 
+	<function><link linkend="mark.tremolosecond">:TREMOLOSECOND</link></function> marks refer to the chordal tremolos commonly
+	found in piano scores. These are processed by separating the notes marked "first" from the ones marked "second" into separately notated chords 
+	and placing a tremolo-style beam over them.  The optional <literal>:NOTATED</literal> keyword indicates that the subdivision number is to be
+	interpreted as a written duration.
+	The optional <literal>:UP</literal> and <literal>:DOWN</literal> keywords in the <function><link linkend="mark.arpeggio">:ARPEGGIO</link></function>
+	mark specify that a direction is to be notated using an arrowhead.
+	The optional <userinput><link linkend="markarg.note">note</link></userinput> arguments are for specifying the trill note.
+	Only half and whole step trills are currently supported (and unison trills for percussion instruments).
+      </para>
+      <simplelist>
+        <member><function>(<anchor id="mark.tremolo"/>:TREMOLO &amp;optional <userinput><link link="markarg.trem.subdiv">trem-subdiv</link></userinput>
+	  &lt;-&gt; <literal>:NOTATED</literal>)</function></member>
+        <member><function>(<anchor id="mark.tremolofirst"/>:TREMOLOFIRST &amp;optional
+	  <userinput><link link="markarg.trem.subdiv">trem-subdiv</link></userinput> &lt;-&gt; <literal>:NOTATED</literal>)</function></member>
+        <member><function>(<anchor id="mark.tremolosecond"/>:TREMOLOSECOND &amp;optional
+	  <userinput><link link="markarg.trem.subdiv">trem-subdiv</link></userinput> &lt;-&gt; <literal>:NOTATED</literal>)</function></member>
+        <member><function>(<anchor id="mark.longtrill"/>:LONGTRILL &amp;optional <userinput><link linkend="markarg.note">note</link></userinput>)</function></member>
+        <member><function>(<anchor id="mark.arpeggio"/>:ARPEGGIO &amp;optional <literal>:UP</literal>|<literal>:DOWN</literal>)</function></member>
+        <member><function>(<anchor id="mark.glissando"/>:GLISSANDO &amp;optional <literal>:BEFORE</literal>|<literal>:AFTER</literal>)</function></member> <!-- default :before -->
+        <member><function>(<anchor id="mark.portamento"/>:PORTAMENTO &amp;optional <literal>:BEFORE</literal>|<literal>:AFTER</literal>)</function></member> <!-- default :before -->
+	<member><function>(<anchor id="mark.trill"/>:TRILL &amp;optional <userinput><link linkend="markarg.note">note</link></userinput>)</function></member>
+	<member><function>(<anchor id="mark.mordent"/>:MORDENT &amp;optional <userinput><link linkend="markarg.note">note</link></userinput>)</function></member>
+	<member><function>(<anchor id="mark.prall"/>:PRALL &amp;optional &amp;optional <userinput><link linkend="markarg.note">note</link></userinput>)</function></member>
+      </simplelist>
+    </section>
+    <section id="section.marks8">
+      <title>Effects</title>
+      <para>
+	These marks are for special instrument-specific effects or instructions.
+	If the <varname><link linkend="setting.auto.pizz/arco">AUTO-PIZZ/ARCO</link></varname> setting is set to <literal>T</literal>,
+	the <function><link linkend="mark.arco">:ARCO</link></function> marks shouldn't be needed--<application>FOMUS</application> inserts them where they are necessary.
+	Harmonics are specified by attaching one or more <function><link linkend="mark.harmonic">:HARMONIC</link></function> marks, each
+	indicating an extra note to appear above the base note.
+	Specifying <literal>:SOUNDING</literal> (the default) causes a small parenthesized notehead to appear while specifying
+	<literal>:TOUCHED</literal> causes a diamond notehead to appear.
+	The actual results may vary depending on the backend (extra editing may be required).
+	Notes are indicated with either a symbol or number, as in the <structfield><link linkend="note.note">NOTE</link></structfield>
+	slot in the <classname><link linkend="class.note">NOTE</link></classname> class.
+	(Extra accidentals are not specified here.)
+      </para>
+      <simplelist>
+        <member><function><anchor id="mark.pizz"/>:PIZZ</function></member>
+        <member><function><anchor id="mark.arco"/>:ARCO</function></member>
+	<member>
+	  <function>(<anchor id="mark.harmonic"/>:HARMONIC <userinput><link linkend="markarg.note">note</link></userinput> 
+	  &lt;-&gt; &amp;optional <literal>:TOUCHED</literal>|<literal>:SOUNDING</literal>)</function>
+	</member>
+	<member><function>(<anchor id="mark.open"/>:OPEN &amp;optional <userinput><link linkend="markarg.art.order">art-order</link></userinput>)</function></member>
+	<member><function>(<anchor id="mark.stopped"/>:STOPPED &amp;optional <userinput><link linkend="markarg.art.order">art-order</link></userinput>)</function></member>
+	<member><function>(<anchor id="mark.upbow"/>:UPBOW &amp;optional <userinput><link linkend="markarg.art.order">art-order</link></userinput>)</function></member>
+	<member><function>(<anchor id="mark.downbow"/>:DOWNBOW &amp;optional <userinput><link linkend="markarg.art.order">art-order</link></userinput>)</function></member>
+	<member><function>(<anchor id="mark.thumb"/>:THUMB &amp;optional <userinput><link linkend="markarg.art.order">art-order</link></userinput>)</function></member>
+	<member><function>(<anchor id="mark.leftheel"/>:LEFTHEEL &amp;optional <userinput><link linkend="markarg.art.order">art-order</link></userinput>)</function></member>
+	<member><function>(<anchor id="mark.rightheel"/>:RIGHTHEEL &amp;optional <userinput><link linkend="markarg.art.order">art-order</link></userinput>)</function></member>
+	<member><function>(<anchor id="mark.lefttoe"/>:LEFTTOE &amp;optional <userinput><link linkend="markarg.art.order">art-order</link></userinput>)</function></member>
+	<member><function>(<anchor id="mark.righttoe"/>:RIGHTTOE &amp;optional <userinput><link linkend="markarg.art.order">art-order</link></userinput>)</function></member>
+      </simplelist>
+    </section>
+    <section id="section.marks9">
+      <title>Text</title>
+      <para>
+        Different kinds of text may be attached to events.
+	<function><link linkend="mark.textnote">:TEXTNOTE</link></function> is for text that appears over a single note (for example, "sul G"), 
+	<function><link linkend="mark.text">:TEXT</link></function> and <function><link linkend="mark.text-">:TEXT-</link></function>
+	are for italicized texts that appear above or beneath the staff, 
+	<function><link linkend="mark.texttempo">:TEXTTEMPO</link></function> indicates tempo changes (and is printed in a larger boldface font),
+	and <function><link linkend="mark.textdyn">:TEXTDYN</link></function> is for texts appearing in a dynamics-type font.
+	For text spanners, "levels" may be specified to influence the order of their placement on the score.
+      </para>
+      <simplelist>
+        <member><function>(<anchor id="mark.textnote"/>:TEXTNOTE <userinput><link linkend="markarg.string">string</link></userinput>)</function></member>
+        <member><function>(<anchor id="mark.text"/>:TEXT <userinput><link linkend="markarg.string">string</link></userinput> &lt;-&gt; &amp;optional
+	  <literal>:UP</literal>|<literal>:DOWN</literal>)</function></member>
+        <member><function>(<anchor id="mark.text-"/>:STARTTEXT- <userinput><link linkend="markarg.string">string</link></userinput> &lt;-&gt;
+	  &amp;optional <userinput><link linkend="markarg.level">level</link></userinput> &lt;-&gt; <literal>:UP</literal>|<literal>:DOWN</literal>)</function>
+	  / <function>(:TEXT- &amp;optional
+	  <userinput><link linkend="markarg.level">level</link></userinput>)</function> / <function>(:ENDTEXT- &amp;optional
+	  <userinput><link linkend="markarg.level">level</link></userinput>)</function></member>
+        <member><function>(<anchor id="mark.texttempo"/>:TEXTTEMPO <userinput><link linkend="markarg.string">string</link></userinput> &lt;-&gt; &amp;optional
+	  <literal>:UP</literal>|<literal>:DOWN</literal>)</function></member>
+        <member><function>(<anchor id="mark.textdyn"/>:TEXTDYN <userinput><link linkend="markarg.string">string</link></userinput> &lt;-&gt; &amp;optional
+	  <literal>:UP</literal>|<literal>:DOWN</literal>)</function></member>
+      </simplelist>
+    </section>
+    <section id="section.marks10">
+      <title>Notation</title>
+      <para>
+        Most of these behave as user overrides to <application>FOMUS</application>'s automatic algorithms.
+        <function><link linkend="mark.cautacc">:CAUTACC</link></function> indicates that a cautionary accidental is to be placed before
+	the note.  <function><link linkend="mark.forceacc">:FORCEACC</link></function> forces an accidental spelling.
+	<function><link linkend="mark.notehead">:NOTEHEAD</link></function> indicates a different notehead.
+	The <function><link linkend="mark.clef">:CLEF</link></function> and <function><link linkend="mark.clef-">:CLEF-</link></function> spanner
+	marks indicate clef changes and regions where a certain clef is required.  A clef spanner must occur in a single voice.
+	The <function><link linkend="mark.staff">:STAFF</link></function> and <function><link linkend="mark.staff-">:STAFF-</link></function> spanner
+	marks indicate staff choice overrides for instruments with more than one staff (ie. a grandstaff).
+	All marks containing <function>8UP</function> and <function>8DOWN</function> are overrides for ottava brackets and must be specified
+	for notes that appear in a single staff rather than a voice.  The <function><link linkend="mark.tie">:TIE</link></function> mark
+	ties a note to the following or previous note depending on whether <literal>:BEFORE</literal> or <literal>:AFTER</literal> (default) is supplied
+	and whether or note the adjacent note is the same.
+      </para>
+      <simplelist>
+        <member><function><anchor id="mark.cautacc"/>:CAUTACC</function></member>
+	<member><function><anchor id="mark.forceacc"/>:FORCEACC</function></member>
+	<member><function>(<anchor id="mark.notehead"/>:NOTEHEAD 
+	<literal>:HARMONIC</literal>|<literal>:DIAMOND</literal>|<literal>:X</literal>|<literal>:XCIRCLE</literal>|<literal>:TRIANGLE</literal>|<literal>:SLASH</literal>)</function></member>
+
+	<member><function>(<anchor id="mark.clef"/>:CLEF <userinput><link linkend="markarg.clef">clef</link></userinput>)</function></member>
+        <member><function>(<anchor id="mark.clef-"/>:STARTCLEF
+	  <userinput><link linkend="markarg.clef">clef</link></userinput>)</function> / <function>:CLEF-</function> / <function>:ENDCLEF-</function></member>
+	<member><function>(<anchor id="mark.staff"/>:STAFF &amp;rest <userinput><link linkend="markarg.staff">staffnum(s)</link></userinput>)</function></member>
+        <member><function>(<anchor id="mark.staff-"/>:STARTSTAFF &amp;rest
+	  <userinput><link linkend="markarg.staff">staffnum(s)</link></userinput>)</function> / <function>:STAFF-</function> / <function>:ENDSTAFF-</function></member>
+        <member><function><anchor id="mark.8up"/>:8UP</function></member>
+        <member><function><anchor id="mark.8up-"/>:START8UP-</function> / <function>:8UP-</function> / <function>:END8UP-</function></member>
+        <member><function><anchor id="mark.8down"/>:8DOWN</function></member>
+        <member><function><anchor id="mark.8down-"/>:START8DOWN-</function> / <function>:8DOWN-</function> / <function>:END8DOWN-</function></member>
+        <member><function>(<anchor id="mark.tie"/>:TIE &amp;optional <literal>:BEFORE</literal>|<literal>:AFTER</literal>)</function></member>
+      </simplelist>
+    </section>  
+    <section id="section.marks11">
+      <title>Other</title>
+      <para>
+      	  The <function><link linkend="mark.ignore">:IGNORE</link></function> has no effect.  It is intended to be useful for automatically generating
+	<application>FOMUS</application> input files.
+      </para>
+      <simplelist>
+        <member><function><anchor id="mark.ignore"/>:IGNORE</function></member>
+      </simplelist>
+    </section>  
+  </section>
+  <section id="section.marks12">
+    <title>TIMESIG Properties</title>
+    <para>
+      These are marks that are specified in <classname><link linkend="class.timesig">TIMESIG</link></classname> objects
+      (and are called properties rather than marks). They either affect one location in the score at the 
+      <classname><link linkend="class.timesig">TIMESIG</link></classname> object's offset or the entire region of the score governed by that time signature.
+    </para>
+    <para>
+      At the moment there's only one property, <function><link linkend="prop.barline">:BARLINE</link></function> that
+      changes the type of barline that appears at the <classname><link linkend="class.timesig">TIMESIG</link></classname>'s
+      offset.
+    </para>
+    <simplelist>
+      <member><function>(<anchor id="prop.barline"/>:BARLINE 
+      <literal>:SINGLE</literal>|<literal>:DOUBLE</literal>|<literal>:FINAL</literal>|<literal>:REPEATLEFT</literal>|<literal>:REPEATRIGHT</literal>|<literal>:REPEATLEFTRIGHT</literal>|<literal>:INVISIBLE</literal>)</function></member>
+    </simplelist>
+  </section>
+  <section id="marks.partprops">
+    <title id="marks.partprops.title">PART Properties</title>
+    <para>
+      These are "marks" that are specified in <classname><link linkend="class.part">PART</link></classname> objects
+      (and are called properties rather than marks). They either change how the part appears in the score or affect
+      all of the objects in that part some way.
+    </para>
+    <para>
+      At the moment there's only one property, <function><link linkend="prop.distr">:DISTR</link></function> that
+      allows the user to distribute notes or rests across several other parts.  This is done by voice so that
+      the user may specify multiple parts for a single instrument but insert all of the events into only one of them. 
+      The user may then, for example, treat four violins as one instrument, inserting note events for all four instruments into
+      one part and letting <application>FOMUS</application>'s voice separating algorithm  figure out how they are distributed to the actual parts that appear in the score.
+    </para>
+    <para>
+      The syntax of this property is given below.
+      The <literal>PARTID</literal> argument specifies the part that notes and rests are moved to once all voices have been determined.  The <literal>VOICE</literal> or
+      <literal>VOICEFROM</literal> arguments specify which events are to be moved.  <literal>VOICETO</literal>, if given, specifies
+      the voice the events will have once they have been moved.  If <literal>VOICETO</literal> isn't given, then the new voice defaults to
+      the position of the argument in the list. <literal>(:DISTR (PRT1 2 3) (PRT2 1 4))</literal> is then equivalent to 
+      <literal>(:DISTR (PRT1 (2 1) (3 2)) (PRT2 (1 1) (4 2)))</literal>--events in voices 2 and 3 are distributed to the part <literal>PRT1</literal>
+      as voices 1 and 2 while events in voices 1 and 4 are distributed to <literal>PRT2</literal> as voices 1 and 2.
+    </para>
+    <simplelist>
+      <member><function>(<anchor id="prop.distr"/>:DISTR
+      (<userinput>partid</userinput> <userinput>voice</userinput>|(<userinput>voicefrom</userinput> <userinput>voiceto</userinput>) ...) ...)</function></member>
+    </simplelist>
+  </section>
+</chapter>

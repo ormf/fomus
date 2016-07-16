@@ -1,0 +1,878 @@
+<chapter id="outputs">
+  <title id="outputs.title">Outputs</title>
+  <section id="section.outputs1">
+    <para>
+      This chapter explains options specific to each of the possible output formats.
+      One or more outputs or backends may be selected with the <varname><link linkend="setting.output">OUTPUT</link></varname> setting.
+      Most options are passed as keyword/argument pairs via this setting or in the
+      <structfield><link linkend="part.opts">OPTS</link></structfield> slot of the <classname><link linkend="class.part">PART</link></classname>
+      class. Current possible output symbols are <literal>:DATA</literal> or <literal>:FOMUS</literal>, <literal>:CHUNK</literal>, <literal>:NONE</literal>, 
+      <literal>:MUSICXML</literal>, <literal>:MUSICXML-SIBELIUS</literal>, <literal>:MUSICXML-FINALE</literal>, <literal>:CMN</literal>, 
+      <literal>:LILYPOND</literal> and <literal>:MIDI</literal>.
+    </para>
+    <para>
+      The base output filename is specified using the <varname><link linkend="setting.filename">FILENAME</link></varname> setting.
+      It may be overridden by the <varname>filename</varname> option present in each of the outputs.
+      Each output adds its own extension (for example, a LilyPond file gets a <filename>.ly</filename> extension added).
+    </para> 
+  </section>
+  <section id="section.outputs2">
+    <title>Data</title>  
+    <para>
+      This produces a file with extension <filename>.fms</filename> containing a dump of the data that is
+      sent to <application>FOMUS</application> before any processing occurs.
+      If this is the only output specified, <application>FOMUS</application> simply saves the data and returns without further processing.
+      It may be specified using either the <literal>:DATA</literal> or <literal>:FOMUS</literal> keywords in the 
+      <varname><link linkend="setting.output">OUTPUT</link></varname> setting.
+      The file is editable and can be reloaded for editing and processing by calling the <function><link linkend="function.fomus2">FOMUS</link></function>
+      function with the name of the file. See <link linkend="interface.text" endterm="interface.text.title"/> for a description of this file format.
+    </para>
+  </section>
+  <section id="section.outputs3">
+    <title>LilyPond</title>
+    <para>
+      <application>FOMUS</application> currently creates notation files for <application>LilyPond</application> versions 2.4 and 2.6.
+      The <varname><link linkend="setting.output">OUTPUT</link></varname> setting keyword to use is <literal>:LILYPOND</literal>.
+      <application>FOMUS</application> outputs a slightly different file depending on whether LilyPond version 2.4 or 2.6 is installed to insure
+      that it compiles correctly (a file for one version may give an error when compiled in the other version).
+      A <filename>.ly</filename> extension is added to the base filename to make the complete output filename.
+      When <application>FOMUS</application> loads it looks for <application>LilyPond</application> 
+      and viewer application executables in several locations in the filesystem.
+      If these executables are in an uncommon location or the user wants to specify these herself, several options exist for
+      setting the pathnames and changing command line arguments.
+      When setup correctly, <application>FOMUS</application> can automatically compile the output file and launch a viewer (a PostScript
+      viewing application in <application>Gnome</application> or <application>KDE</application>
+      or the <application>Preview</application> application in OS X).
+    </para>
+    <para>
+      Tremolos might be represented by displaying slash marks (like in the MusicXML
+      <varname><link linkend="musicxml.1note.tremolo.kludge">:XML-1NOTE-TREMOLO-KLUDGE</link></varname>
+      and <varname><link linkend="musicxml.multinote.tremolo.kludge">:XML-MULTINOTE-TREMOLO-KLUDGE</link></varname> options)
+      in rare cases where they can't be indicated properly.
+    </para>
+    <section id="section.outputs4">
+      <title>LilyPond Options</title>
+      <simplelist type="vert" columns="3">
+        <member><varname><link linkend="lily.filename">:FILENAME</link></varname></member>
+        <member><varname><link linkend="lily.process">:PROCESS</link></varname></member>
+        <member><varname><link linkend="lily.view">:VIEW</link></varname></member>
+        <member><varname><link linkend="lily.exe">:EXE</link></varname></member>
+        <member><varname><link linkend="lily.opts">:OPTS</link></varname></member>
+        <member><varname><link linkend="lily.view.exe">:VIEW-EXE</link></varname></member>
+        <member><varname><link linkend="lily.view.opts">:VIEW-OPTS</link></varname></member>
+        <member><varname><link linkend="lily.version">:VERSION</link></varname></member>
+        <member><varname><link linkend="lily.filehead">:FILEHEAD</link></varname></member>
+        <member><varname><link linkend="lily.scorehead">:SCOREHEAD</link></varname></member>
+        <member><varname><link linkend="lily.parthead">:LILY-PARTHEAD</link></varname></member>
+        <member><varname><link linkend="lily.partname">:LILY-PARTNAME</link></varname></member>
+        <member><varname><link linkend="lily.out.ext">:OUT-EXT</link></varname></member>
+        <member><varname><link linkend="lily.text.markup">:TEXT-MARKUP</link></varname></member>
+        <member><varname><link linkend="lily.textdyn.markup">:TEXTDYN-MARKUP</link></varname></member>
+        <member><varname><link linkend="lily.texttempo.markup">:TEXTTEMPO-MARKUP</link></varname></member>
+        <member><varname><link linkend="lily.textnote.markup">:TEXTNOTE-MARKUP</link></varname></member>
+        <member><varname><link linkend="lily.textacc.markup">:TEXTACC-MARKUP</link></varname></member>
+      </simplelist>
+    </section>
+    <section id="section.outputs5">
+      <title>Alphabetical Listing of Options</title>    
+      <variablelist>
+        <varlistentry>
+          <term><varname><anchor id="lily.exe"/>:EXE</varname></term>
+          <listitem>
+            <para> 
+	      This is a string specifying the path and filename to the <application>LilyPond</application> executable.
+	      The full pathname may or may not need to be specified depending on the Lisp implementation.
+	      This overrides the <varname><link linkend="setting.lilypond.exe">LILYPOND-EXE</link></varname> setting if used.
+    	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.opts"/>:OPTS</varname></term>
+          <listitem>
+            <para>
+	      This is a list of strings representing options to be passed to the <application>LilyPond</application> executable.
+	      The default is currently <literal>'("--ps")</literal> for Linux or <literal>'("--pdf")</literal> for OS X/Windows,
+	      specifying that <application>LilyPond</application> should generate either a PostScript or PDF format file.
+	      This overrides the <varname><link linkend="setting.lilypond.opts">LILYPOND-OPTS</link></varname> setting if used.
+  	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.filehead"/>:FILEHEAD</varname></term>
+          <listitem>
+            <para>
+	      This is a string or list of strings representing text to be inserted directly into the output file.
+	      Each string in the list is followed by a carriage return.
+	      The text is inserted near the top of the file at a point before any score or part data appears.
+  	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.filename"/>:FILENAME</varname></term>
+          <listitem>
+            <para>
+	      This is a string representing the output filename.
+	      It overrides the <varname><link linkend="setting.filename">FILENAME</link></varname> setting if used.
+  	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.out.ext"/>:OUT-EXT</varname></term>
+          <listitem>
+            <para>
+	      This is a string specifying the extension for the output filename that is created when <application>LilyPond</application> is run.
+	      The default is <literal>"ps"</literal> for Linux and <literal>"pdf"</literal> for OS X/Windows.
+	      This overrides the <varname><link linkend="setting.lilypond.out.ext">LILYPOND-OUT-EXT</link></varname> setting if used.
+  	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.parthead"/>:LILY-PARTHEAD</varname></term>
+          <listitem>
+            <para>
+	      This option is specified in <classname><link linkend="class.part">PART</link></classname> part objects
+	      and is valid only for that part.
+	      It is a string or list of strings representing text to be inserted directly into the output file.
+	      Each string is followed by a carriage return.
+	      The text inserted at the beginning of a staff section just before note, rest and other
+	      information appears for that part in the file.
+  	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.partname"/>:LILY-PARTNAME</varname></term>
+          <listitem>
+            <para>
+	      This option is specified in <classname><link linkend="class.part">PART</link></classname> part objects
+	      and is valid only for that part.
+	      It is a string representing a part name used to uniquely identify the part in the output file.
+	      If it isn't supplied, <application>FOMUS</application> automatically generates a name.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.process"/>:PROCESS</varname></term>
+          <listitem>
+            <para>
+	      If set to <literal>T</literal>, indicates that <application>FOMUS</application> should call <application>LilyPond</application>
+	      to process the output file once it's been written.
+	      If set to <literal>NIL</literal>, only the output file is written and no processing occurs (unless 
+	      <varname><link linkend="lily.view">VIEW</link></varname> is set to <literal>T</literal>).
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.scorehead"/>:SCOREHEAD</varname></term>
+          <listitem>
+            <para>
+	      This is a string or list of strings representing text to be inserted directly into the output file at the beginning of a score block.
+	      Each string in the list is followed by a carriage return.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.text.markup"/>:TEXT-MARKUP</varname></term>
+          <listitem>
+            <para>
+	      This is a "wrapper" string specifying <application>LilyPond</application> markup instructions to be used when
+	      printing text above or below the staff.
+	      The string must have an <literal>~A</literal> or similar substring to indicate where to place the actual text
+	      (as if in a call to <function>FORMAT</function>).
+	      The default value is <literal>"\markup{\italic{~A}}"</literal>.
+    	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.textacc.markup"/>:TEXTACC-MARKUP</varname></term>
+          <listitem>
+            <para>
+	      This is a "wrapper" string specifying <application>LilyPond</application> markup instructions to be used when
+	      engraving accidentals as text.
+	      The string must have an <literal>~A</literal> or similar substring to indicate where to place the actual text
+	      (as if in a call to <function>FORMAT</function>).
+	      The default value is <literal>"\\markup{\\tiny{~A}}"</literal>.
+    	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.textdyn.markup"/>:TEXTDYN-MARKUP</varname></term>
+          <listitem>
+            <para>
+	      This is a "wrapper" string specifying <application>LilyPond</application> markup instructions to be used when
+	      printing text in a dynamic-type font.
+	      The string must have an <literal>~A</literal> or similar substring to indicate where to place the actual text
+	      (as if in a call to <function>FORMAT</function>).
+	      The default value is <literal>"\markup{\dynamic{\italic{\bold{~A}}}}"</literal>.
+    	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.textnote.markup"/>:TEXTNOTE-MARKUP</varname></term>
+          <listitem>
+            <para>
+	      This is a "wrapper" string specifying <application>LilyPond</application> markup instructions to be used when
+	      printing text above single notes.
+	      The string must have an <literal>~A</literal> or similar substring to indicate where to place the actual text
+	      (as if in a call to <function>FORMAT</function>).
+	      The default value is <literal>"\markup{\italic{~A}}"</literal>.
+    	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.texttempo.markup"/>:TEXTTEMPO-MARKUP</varname></term>
+          <listitem>
+            <para>
+	      This is a "wrapper" string specifying <application>LilyPond</application> markup instructions to be used when
+	      printing text in a heavy "tempo" font.
+	      The string must have an <literal>~A</literal> or similar substring to indicate where to place the actual text
+	      (as if in a call to <function>FORMAT</function>).
+	      The default value is <literal>"\markup{\bold{\huge{~A}}}"</literal>.
+    	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.version"/>:VERSION</varname></term>
+          <listitem>
+            <para>
+	      If set to a string (for example, <literal>"2.8"</literal>), forces <application>FOMUS</application> to output <application>LilyPond</application> files for that
+	      version.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.view"/>:VIEW</varname></term>
+          <listitem>
+            <para>
+	      If set to <literal>T</literal>, indicates that <application>FOMUS</application> should call <application>LilyPond</application>
+	      to process the output file then open the results with a viewer program for immediate viewing.
+	      If set to <literal>NIL</literal>, no viewer application is opened.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.view.exe"/>:VIEW-EXE</varname></term>
+          <listitem>
+            <para>
+	      This is a string specifying the path and filename to the executable for the viewer application.
+	      The full pathname may or may not need to be specified depending on the Lisp implementation.
+	      The default application depends on what is installed on the user's machine, and should be
+	      one appropriate for viewing PostScript files.
+	      This overrides the <varname><link linkend="setting.lilypond.view.exe">LILYPOND-VIEW-EXE</link></varname> setting if used.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="lily.view.opts"/>:VIEW-OPTS</varname></term>
+          <listitem>
+            <para>
+	      This is a list of strings representing options to be passed to the viewer application executable.
+	      This overrides the <varname><link linkend="setting.lilypond.view.opts">LILYPOND-VIEW-OPTS</link></varname> setting if used.
+  	  </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section> 
+  </section>
+  <section id="section.outputs6">
+    <title id="musicxml">MusicXML</title>  
+    <para>
+    <application>FOMUS</application> outputs <application>MusicXML</application> version 1.1 format files when the <literal>:MUSICXML</literal>
+    keyword is used in the <varname><link linkend="setting.output">OUTPUT</link></varname> setting.
+    An <filename>.xml</filename> extension is automatically added to make the complete output filename.
+    The output file is importable into a number of different notation programs, though the quality of the
+    results will vary.
+    <application>FOMUS</application> doesn't including any information about positioning--this is left up to the program doing the importing
+    to decide.
+    So far, <application>MusicXML</application> has been tested on <application>Sibelius</application> version 4.1
+    and <application>Finale</application> version 2006.  
+    Although the <application>MusicXML</application> format itself can support almost all of the notational elements that <application>FOMUS</application> supports,
+    a few things don't seem to work correctly or don't import at all into either of these programs.  
+    The following major issues were found:
+    <itemizedlist>
+    <listitem>Sibelius often imports rhythms incorrectly when they involve tuplets.</listitem>
+    <listitem>Finale imports tuplets/rhythms incorrectly when they involve nested tuplets.</listitem>
+<!--     <listitem><application>Sibelius</application> mangles the groups (and the brackets or braces) for parts.</listitem> -->
+    <listitem>There's not much support for importing tremolos.</listitem>
+<!--     <listitem>Artificial harmonics are imported as natural harmonics.</listitem> -->
+<!--     <listitem>Measure rests are occassionaly added in cases where one voice should be distributed across two or more staves.</listitem> -->
+    </itemizedlist>
+    </para>
+    <para>
+    Most of these are easily fixed with the exception of the improper rhythm/tuplet problems.
+    Until there are better solutions for these problems, there are some options for getting around some of them:
+    </para>
+    <section id="section.outputs7">
+      <title>MusicXML Options</title>
+      <simplelist type="vert" columns="3">
+        <member><varname><link linkend="musicxml.filename">:FILENAME</link></varname></member>
+	<member><varname><link linkend="musicxml.1note.tremolo.kludge">:XML-1NOTE-TREMOLO-KLUDGE</link></varname></member>
+	<member><varname><link linkend="musicxml.multinote.tremolo.kludge">:XML-MULTINOTE-TREMOLO-KLUDGE</link></varname></member>
+	<member><varname><link linkend="musicxml.harmonic.kludge">:XML-HARMONIC-KLUDGE</link></varname></member>
+	<member><varname><link linkend="musicxml.partgroups.kludge">:XML-PARTGROUPS-KLUDGE</link></varname></member>
+      </simplelist>
+    </section>
+    <section id="section.outputs8">
+      <title>Alphabetical Listing of Options</title>    
+      <variablelist>
+        <varlistentry>
+          <term><varname><anchor id="musicxml.filename"/>:FILENAME</varname></term>
+          <listitem>
+            <para>
+	      This is a string representing the output filename.
+	      It overrides the <varname><link linkend="setting.filename">FILENAME</link></varname> setting if used.
+  	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="musicxml.1note.tremolo.kludge"/>:XML-1NOTE-TREMOLO-KLUDGE</varname></term>
+          <listitem>
+            <para>
+	      If set to <literal>T</literal>, indicates to insert a <literal>//</literal> symbol wherever there is a single-note tremolo.
+	      The number of slashes indicates the number of tremolo lines that would normally be added to the note.
+	      The default is <literal>NIL</literal>.
+  	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="musicxml.harmonic.kludge"/>:XML-HARMONIC-KLUDGE</varname></term>
+          <listitem>
+            <para>
+	      If set to <literal>T</literal>, <application>FOMUS</application> fudges an artificial harmonic by changing the notehead to a diamond shape.
+	      This appears correct when imported into <application>Finale</application> and <application>Siblius</application>, but
+	      doesn't make use of the special XML tags reserved for specifying this type of harmonic (a minor issue).
+	      The default is <literal>NIL</literal>.
+  	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="musicxml.partgroups.kludge"/>:XML-PARTGROUPS-KLUDGE</varname></term>
+          <listitem>
+            <para>
+	      If set to <literal>T</literal>, parts are not grouped together by brackets or braces.  These must then be added manually
+	      once the notation data has been imported.
+	      The default is <literal>NIL</literal>.
+  	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="musicxml.multinote.tremolo.kludge"/>:XML-MULTINOTE-TREMOLO-KLUDGE</varname></term>
+          <listitem>
+            <para>
+	      If set to <literal>T</literal>, indicates to insert a <literal>//-</literal> symbol wherever there is a multiple-note tremolo 
+	      (such as those sometimes found in piano scores).
+	      The number of slashes indicates the number of tremolo beam-lines that would normally be added to the beam or beams connecting the two notes or chords.
+	      The default is <literal>NIL</literal>.
+  	    </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+  </section>
+  <section id="section.outputs9">
+    <title>MusicXML for Sibelius</title>  
+    <para>
+      This is equivalent to the <link linkend="musicxml">MusicXML</link> output with "kludge" options set appropriately for Sibelius version 4.
+      Use the <literal>:MUSICXML-SIBELIUS</literal> keyword in the <varname><link linkend="setting.output">OUTPUT</link></varname> setting for this.
+    </para>
+    </section>
+  <section id="section.outputs10">
+    <title>MusicXML for Finale</title>  
+    <para>
+      This is equivalent to the <link linkend="musicxml">MusicXML</link> output with "kludge" options set appropriately for Finale.
+      Use the <literal>:MUSICXML-FINALE</literal> keyword in the <varname><link linkend="setting.output">OUTPUT</link></varname> setting for this.
+    </para>
+    </section>
+  <section id="section.outputs11">
+    <title>Common Music Notation</title>  
+    <para>
+      This backend produces files in Lisp syntax suitable for loading and processing with <application>Common Music Notation</application>.
+      The <varname><link linkend="setting.output">OUTPUT</link></varname> setting for this is <literal>:CMN</literal>.
+      A <filename>.cmn</filename> extension is added to the base filename to make the complete output filename.
+      The file can be compiled and viewed automatically if <application>CMN</application> is loaded and an <filename>.eps</filename> file
+      viewing application (a PostScript viewing application in <application>Gnome</application> or <application>KDE</application>
+      or the <application>Preview</application> application in OS X) has been found or is specified by the user.
+    </para>
+    <section id="section.outputs12">
+      <title>CMN Options</title>
+      <simplelist type="vert" columns="3">
+        <member><varname><link linkend="cmn.filename">:FILENAME</link></varname></member>
+        <member><varname><link linkend="cmn.process">:PROCESS</link></varname></member>
+        <member><varname><link linkend="cmn.view">:VIEW</link></varname></member>
+        <member><varname><link linkend="cmn.score.attr">:SCORE-ATTR</link></varname></member>
+        <member><varname><link linkend="cmn.out.ext">:OUT-EXT</link></varname></member>
+        <member><varname><link linkend="cmn.view.exe">:VIEW-EXE</link></varname></member>
+        <member><varname><link linkend="cmn.view.opts">:VIEW-OPTS</link></varname></member>
+      </simplelist>
+    </section>
+    <section id="section.outputs13">
+      <title>Alphabetical Listing of Options</title>    
+        <variablelist>
+        <varlistentry>
+          <term><varname><anchor id="cmn.filename"/>:FILENAME</varname></term>
+          <listitem>
+            <para>
+	      This is a string representing the output filename.
+	      It overrides the <varname><link linkend="setting.filename">FILENAME</link></varname> setting if used.
+  	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="cmn.out.ext"/>:OUT-EXT</varname></term>
+          <listitem>
+            <para>
+	      This is a string specifying the extension for the output filename that is created when the score file is loaded 
+	      and <application>CMN</application> is called.
+	      The default is <literal>"eps"</literal>.
+  	    </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="cmn.process"/>:PROCESS</varname></term>
+          <listitem>
+            <para>
+	      If set to <literal>T</literal>, indicates that <application>FOMUS</application> should load the score file and call <application>CMN</application>
+	      to process the output file once it's been written.
+	      If set to <literal>NIL</literal>, only the output file is written and no processing occurs (unless 
+	      <varname><link linkend="cmn.view">VIEW</link></varname> is set to <literal>T</literal>).
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="cmn.score.attr"/>:SCORE-ATTR</varname></term>
+          <listitem>
+            <para>
+	      This is a list of extra <application>CMN</application> score attributes to be inserted into the score file.
+	      The default is <literal>NIL</literal>.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="cmn.view"/>:VIEW</varname></term>
+          <listitem>
+            <para>
+	      If set to <literal>T</literal>, indicates that <application>FOMUS</application> should load the score file and call <application>CMN</application>
+	      to process the output file, then open the results with a viewer program for immediate viewing.
+	      If set to <literal>NIL</literal>, no viewer application is opened.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="cmn.view.exe"/>:VIEW-EXE</varname></term>
+          <listitem>
+            <para>
+	      This is a string specifying the path and filename to the executable for the viewer application.
+	      The full pathname may or may not need to be specified depending on the Lisp implementation.
+	      The default application depends on what is installed on the user's machine, and should be
+	      an application appropriate for viewing PostScript or EPS files.
+	      This overrides the <varname><link linkend="setting.cmn.view.exe">CMN-VIEW-EXE</link></varname> setting if used.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="cmn.view.opts"/>:VIEW-OPTS</varname></term>
+          <listitem>
+            <para>
+	      This is a list of strings representing options to be passed to the viewer application executable.
+	      It overrides the <varname><link linkend="setting.cmn.view.opts">CMN-VIEW-OPTS</link></varname> setting if used.
+  	  </para>
+          </listitem>
+        </varlistentry>
+	</variablelist> 
+    </section>
+  </section>
+  <section id="section.outputs14">
+    <title>MIDI</title>  
+    <para>
+      This requires <application>Common Music</application> to output MIDI data.  
+      The purpose of this backend is to allow the user to hear the results after any changes and adjustments made to the music
+      (for example, quantizing).
+      It should not be used as input to a score notation program, since the output data will not precisely match the input data.
+      <application>FOMUS</application> attempts to accurately simulate most of <application>FOMUS</application>'s markings (trills, dynamic markings, etc.).
+      Users can override how marks are interpretted by using the <varname><link linkend="midi.events.fun">EVENTS-FUN</link></varname> option to
+      provide their own instructions.
+      Output can also be tweaked using most of the options listed below.
+    </para>
+    <para>
+      See the <classname><link linkend="struct.instr">INSTR</link></classname> and <classname><link linkend="struct.perc">PERC</link></classname>
+      structures for information on how to define MIDI data for <application>FOMUS</application>'s instruments.
+    </para>
+    <para>
+      MIDI output is be routed either to a file or to <application>Common Music</application>'s realtime scheduler, the latter being advantageous if more than 16
+      channels are necessary (see the <varname><link linkend="midi.play">PLAY</link></varname> option).
+      Also, the <varname><link linkend="midi.cm.args">CM-ARGS</link></varname> option may be used to send <application>Common Music</application> specific
+      arguments to its <function>EVENTS</function> or <function>RTS</function> function, whichever is used.
+      <application>FOMUS</application> uses floating point velocity (or amplitude) values (0.0 to 1.0).
+    </para>
+    <section id="section.outputs15">
+      <title>MIDI Options</title>
+      <simplelist type="vert" columns="3">
+        <member><varname><link linkend="midi.filename">:FILENAME</link></varname></member>
+        <member><varname><link linkend="midi.midi.filename">:MIDI-FILENAME</link></varname></member>
+        <member><varname><link linkend="midi.play">:PLAY</link></varname></member>
+        <member><varname><link linkend="midi.cm.args">:CM-ARGS</link></varname></member>
+        <member><varname><link linkend="midi.events.fun">:EVENTS-FUN</link></varname></member>
+        <member><varname><link linkend="midi.delay">:DELAY</link></varname></member>
+        <member><varname><link linkend="midi.nports">:NPORTS</link></varname></member>
+        <member><varname><link linkend="midi.tempo">:TEMPO</link></varname></member>
+        <member><varname><link linkend="midi.arpatt">:ARPATT</link></varname></member>
+        <member><varname><link linkend="midi.breath.dur">:BREATH-DUR</link></varname></member>
+        <member><varname><link linkend="midi.instr.per.ch">:INSTR-PER-CH</link></varname></member>
+        <member><varname><link linkend="midi.fermata.mults">:FERMATA-MULTS</link></varname></member>
+        <member><varname><link linkend="midi.grace.dur.secs">:GRACE-DUR-SECS</link></varname></member>
+        <member><varname><link linkend="midi.harmatt">:HARMATT</link></varname></member>
+        <member><varname><link linkend="midi.min.amp">:MIN-AMP</link></varname></member>
+        <member><varname><link linkend="midi.mindur.secs">:MINDUR-SECS</link></varname></member>
+        <member><varname><link linkend="midi.pbend.width">:PBEND-WIDTH</link></varname></member>
+        <member><varname><link linkend="midi.portato.mult">:PORTATO-MULT</link></varname></member>
+        <member><varname><link linkend="midi.slur.adddur">:SLUR-ADDDUR</link></varname></member>
+        <member><varname><link linkend="midi.staccatissimo.mult">:STACCATISSIMO-MULT</link></varname></member>
+        <member><varname><link linkend="midi.staccato.mult">:STACCATO-MULT</link></varname></member>
+        <member><varname><link linkend="midi.tenuto.adddur">:TENUTO-ADDDUR</link></varname></member>
+        <member><varname><link linkend="midi.tramp">:TRAMP</link></varname></member>
+        <member><varname><link linkend="midi.trdur.secs">:TRDUR-SECS</link></varname></member>
+        <member><varname><link linkend="midi.trovlp.adddur">:TROVLP-ADDDUR</link></varname></member>
+        <member><varname><link linkend="midi.midi.filename">:MIDI-FILENAME</link></varname></member>
+      </simplelist>
+    </section>
+    <section id="section.outputs16">
+      <title>Alphabetical Listing of Options</title>    
+      <variablelist>
+        <varlistentry>
+          <term><varname><anchor id="midi.arpatt"/>:ARPATT</varname></term>
+          <listitem>
+            <para>
+	      A real number from <literal>0</literal> to <literal>1</literal> specifying the amount of 
+	      attenuation to apply to arpeggios to make them sound more natural (a crescendo is also added).
+	      The number is subtracted from the velocities of the events. 
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.breath.dur"/>:BREATH-DUR</varname></term>
+          <listitem>
+            <para>
+	      A real number greater than <literal>0</literal> specifying the duration in beats of a breath mark.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.cm.args"/>:CM-ARGS</varname></term>
+          <listitem>
+            <para>
+	      This is a list of arguments that are sent to <application>Common Music</application>'s
+	      <function>EVENTS</function> or <function>RTS</function> function, whichever is used.
+	      <application>FOMUS</application> overrides the <literal>:TEMPO</literal> and <literal>:PLAY</literal> keyword arguments to
+	      these functions.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.delay"/>:DELAY</varname></term>
+          <listitem>
+            <para>
+	      A real number greater than or equal to <literal>0</literal> specifying a delay time in seconds to be inserted at the
+	      beginning of the MIDI file or output (useful if the score takes several seconds to appear on the screen).
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.events.fun"/>:EVENTS-FUN</varname></term>
+          <listitem>
+            <para>
+	      This options provides a way of overriding <application>FOMUS</application>'s default interpretation of marks into MIDI events.
+	      It is a function of the form 
+	      <function>(lambda (<userinput>ev</userinput> <userinput>mark</userinput> <userinput>arg1</userinput> <userinput>arg2</userinput>) ...)</function>,
+	      where <userinput>ev</userinput> is either a single <application>Common Music</application> <classname>MIDI</classname> object or a list of such objects, 
+	      <userinput>mark</userinput> is a keyword symbol specifying what modifications should occur, and <userinput>arg1</userinput> and
+	      <userinput>arg2</userinput> are input arguments specific to each mark.
+	      The function may either modify the <classname>MIDI</classname> event objects or create new ones using <application>Common Music</application>
+	      functions (or return a mixture of both).  
+	      The return value is either a single <classname>MIDI</classname> object, a list of <classname>MIDI</classname> objects, 
+	      <literal>NIL</literal> or <literal>'(NIL)</literal>.
+	      Returning <literal>NIL</literal> indicates that <application>FOMUS</application> should use its default function to interpret the mark.
+	      <literal>'(NIL)</literal> indicates that the return value actually is an empty list of events (and that the default function should not
+	      be called)--they will then be deleted from the output.
+	    </para>
+	    <para>  
+	      The user should not worry about how multiple marks will affect either other.  
+	      For example, a note with both <literal>:TREMOLO</literal> and <literal>:ACCENT</literal> marks will be passed to the user function
+	      first with the <literal>:TREMOLO</literal> keyword. Next (assuming the user returned multiple <classname>MIDI</classname> events)
+	      only the first note of the tremolo is passed to this function with the <literal>:ACCENT</literal> keyword.
+	      The user function should then only deal directly with what it is given and allow <application>FOMUS</application> to handle
+	      the sorting out of these details and applying them to the correct notes.
+	      Also, the dynamic markings <literal>:PPPPPP</literal> through <literal>:FFFFFF</literal> are translated before any other dynamics-related
+	      markings, so user code should set the amplitudes of <classname>MIDI</classname> objects to some initial value in these cases.
+	      Subsequent handling of other dynamics-related marks can then alter MIDI amplitude values in whatever ways are appropriate.
+	    </para>
+	    <para>  
+	      Marks that are sent via the <userinput>mark</userinput> argument are listed here (with <userinput>arg1</userinput> and <userinput>arg2</userinput>
+	      if appropriate).
+	      Marks beginning with <literal>:SPAN-</literal> accompany a list of events to modify and correspond to what are called "spanner" marks in
+	      <link linkend="marks" endterm="marks.title"/>.
+	      <simplelist>
+	      <member><literal>:FFFFFF</literal></member>
+	      <member><literal>:FFFFF</literal></member>
+	      <member><literal>:FFFF</literal></member>
+	      <member><literal>:FFF</literal></member> 
+	      <member><literal>:FF</literal></member> 
+	      <member><literal>:F</literal></member> 
+	      <member><literal>:MF</literal></member> 
+	      <member><literal>:MP</literal></member> 
+	      <member><literal>:P</literal></member> 
+	      <member><literal>:PP</literal></member> 
+	      <member><literal>:PPP</literal></member> 
+	      <member><literal>:PPPP</literal></member> 
+	      <member><literal>:PPPPP</literal></member> 
+	      <member><literal>:PPPPPP</literal></member>
+	      <member><literal>:RFZ</literal></member> 
+	      <member><literal>:SFZ</literal></member> 
+	      <member><literal>:SPP</literal></member>
+	      <member><literal>:SP</literal></member>
+	      <member><literal>:SFF</literal></member>
+	      <member><literal>:SF</literal></member>
+	      <member><literal>:FP</literal></member>
+	      <member><literal>:STACCATO</literal></member> 
+	      <member><literal>:STACCATISSIMO</literal></member> 
+	      <member><literal>:PORTATO</literal></member> 
+	      <member><literal>:TENUTO</literal></member> 
+	      <member><literal>:MARCATO</literal></member> 
+	      <member><literal>:ACCENT</literal></member> 
+	      <member><literal>:SPAN-SLUR (<userinput>arg1</userinput> is the slur level)</literal></member>	      
+	      <member><literal>:FERMATA (<userinput>arg1</userinput> is either <literal>:SHORT</literal>, <literal>:LONG</literal> or 
+                               <literal>:VERYLONG</literal>)</literal></member>	      
+	      <member><literal>:BREATH</literal></member>
+	      <member><literal>:TREMOLO</literal> (<userinput>arg1</userinput> is the number of tremolo subdivisions, 
+                               <userinput>arg2</userinput> is 1/8 for eighth-note subdivions, 1/16 for sixteenths, etc.)</member>
+	      <member><literal>:SPAN-TREMFIRST</literal> (<userinput>arg1</userinput> and <userinput>arg2</userinput> 
+                               are the same as with <literal>:TREMOLO</literal>)</member>
+	      <member><literal>:SPAN-TREMSECOND</literal> (<userinput>arg1</userinput> and <userinput>arg2</userinput> 
+                               are the same as with <literal>:TREMOLO</literal>)</member>
+	      <member><literal>:TRILL</literal> (<userinput>arg1</userinput> is the additional trill pitch)</member>
+	      <member><literal>:LONGTRILL</literal> (<userinput>arg1</userinput> is the additional trill pitch)</member>
+	      <member><literal>:PRALL</literal> (<userinput>arg1</userinput> is the additional prall pitch)</member>
+	      <member><literal>:MORDENT</literal> (<userinput>arg1</userinput> is the additional mordent pitch)</member>
+	      <member><literal>:SPAN-ARP</literal> (<userinput>arg1</userinput> is either <literal>:UP</literal>, <literal>:DOWN</literal> or <literal>NIL</literal>, 
+                               <userinput>arg2</userinput> is the offset of the previous note)</member>
+	      <member><literal>:SPAN-PORT</literal></member>
+	      <member><literal>:SPAN-GLISS</literal></member>	      
+	      <member><literal>:SPAN-WEDGE&lt;</literal> (<userinput>arg1</userinput> is the destination amplitude or velocity, 
+                               <userinput>arg2</userinput> is the offset of the event following the last event of the wedge)</member>	      
+	      <member><literal>:SPAN-WEDGE&gt;</literal> (<userinput>arg1</userinput> and <userinput>arg2</userinput> 
+                               are the same as with <literal>:SPAN-WEDGE&lt;</literal>)</member>	      
+	      <member><literal>:HARMONIC</literal> (<userinput>arg1</userinput> is either <literal>:SOUNDING</literal> or <literal>:TOUCHED</literal>, 
+                               <userinput>arg2</userinput> is the sounding pitch in either case)</member>
+	      <member><literal>:ARCO</literal></member>
+	      <member><literal>:PIZZ</literal></member>
+	      <member><literal>:STOPPED</literal></member>
+	      <member><literal>:OPEN</literal></member> 
+	      <member><literal>:FLAGEOLET</literal></member> 
+	      </simplelist>
+  	    </para>	    
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.fermata.mults"/>:FERMATA-MULTS</varname></term>
+          <listitem>
+            <para>
+	      This is a list of three real numbers greater than <literal>0</literal>, specifying how much to increase (by multiplying) the durations
+	      of notes that have fermatas over them.
+	      The three values each correspond to short, long and very long fermatas.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.filename"/>:FILENAME</varname></term>
+          <listitem>
+            <para>
+	      This is a string representing the output filename.
+	      It overrides the <varname><link linkend="setting.filename">FILENAME</link></varname> setting if used.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.grace.dur.secs"/>:GRACE-DUR-SECS</varname></term>
+          <listitem>
+            <para>
+	      A real number greater than <literal>0</literal> specifying the default MIDI grace note duration in seconds.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.harmatt"/>:HARMATT</varname></term>
+          <listitem>
+            <para>
+	      A real number from <literal>0</literal> to <literal>1</literal> specifying the amount of 
+	      attenuation to apply to harmonics to make them sound closer to what is expected.	      
+	      The number is subtracted from the velocities of the events. 
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.instr.per.ch"/>:INSTR-PER-CH</varname></term>
+          <listitem>
+            <para>
+	      When set to an integer value greater than or equal to <literal>1</literal>, specifies how many parts with similar instruments
+	      (ie. with equivalent MIDI program change values) are stuffed into one MIDI channel or track.
+	      A value of <literal>NIL</literal> indicates that all parts with the same program change indicated in their 
+	      <classname><link linkend="struct.instr">INSTR</link></classname> objects are to be put into a single channel.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.midi.filename"/>:MIDI-FILENAME</varname></term>
+          <listitem>
+            <para>
+	      This is a part option (see the <classname><link linkend="class.part">PART</link></classname> class).
+	      It is a string representing a filename for a separate output file--<application>FOMUS</application> fills this with 
+	      MIDI data only for the part that it is specified in.
+	      These strings are "merged" with <varname><link linkend="midi.filename">FILENAME</link></varname> using Lisp's <function>MERGE-PATHNAMES</function> function
+	      so that if a full path isn't specified it appears in the same directory as <link linkend="midi.filename">FILENAME</link>.
+	      Parts with the same <varname><link linkend="midi.midi.filename">MIDI-FILENAME</link></varname> are grouped together so that
+	      all of their output is written to one file.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.min.amp"/>:MIN-AMP</varname></term>
+          <listitem>
+            <para>
+	      A real number from <literal>0</literal> to <literal>1</literal> specifying a minimum velocity value for all midi events.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.mindur.secs"/>:MINDUR-SECS</varname></term>
+          <listitem>
+            <para>
+	      This real number specifies an absolute minimum duration in seconds for all midi events.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.nports"/>:NPORTS</varname></term>
+          <listitem>
+            <para>
+	      If realtime playback is specified using the <varname><link linkend="midi.play">PLAY</link></varname> option, this integer
+	      value specifies the number of ports to use.
+	      The default is <literal>1</literal>.
+	      If output is to a MIDI file, then this value will be <literal>1</literal> regardless of what is specified.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.pbend.width"/>:PBEND-WIDTH</varname></term>
+          <listitem>
+            <para>
+	      This is equivalent to the <literal>:PITCH-BEND-WIDTH</literal> option used when opening MIDI streams in <application>Common Music</application>.
+	      It is a real number greater than <literal>0</literal>, specifying the maximum pitch bend range in semitones used to calculate
+	      pitch bend values for quartertone playback.
+	      The default is <literal>2</literal>.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.play"/>:PLAY</varname></term>
+          <listitem>
+            <para>
+	      If set to <literal>NIL</literal> or <literal>T</literal>, specifies that output is to a MIDI file.
+	      <literal>T</literal> indicates that the output should be played automatically (equivalent to sending <literal>:PLAY T</literal> to
+	      <application>Common Music</application>'s <function>EVENTS</function> function).
+	      If set to a <application>Common Music</application> MIDI stream, indicates that the <function>RTS</function> function should be used
+	      and the MIDI events scheduled for realtime playback.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.portato.mult"/>:PORTATO-MULT</varname></term>
+          <listitem>
+            <para>
+	      A real number greater than <literal>0</literal> indicating the amount to increase (by multiplying) the duration
+	      of MIDI events with portato markings.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.slur.adddur"/>:SLUR-ADDDUR</varname></term>
+          <listitem>
+            <para>
+	      A real number greater than or equal to <literal>0</literal> indicating the amount of beats to add to the duration
+	      of slurred events (causing them to overlap slightly).
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.staccatissimo.mult"/>:STACCATISSIMO-MULT</varname></term>
+          <listitem>
+            <para>
+	      A real number greater than <literal>0</literal> indicating the amount to increase (by multiplying) the duration
+	      of MIDI events with staccatissimo markings.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.staccato.mult"/>:STACCATO-MULT</varname></term>
+          <listitem>
+            <para>
+	      A real number greater than <literal>0</literal> indicating the amount to increase (by multiplying) the duration
+	      of MIDI events with staccato markings.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.tempo"/>:TEMPO</varname></term>
+          <listitem>
+            <para>
+	      A real number greater than or equal to <literal>0</literal> specifying the MIDI playback tempo.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.tenuto.adddur"/>:TENUTO-ADDDUR</varname></term>
+          <listitem>
+            <para>
+	      A real number greater than or equal to <literal>0</literal> indicating the amount of beats to add to the duration
+	      of MIDI events with tenuto markings.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.tramp"/>:TRAMP</varname></term>
+          <listitem>
+            <para>
+	      A real number from <literal>0</literal> to <literal>1</literal> specifying the amount of 
+	      amplification to apply to MIDI events that are a part of a trill or tremolo.
+	      The number is added to the velocities of the events.
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.trdur.secs"/>:TRDUR-SECS</varname></term>
+          <listitem>
+            <para>
+	      A real number greater than <literal>0</literal> indicating the duration in seconds of an individual
+	      MIDI event in a trill or tremolo.
+	      (For tremolos it is the minimum duration of an individual MIDI event.)
+  	  </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term><varname><anchor id="midi.trovlp.adddur"/>:TROVLP-ADDDUR</varname></term>
+          <listitem>
+            <para>
+	      A real number greater than or equal to <literal>0</literal> indicating the amount of beats to add to the duration
+	      of MIDI events that are a part of a trill or tremolo.
+  	  </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+  </section>
+  <section id="section.outputs17">
+    <title>CHUNK</title>
+    <para>
+      (See <link linkend="interface.chunks" endterm="interface.chunks.title"/>.)
+      This keyword tells <application>FOMUS</application> to process the input and output a chunk.  
+      Use it when there are no other backends specified (<application>FOMUS</application> complains otherwise).  The <literal>:NONE</literal> keyword can also be used.
+    </para>
+  </section>
+</chapter>

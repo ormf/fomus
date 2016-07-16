@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Class TIMESIG-REPL</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch04.html" title="Chapter&#160;4.&#160;Objects" /><link rel="prev" href="ch04s03.html" title="Class TIMESIG" /><link rel="next" href="ch04s05.html" title="Class KEYSIG" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Class TIMESIG-REPL</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04s03.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;4.&#160;Objects</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch04s05.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.objects4"></a>Class TIMESIG-REPL</h2></div></div></div><p>
+      A <code class="classname"><a href="ch04s04.html#class.timesig.repl">TIMESIG-REPL</a></code> object is a "replacement"
+      <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> object.
+      They are used in the <em class="structfield"><code><a href="ch04s03.html#timesig.repl">REPL</a></code></em> slot of
+      <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> objects and in
+      the FIXME setting, and are simply <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> objects with missing
+      <em class="structfield"><code><a href="ch04s03.html#timesig.off">OFF</a></code></em>,
+      <em class="structfield"><code><a href="ch04s03.html#timesig.partids">PARTIDS</a></code></em> and
+      <em class="structfield"><code><a href="ch04s03.html#timesig.repl">REPL</a></code></em> slots.
+      The use of these is optional.
+      They are included for the sake of conciseness and to (hopefully) eliminate confusion.
+    </p><p>
+      Since this class is nearly equivalent to the <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> class, no slot descriptions are given here.
+      See the <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> class for an explanation of all the slots.
+      The predicate function <code class="function">TIMESIGP</code> returns <code class="literal">T</code> for both
+      <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> and <code class="classname"><a href="ch04s04.html#class.timesig.repl">TIMESIG-REPL</a></code> classes.
+    </p><p>Constructor: 
+      <code class="function">(MAKE-TIMESIG-REPL &amp;key
+        :ID <strong class="userinput"><code>id</code></strong>
+	:TIME <strong class="userinput"><code>time</code></strong>
+	:COMP <strong class="userinput"><code>comp</code></strong>
+	:BEAT <strong class="userinput"><code>beat</code></strong>
+	:DIV <strong class="userinput"><code>div</code></strong>
+	:PROPS <strong class="userinput"><code>props</code></strong>)</code>
+    </p><p>Copy Function: 
+      <code class="function">(COPY-TIMESIG-REPL <strong class="userinput"><code>timesig-repl</code></strong> &amp;key
+        :ID <strong class="userinput"><code>id</code></strong>
+	:TIME <strong class="userinput"><code>time</code></strong>
+	:COMP <strong class="userinput"><code>comp</code></strong>
+	:BEAT <strong class="userinput"><code>beat</code></strong>
+	:DIV <strong class="userinput"><code>div</code></strong>
+	:PROPS <strong class="userinput"><code>props</code></strong>)</code>
+    </p><p>Predicate Function: <code class="function">(TIMESIGP <strong class="userinput"><code>obj</code></strong>)</code></p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04s03.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch04s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Class TIMESIG&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Class KEYSIG</td></tr></table></div></body></html>

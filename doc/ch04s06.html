@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Class NOTE</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch04.html" title="Chapter&#160;4.&#160;Objects" /><link rel="prev" href="ch04s05.html" title="Class KEYSIG" /><link rel="next" href="ch04s07.html" title="Class REST" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Class NOTE</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04s05.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;4.&#160;Objects</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch04s07.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.objects6"></a>Class NOTE</h2></div></div></div><p>
+      The <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> object will usually be the only object required to describe
+      musical events that occur in the score.
+      It allows the user to specify pitch, offset and duration as well as which voice the event belongs to.
+      A special slot, <em class="structfield"><code><a href="ch04s06.html#note.marks">MARKS</a></code></em>, allows for a wide variety of other information including
+      articulations, clef and staff change overrides, "spanners" like slurs or dashed lines with text, etc..
+      <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code>, <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code>
+      and <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> objects are all
+      considered "events," and so all of their important accessors begin with an <code class="function">EVENT-</code> prefix.
+    </p><p>
+      <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> objects are passed to <span class="application">FOMUS</span> by including them either
+      in the <em class="structfield"><code><a href="ch04s02.html#part.events">EVENTS</a></code></em> slot list of a <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> object or in
+      the global <code class="varname"><a href="ch05s04.html#setting.events">EVENTS</a></code> list.
+      <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> objects listed inside a part apply only to that part (unless the
+      <em class="structfield"><code><a href="ch04s06.html#note.partid">PARTID</a></code></em> slot indicates otherwise).
+      <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> objects in the <code class="varname"><a href="ch05s04.html#setting.events">EVENTS</a></code>
+      list are distributed to parts according to the contents their
+      <em class="structfield"><code><a href="ch04s06.html#note.partid">PARTID</a></code></em> slot values.
+    </p><p>Constructor: 
+      <code class="function">(MAKE-NOTE &amp;key 
+        :ID <strong class="userinput"><code>id</code></strong>
+	:PARTID <strong class="userinput"><code>partid</code></strong>
+        :VOICE <strong class="userinput"><code>voice</code></strong>
+	:OFF <strong class="userinput"><code>off</code></strong>
+	:DUR <strong class="userinput"><code>dur</code></strong>
+	:NOTE <strong class="userinput"><code>note</code></strong>
+	:MARKS <strong class="userinput"><code>marks</code></strong>)</code>
+    </p><p>Copy Function: 
+      <code class="function">(COPY-NOTE <strong class="userinput"><code>note</code></strong> &amp;key
+        :ID <strong class="userinput"><code>id</code></strong>
+	:PARTID <strong class="userinput"><code>partid</code></strong>
+        :VOICE <strong class="userinput"><code>voice</code></strong>
+	:OFF <strong class="userinput"><code>off</code></strong>
+	:DUR <strong class="userinput"><code>dur</code></strong>
+	:NOTE <strong class="userinput"><code>note</code></strong>
+	:MARKS <strong class="userinput"><code>marks</code></strong>)</code>
+    </p><p>Predicate Function: <code class="function">(NOTEP <strong class="userinput"><code>obj</code></strong>)</code></p><p>Accessors:
+      </p><div class="variablelist"><dl><dt><span class="term"><code class="function"><a id="note.id"></a>OBJ-ID</code></span></dt><dd><p>
+	      This slot isn't used by FOMUS.
+	    </p></dd><dt><span class="term"><code class="function"><a id="note.partid"></a>EVENT-PARTID</code></span></dt><dd><p>
+	      This is a reference to a particular part or group of parts.
+	      If the value of this slot is <code class="literal">NIL</code>, the event is included in whatever part contains it in its
+	      <em class="structfield"><code><a href="ch04s02.html#part.events">EVENTS</a></code></em> slot list, or to all parts if it is included in the global
+	      <code class="varname"><a href="ch05s04.html#setting.events">EVENTS</a></code> list.
+   	      If the value is a symbol, number, or list of symbols or numbers, these values are used to lookup which part or parts the event belongs to.
+	      Events belonging to multiple parts are effectively copied into these parts.
+	    </p></dd><dt><span class="term"><code class="function"><a id="note.voice"></a>EVENT-VOICE</code></span></dt><dd><p>
+	      This is an integer or a list of integers specifying a voice or selection of voices that this note
+	      should belong to.
+	      Voice numbers are limited to the integers 1 through 4.
+	      The default value <code class="literal">NIL</code> specifies voice 1.
+	      If a list of choices is given, <span class="application">FOMUS</span>'s voice distribution algorithm will try to make
+	      an intelligent decision based on voice leading, pitch, balance and other factors.
+	      Note that <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> and <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code>
+	      objects use this value slightly differently.
+	    </p></dd><dt><span class="term"><code class="function"><a id="note.off"></a>EVENT-OFF</code></span></dt><dd><p>
+	      This is a number (real, ratio or integer) specifying the absolute position for the onset for this note.
+	      The offset is measured in "beats," which may indicate different notational values depending on what the
+	      current time signature is and what value is present in its <em class="structfield"><code><a href="ch04s03.html#timesig.beat">BEAT</a></code></em> slot.
+	      <span class="application">FOMUS</span>'s quantizing algorithm tries to fit all offsets and durations into values
+	      that make the best use of tuplets within given constraints while minimizing the amount of error.
+	      If this quantizing algorithm is switched off, then the user must insure that all offset and duration values
+	      are precise and "notatable" (floating point numbers are not recommended in this case).
+	    </p></dd><dt><span class="term"><code class="function"><a id="note.dur"></a>EVENT-DUR</code></span></dt><dd><p>
+	      This is set to either a number to specify a regular duration or a list to specify a grace note.
+  	      If it's a number (real, ratio or integer) it indicates the note's duration in beats (see <code class="function">EVENT-OFF</code> above).
+	      The comments in <code class="function">EVENT-OFF</code> on quantization also apply here.
+	      If <span class="application">Common Music</span> is present and <code class="varname"><a href="ch05s04.html#setting.use.cm">USE-CM</a></code> is set to <code class="literal">T</code>,
+	      the value of this slot may also be a symbol, which is parsed by <span class="application">CM</span> using its <code class="function">RHYTHM</code>
+	      function.
+	      Symbols in this case designate notational values and not beats, although
+	      numbers are still interpreted with respect to beats and not filtered through <span class="application">CM</span>'s
+	      <code class="function">RHYTHM</code> function.
+	    </p><p>
+	      If a grace note is desired then a list of two elements must be specified, the first element being the duration value described above
+	      and the second element being an integer value describing the "position" that the grace note occupies.
+	      Grace notes with the same offset are organized with respect to this position number.
+	      Lower position grace notes occur earlier in the score than higher position notes.
+	      Grace notes with the same position form chords, and notes with negative positions are notated with a slash.
+	      The duration value at the front of the list is still interpreted in terms of beats and notated as such even though
+	      the note does not take up time in the measure.
+	      Specifying a duration of <code class="literal">'(1/4 -1)</code>, for example, specifies a grace sixteenth note with a slash
+	      if the current beat is 1/4 (a quarter note).
+	    </p></dd><dt><span class="term"><code class="function"><a id="note.note"></a>EVENT-NOTE</code></span></dt><dd><p>
+	      This slot either designates a pitch (with an optional choice of spellings) or a percussion instrument if the part is a
+	      percussion part.
+	      If specifying a pitch, the value may be either a symbol or a number (real, ratio or integer).
+	      If a number is used, 60 represents middle C, as in a MIDI file.
+	      Numbers are rounded depending on the whether semitones or quartertones are specified (see the
+	      <code class="varname"><a href="ch05s04.html#setting.quartertones">QUARTERTONES</a></code> setting).
+	      Symbols are assembled by concatenating a note letter name (<code class="literal">A</code> through <code class="literal">G</code>),
+	      a <code class="literal">+</code> or <code class="literal">S</code> for sharp or a <code class="literal">-</code> or <code class="literal">F</code> for flat, and an
+	      integer designating the register (<code class="literal">4</code> is the octave above middle C).
+	      A few examples are given here:
+       	    </p><div class="example"><a id="event.note.slot.setting1"></a><p class="title"><b>Example&#160;4.3.&#160;EVENT-NOTE Slot Setting 1</b></p><div class="example-contents"><pre class="programlisting">
+
+'c+4
+                </pre></div></div><p><br class="example-break" />	      
+       	    </p><div class="example"><a id="event.note.slot.setting2"></a><p class="title"><b>Example&#160;4.4.&#160;EVENT-NOTE Slot Setting 2</b></p><div class="example-contents"><pre class="programlisting">
+
+'ef5
+                </pre></div></div><p><br class="example-break" />	      
+	      Quartertones must be specified using numbers.
+	      If <span class="application">Common Music</span> is present and <code class="varname"><a href="ch05s04.html#setting.use.cm">USE-CM</a></code> is set to <code class="literal">T</code>,
+	      symbols are filtered through <span class="application">CM</span>'s <code class="function">KEYNUM</code> function.
+	      In this case, the value of <code class="varname"><a href="ch05s04.html#setting.cm.scale">CM-SCALE</a></code> will also be passed to the function if it is set to anything other
+	      than <code class="literal">NIL</code>.
+	    </p><p>
+	      If a list of spelling choices is supplied, <span class="application">FOMUS</span> will try to use the note spellings in this list.
+	      To specify one, the value of the <em class="structfield"><code><a href="ch04s06.html#note.note">NOTE</a></code></em>
+	      slot must be a list, the first element of which is the note number
+	      or symbol described above and the rest of which is the list of spelling choices.
+	      A spelling choice is represented either by a number or symbol.
+	      <code class="literal">1</code>, <code class="literal">+</code> or <code class="literal">S</code> designates using a sharp while
+	      <code class="literal">-1</code>, <code class="literal">-</code> or <code class="literal">F</code> designates a flat.
+	      <code class="literal">0</code>, <code class="literal">N</code> designates a natural while repeating one of the above symbols (for example,
+	      <code class="literal">++</code> or <code class="literal">SS</code>) designates a double sharp or flat.
+	      <code class="literal">2</code> or <code class="literal">-2</code> also designates a double sharp or flat.
+	      Quartertones spellings are specified using a list of two elements, the first element specifying the semitone
+	      alteration and the second element specifying the quartertone alteration (one of the numbers
+	      <code class="literal">-1/2</code>, <code class="literal">0</code> or <code class="literal">1/2</code>).
+	      A few examples are given here:
+       	    </p><div class="example"><a id="event.note.slot.setting3"></a><p class="title"><b>Example&#160;4.5.&#160;EVENT-NOTE Slot Setting 3</b></p><div class="example-contents"><pre class="programlisting">
+
+'(f4 + --)
+                </pre></div></div><p><br class="example-break" />	      
+       	    </p><div class="example"><a id="event.note.slot.setting4"></a><p class="title"><b>Example&#160;4.6.&#160;EVENT-NOTE Slot Setting 4</b></p><div class="example-contents"><pre class="programlisting">
+
+'(61.5 (n -1/2))
+                </pre></div></div><p><br class="example-break" />	      
+	      If <span class="application">FOMUS</span>'s note spelling algorithm is switched off then all note spellings must be supplied by the user
+	      (so each <em class="structfield"><code><a href="ch04s06.html#note.note">NOTE</a></code></em> slot must contain a list of two elements
+	      specifying the pitch and its spelling, unless it is spelled with a natural).
+	    </p></dd><dt><span class="term"><code class="function"><a id="note.marks"></a>EVENT-MARKS</code></span></dt><dd><p>
+	      This slot is nearly equivalent to the <em class="structfield"><code><a href="ch04s08.html#mark.marks">MARKS</a></code></em>
+	      slot in the <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code>
+	      class described below.
+	      The contents of the <em class="structfield"><code><a href="ch04s08.html#mark.marks">MARKS</a></code></em> slots of
+	      <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> objects are actually dumped
+	      into the <em class="structfield"><code><a href="ch04s06.html#note.marks">MARKS</a></code></em> slots of <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> and
+	      <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> objects
+	      once voices and staves have been decided.
+	      See the <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> class for more information and
+	      <a href="ch06.html" title="Chapter&#160;6.&#160;Marks">Marks</a> for a more detailed explanation of marks and their usage.
+	    </p></dd></dl></div><p>
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04s05.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch04s07.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Class KEYSIG&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Class REST</td></tr></table></div></body></html>

@@ -1,0 +1,859 @@
+<chapter id="examples">
+  <title id="examples.title">Examples</title>
+  <section id="section.examples1">
+  <para>
+     These examples (will eventually) show most of <application>FOMUS</application>'s functionality and hopefully eliminate the need to spend
+     countless hours figuring out settings, how to create objects, etc..  Examples using different interfaces 
+     (see <link linkend="usage" endterm="usage.title"/>) are given.
+     The images were all generated using <application>LilyPond</application> 2.8.
+  </para>
+  </section>
+  <section id="section.examples2">
+    <title>Lisp Examples</title>
+      <example id="example.simp">
+        <title>Simple Example</title>
+	<programlisting>
+<![CDATA[
+(fomus
+ :output '(:lilypond :view t)
+ :parts
+ (list
+  (make-part
+   :name "Piano"
+   :instr :piano
+   :events
+   (loop
+    for off from 0 to 10 by 1/2
+    collect (make-note :off off
+		       :dur (if (< off 10) 1/2 1)
+		       :note (+ 48 (random 25)))))))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_simp_ex.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.accents">
+        <title>Staccato and Accent Marks</title>
+	<programlisting>
+<![CDATA[
+(fomus
+ :output '(:lilypond :view t)
+ :parts
+ (list
+  (make-part
+   :name "Piano"
+   :instr :piano
+   :events
+   (loop
+    for off from 0 to 10 by 1/2
+    collect (make-note :off off
+		       :dur (if (< off 10) 1/2 1)
+		       :note (+ 48 (random 25))
+		       :marks (case (random 3)
+				(0 nil)
+				(1 '(:staccato))
+				(2 '(:accent))))))))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_accents.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.qtones">
+        <title>Quartertones</title>
+	<programlisting>
+<![CDATA[
+(fomus
+ :output '(:lilypond :view t)
+ :quartertones t
+ :parts
+ (list
+  (make-part
+   :name "Flute"
+   :instr :flute
+   :events
+   (loop
+    for off from 0 to 10 by 1/2
+    collect (make-note :off off
+		       :dur (if (< off 10) 1/2 1)
+		       :note (+ 70 (/ (random 4) 2)))))))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_qtones.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.poly.slurs">
+        <title>Polyphony with Slurs</title>
+	<programlisting>
+<![CDATA[
+(fomus
+ :output '(:lilypond :view t)
+ :verbose 1
+ :parts
+ (list
+  (make-part
+   :name "Piano"
+   :instr :piano
+   :events
+   (loop for v from 1 to 2
+	 nconc (loop
+		for off from 0 to 10 by 1/2
+		collect (make-note :off off
+				   :dur (if (< off 10) 1/2 1)
+				   :note (+ 60 (random 25))
+				   :voice v
+				   :marks (when (= (random 3) 0)
+					    '(:startslur-))))))))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_poly_slurs.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.pno.chords">
+        <title>Piano Chords</title>
+	<programlisting>
+<![CDATA[
+(fomus
+ :output '(:lilypond :view t)
+ :verbose 1
+ :ensemble-type :orchestra
+ :parts
+ (list
+  (make-part
+   :name "Piano"
+   :instr :piano
+   :events
+   (loop repeat 3
+	 nconc (loop
+		for off from 0 to 10 by 1/2
+		collect (make-note :off off
+				   :dur (if (< off 10) 1/2 1)
+				   :note (+ 48 (random 25))
+				   :voice '(1 2)))))))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_pno_chords.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.chords2">
+        <title>Quantizing/Chords</title>
+	<programlisting>
+<![CDATA[
+(fomus
+ :output '(:lilypond :view t)
+ :parts
+ (list
+  (make-part
+   :name "Piano"
+   :instr :piano
+   :events
+   (loop repeat 10
+	 for off = (random 30.0)
+	 and dur = (1+ (random 3.0))
+	 collect (make-note :off off :dur dur :note (+ 60 (random 25)))))))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_chords.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.mark.objs">
+        <title>Mark Objects</title>
+	<programlisting>
+<![CDATA[
+(fomus
+ :output '(:lilypond :view t)
+ :parts (list
+	 (make-part
+	  :partid :flute
+	  :name "Flute"
+	  :instr :flute
+	  :events (loop for o from 0 to 20 by 1/2
+			collect (make-note :off o :dur 1/2 :note 72)))
+	 (make-part
+	  :partid :tuba
+	  :name "Tuba"
+	  :instr :tuba
+	  :events (loop for o from 0 to 20 by 1/2
+			collect (make-note :off o :dur 1/2 :note 48))))
+ :events (loop repeat 10
+	       collect (make-mark :partid (case (random 2) (0 :flute) (1 :tuba))
+				  :off (random 20.0)
+				  :marks '(:accent))))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_mark_objs.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.perc1">
+        <title>Percussion 1</title>
+	<programlisting>
+<![CDATA[
+(fomus
+ :output '(:lilypond :view t)
+ :parts (list
+	 (make-part
+	  :name "Percussion"
+	  :instr (list :percussion :percs (list (make-perc :woodblock :note 'e4)
+						(make-perc :snaredrum :note 'a3)))
+	  :events (loop for o from 0 to 20 by 1/2 collect
+			(make-note :off o :dur 1/2
+				   :note (case (random 2)
+					   (0 :woodblock)
+					   (1 :snaredrum)))))))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_perc1.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.perc2">
+        <title>Percussion 2</title>
+	<programlisting>
+<![CDATA[
+(fomus
+ :output '(:lilypond :view t)
+ :parts (list
+	 (make-part
+	  :name "Percussion"
+	  :instr (list :percussion :percs (list (make-perc :woodblock :voice 1 :note 'e4)
+						(make-perc :snaredrum :voice 2 :note 'a3)))
+	  :events (loop for o from 0 to 20 by 1/2 collect
+			(make-note :off o :dur 1/2
+				   :note (case (random 2)
+					   (0 :woodblock)
+					   (1 :snaredrum)))))))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_perc2.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.perc.autodurs">
+        <title>Percussion with Automatic Durations</title>
+	<programlisting>
+<![CDATA[
+(fomus
+ :output '(:lilypond :view t)
+ :parts (list
+	 (make-part
+	  :name "Snare Drum"
+	  :instr '(:percussion :percs ((:snare-drum :note a3)))
+	  :events (loop for o from 0 to 40 by 1/2 when (= (random 2) 0) collect
+			(make-note :off o
+				   :note :snare-drum)))))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_perc_autodurs.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.orch.sco">
+        <title>Semi-Orchestra Score</title>
+	<programlisting>
+<![CDATA[
+(fomus
+ :output '(:lilypond :view t)
+ :ensemble-type :orchestra
+ :global (list (make-timesig :off 0 :time '(3 4)))
+ :parts (list
+	 (make-part
+	  :name "Flute 1"
+	  :instr :flute
+	  :events (list (make-note :off 0 :dur 1 :note 60)))
+	 (make-part
+	  :partid 'fl2
+	  :name "Flute 2"
+	  :instr :flute
+	  :events (list (make-note :off 0 :dur 1 :note 60)))
+	 (make-part
+	  :partid 'cl1
+	  :name "Clarinet 1"
+	  :instr :bf-clarinet
+	  :events (list (make-note :off 0 :dur 1 :note 60)))
+	 (make-part
+	  :name "Clarinet 2"
+	  :instr :bf-clarinet
+	  :events (list (make-note :off 0 :dur 1 :note 60)))
+	 (make-part
+	  :name "Violin 1"
+	  :instr :violin
+	  :events (list (make-note :off 0 :dur 1 :note 60)))
+	 (make-part
+	  :name "Violin 2"
+	  :instr :violin
+	  :events (list (make-note :off 0 :dur 1 :note 60)))
+	 (make-part
+	  :name "Cello 1"
+	  :instr :cello
+	  :events (list (make-note :off 0 :dur 1 :note 48)))
+	 (make-part
+	  :name "Cello 2"
+	  :instr :cello
+	  :events (list (make-note :off 0 :dur 1 :note 48)))
+	 (make-part
+	  :name "Tuba"
+	  :instr :tuba
+	  :events (list (make-note :off 0 :dur 1 :note 36)))))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_orch_sco.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.txtmarks2">
+        <title>Key Signatures</title>
+	<programlisting>
+<![CDATA[
+(fomus
+ :output '(:lilypond :view t)
+ :filename "test.xxx"
+ :verbose 1
+ :global (list (make-timesig :off 0 :time '(5 8) :div '(3/2 1) :props '((:keysig :dmaj))))
+ :auto-cautionary-accs t
+ :parts
+ (list
+  (make-part
+   :name "Piano"
+   :instr '(:piano :simultlim 1)
+   :events
+   (loop
+    for off from 0 to 8 by 1/2
+    collect (make-note :off off
+		       :dur (if (< off 10) 1/2 1)
+		       :note (+ 48 (random 25)))))))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_keysigs1.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.chunks1">
+        <title>Chunks</title>
+	<programlisting>
+<![CDATA[
+(let ((c1 (fomus
+	   :output :chunk
+	   :global (list (make-timesig :off 0 :time '(5 8)))
+	   :auto-cautionary-accs t
+	   :parts
+	   (list
+	    (make-part
+	     :partid 'hp                ; identical ids are matched
+	     :name "Harpsichord"
+	     :instr :harpsichord
+	     :events
+	     (loop
+	      for off from 0 to 8 by 1/2
+	      collect (make-note :off off
+				 :dur (if (< off 8) 1/2 1)
+				 :note (+ 48 (random 25))))))))
+      (c2 (fomus
+	   :output :chunk
+	   :global (list (make-timesig :off 0 :time '(5 8)))
+	   :auto-cautionary-accs t
+	   :parts
+	   (list
+	    (make-part
+	     :partid 'hp
+	     :name "Harpsichord"
+	     :instr :harpsichord
+	     :events
+	     (loop
+	      for off from 10 to 16 by 1/2
+	      collect (make-note :off off
+				 :dur (if (< off 16) 1/2 1)
+				 :note (+ 48 (random 25)))))))))
+  (fomus (list c1 c2)
+	 :output '(:lilypond :view t)))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_chunks1.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+  </section>
+  <section id="section.examples3">
+    <title>Common Music Examples</title>
+      <example id="example.cm.poly1">
+        <title>2 Part Polyphony</title>
+	<programlisting>
+<![CDATA[
+(defparameter *part* (new fms:part :instr :piano :partid 'pno))
+
+(defun polygen (voice len minp maxp)
+  (process repeat len
+	   output (new fms:note
+		    :off (now)
+		    :voice voice
+		    :partid 'pno
+		    :note (between minp maxp)
+		    :dur 1/2)
+	   wait 1/2))
+
+(events (list (polygen 1 20 60 80) (polygen 2 20 40 60)) "/tmp/fomus.ly" :parts *part* :view t)
+]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_cm_poly1.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>      
+      <example id="example.cm.poly2">
+        <title>2 Part Polyphony (FOMUS Chooses the Voice)</title>
+	<programlisting>
+<![CDATA[
+(defparameter *part* (new fms:part :instr '(:piano :simultlim 1) :partid 'pno))
+
+(defun polygen (voice len minp maxp)
+  (process repeat len
+	   output (new fms:note
+		    :off (now)
+		    :voice voice
+		    :partid 'pno
+		    :note (between minp maxp)
+		    :dur 1/2)
+	   wait 1/2))
+
+(events (list (polygen '(1 2) 20 50 80) (polygen '(1 2) 20 40 70)) "/tmp/fomus.ly" :parts *part* :view t)]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_cm_poly2.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>      
+      <example id="example.cm.poly3pt">
+        <title>3 Part Polyphony</title>
+	<programlisting>
+<![CDATA[
+(defparameter *part* (new fms:part :instr '(:piano :simultlim 1) :partid 'pno))
+
+(defun polygen (voice len minp maxp)
+  (process repeat len
+	   output (new fms:note
+		    :off (now)
+		    :voice voice
+		    :partid 'pno
+		    :note (between minp maxp)
+		    :dur 1/2)
+	   wait 1/2))
+
+(events (list (polygen '(1 2 3) 20 50 70) (polygen '(1 2 3) 20 50 70) (polygen '(1 2 3) 20 50 70))
+	"/tmp/fomus.ly" :parts *part* :view t)]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_cm_poly3pt.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>      
+      <example id="example.cm.poly6pt">
+        <title>6 Part Polyphony</title>
+	<programlisting>
+<![CDATA[
+(defparameter *parts*
+  (list (new fms:part :name "Violin 1" :instr :violin :partid 'vlns
+	     :props '((:distr (v2 2) (v3 3) (v4 4) (v5 5) (v6 6))))
+	(new fms:part :name "Violin 2" :instr :violin :partid 'v2)
+	(new fms:part :name "Violin 3" :instr :violin :partid 'v3)
+	(new fms:part :name "Violin 4" :instr :violin :partid 'v4)
+	(new fms:part :name "Violin 5" :instr :violin :partid 'v5)
+	(new fms:part :name "Violin 6" :instr :violin :partid 'v6)))
+
+(defun polygen (voice len minp maxp)
+  (process repeat len
+	   output (new fms:note
+		    :off (now)
+		    :voice voice
+		    :partid 'vlns
+		    :note (between minp maxp)
+		    :dur 1/2)
+	   wait 1/2))
+
+(events (list (polygen '(1 2 3 4 5 6) 20 55 70)
+	      (polygen '(1 2 3 4 5 6) 20 60 75)
+	      (polygen '(1 2 3 4 5 6) 20 65 80)
+	      (polygen '(1 2 3 4 5 6) 20 70 85)
+	      (polygen '(1 2 3 4 5 6) 20 75 90)
+	      (polygen '(1 2 3 4 5 6) 20 80 95))
+	"/tmp/fomus.ly" :parts *parts* :quality 3 :view t)]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_cm_poly6pt.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>      
+  </section>
+  <section id="examples.textinput">
+    <title id="examples.textinput.title">Text Input File Examples</title>
+    <para>
+      Any of the following may be reproduced by saving the example to a file and using the so-called text file or command line interface
+      to process it (see <link linkend="interface.text" endterm="interface.text.title"/> and <link linkend="interface.cmd" endterm="interface.cmd.title"/>
+      for more information).  When an output isn't specified in the file, this must be given in the Lisp function call or at the command line.  Some examples are:
+    </para>
+      <example id="example.text.lisp">
+        <title>Text Input Commands (From Lisp)</title>
+	<programlisting>
+<![CDATA[
+(fomus "/directory/file.fms") ; use values in file
+
+(fomus "/directory/file.fms" :output :musicxml) ; output to MusicXML format
+
+(fomus "/directory/file.fms" :output '(:lilypond :view t)) ; output to LilyPond and open for viewing]]>
+	</programlisting>
+      </example>
+      <example id="example.text.cmd">
+        <title>Text Input Commands (Command Line)</title>
+	<programlisting>
+<![CDATA[
+# print help message
+fomus -h
+
+# use values in file
+fomus /directory/file.fms
+
+# output to MusicXML
+fomus -x /directory/file.fms
+
+# output to LilyPond and open for viewing
+fomus -lw /directory/file.fms]]>
+	</programlisting>
+      </example>
+      <example id="example.txtsimp">
+        <title>Simple Text Input Example</title>
+	<programlisting>
+<![CDATA[
+INIT :output :lilypond
+INIT :filename "/mydir/output"
+
+PART 1 :name "Piano" :instr :piano
+
+NOTE 1 :voice 1 :off 0 :dur 1/2 :note 54
+NOTE 1 :voice 1 :off 1/2 :dur 1/2 :note 60
+NOTE 1 :voice 1 :off 1 :dur 1/2 :note 51
+NOTE 1 :voice 1 :off 3/2 :dur 1/2 :note 61
+NOTE 1 :voice 1 :off 2 :dur 1/2 :note 61
+NOTE 1 :voice 1 :off 5/2 :dur 1/2 :note 61
+NOTE 1 :voice 1 :off 3 :dur 1/2 :note 58
+NOTE 1 :voice 1 :off 7/2 :dur 1/2 :note 65
+NOTE 1 :voice 1 :off 4 :dur 1/2 :note 65
+NOTE 1 :voice 1 :off 9/2 :dur 1/2 :note 58
+NOTE 1 :voice 1 :off 5 :dur 1/2 :note 56
+NOTE 1 :voice 1 :off 11/2 :dur 1/2 :note 50
+NOTE 1 :voice 1 :off 6 :dur 1/2 :note 65
+NOTE 1 :voice 1 :off 13/2 :dur 1/2 :note 62
+NOTE 1 :voice 1 :off 7 :dur 1/2 :note 55
+NOTE 1 :voice 1 :off 15/2 :dur 1/2 :note 49
+NOTE 1 :voice 1 :off 8 :dur 1/2 :note 70
+NOTE 1 :voice 1 :off 17/2 :dur 1/2 :note 72
+NOTE 1 :voice 1 :off 9 :dur 1/2 :note 62
+NOTE 1 :voice 1 :off 19/2 :dur 1/2 :note 54
+NOTE 1 :voice 1 :off 10 :dur 1 :note 68]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_txt_simp_ex.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.txtaccents">
+        <title>Staccato and Accent Marks</title>
+	<programlisting>
+<![CDATA[
+INIT :output (:lilypond :view t)
+INIT :filename "/tmp/output"
+
+PART 1 :name "Piano" :instr :piano
+
+NOTE 1 :voice 1 :off 0 :dur 0.5 :note 53 :marks (:staccato)
+NOTE 1 :voice 1 :off 0.5 :dur 0.5 :note 53 :marks (:accent)
+NOTE 1 :voice 1 :off 1 :dur 0.5 :note 55 :marks (:staccato)
+NOTE 1 :voice 1 :off 1.5 :dur 0.5 :note 62
+NOTE 1 :voice 1 :off 2 :dur 0.5 :note 49
+NOTE 1 :voice 1 :off 2.5 :dur 0.5 :note 50
+NOTE 1 :voice 1 :off 3 :dur 0.5 :note 52 :marks (:staccato)
+NOTE 1 :voice 1 :off 3.5 :dur 0.5 :note 61
+
+NOTE 1 :voice 1 :off 4 :dur 0.5 :note 57
+NOTE 1 :voice 1 :off 4.5 :dur 0.5 :note 63
+NOTE 1 :voice 1 :off 5 :dur 0.5 :note 61 :marks (:staccato)
+NOTE 1 :voice 1 :off 5.5 :dur 0.5 :note 72 :marks (:staccato)
+NOTE 1 :voice 1 :off 6 :dur 0.5 :note 51
+NOTE 1 :voice 1 :off 6.5 :dur 0.5 :note 58
+NOTE 1 :voice 1 :off 7 :dur 0.5 :note 51
+NOTE 1 :voice 1 :off 7.5 :dur 0.5 :note 70 :marks (:accent)
+
+NOTE 1 :voice 1 :off 8 :dur 0.5 :note 52 :marks (:staccato)
+NOTE 1 :voice 1 :off 8.5 :dur 0.5 :note 59 :marks (:accent)
+NOTE 1 :voice 1 :off 9 :dur 0.5 :note 54 :marks (:staccato)
+NOTE 1 :voice 1 :off 9.5 :dur 0.5 :note 68
+NOTE 1 :voice 1 :off 10 :dur 1 :note 48 :marks (:staccato)]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_txt_accents.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.txtperc">
+        <title>Percussion</title>
+	<programlisting>
+<![CDATA[
+PART prc :name "Percussion" :instr (:percussion :percs ((MAKE-PERC :sym :woodblock :staff 1 :voice 1 :note e4 :autodur t :midinote-im nil :midinote-ex nil) \
+                                                        (MAKE-PERC :sym :snaredrum :staff 1 :voice 1 :note a3 :autodur t :midinote-im nil :midinote-ex nil)))
+
+NOTE prc :voice 1 :off 0 :dur 1/2 :note :woodblock
+NOTE prc :voice 1 :off 1/2 :dur 1/2 :note :woodblock
+NOTE prc :voice 1 :off 1 :dur 1/2 :note :woodblock
+NOTE prc :voice 1 :off 3/2 :dur 1/2 :note :snaredrum
+NOTE prc :voice 1 :off 2 :dur 1/2 :note :snaredrum
+NOTE prc :voice 1 :off 5/2 :dur 1/2 :note :woodblock
+NOTE prc :voice 1 :off 3 :dur 1/2 :note :snaredrum
+NOTE prc :voice 1 :off 7/2 :dur 1/2 :note :woodblock
+NOTE prc :voice 1 :off 4 :dur 1/2 :note :woodblock
+NOTE prc :voice 1 :off 9/2 :dur 1/2 :note :woodblock
+NOTE prc :voice 1 :off 5 :dur 1/2 :note :woodblock
+NOTE prc :voice 1 :off 11/2 :dur 1/2 :note :woodblock
+NOTE prc :voice 1 :off 6 :dur 1/2 :note :woodblock
+NOTE prc :voice 1 :off 13/2 :dur 1/2 :note :snaredrum
+NOTE prc :voice 1 :off 7 :dur 1/2 :note :woodblock
+NOTE prc :voice 1 :off 15/2 :dur 1/2 :note :snaredrum
+NOTE prc :voice 1 :off 8 :dur 1/2 :note :snaredrum
+NOTE prc :voice 1 :off 17/2 :dur 1/2 :note :snaredrum
+NOTE prc :voice 1 :off 9 :dur 1/2 :note :woodblock
+NOTE prc :voice 1 :off 19/2 :dur 1/2 :note :woodblock
+NOTE prc :voice 1 :off 10 :dur 1/2 :note :snaredrum]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_txt_perc.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.canning">
+        <title>Articulations</title>
+	<programlisting>
+<![CDATA[
+;; Example by Rob Canning
+
+init :output (:lilypond :view t)
+
+part 1 :name "Piano" :instr :piano
+(note 1 :off 0 :dur 0.25 :note 82 :marks (:ignore))
+(note 1 :off 0.25 :dur 0.25 :note 87 :marks (:ignore))
+(note 1 :off 0.5 :dur 0.25 :note 48 :marks (:staccato))
+(note 1 :off 0.75 :dur 0.25 :note 76 :marks (:ignore))
+(note 1 :off 1 :dur 0.25 :note 83 :marks (:marcato))
+(note 1 :off 1.25 :dur 0.25 :note 51 :marks (:accent))
+(note 1 :off 1.5 :dur 0.25 :note 82 :marks (:ignore))
+(note 1 :off 1.75 :dur 0.25 :note 76 :marks (:endslur- (:fermata)))
+(note 1 :off 2 :dur 0.5 :note 57 :marks (:ignore))
+(note 1 :off 2.5 :dur 0.25 :note 45 :marks (:portato))
+(note 1 :off 2.75 :dur 0.25 :note 50 :marks (:marcato))
+(note 1 :off 3 :dur 0.25 :note 36 :marks (:ignore))
+(note 1 :off 3.25 :dur 0.25 :note 51 :marks (:accent))
+(note 1 :off 3.5 :dur 0.25 :note 46 :marks (:ignore))
+(note 1 :off 3.75 :dur 0.25 :note 51 :marks (:ignore))
+(note 1 :off 4 :dur 0.25 :note 79 :marks (:staccato))
+(note 1 :off 4.25 :dur 8 :note 40 :marks (:startslur- (:textnote "id=479")))]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_canning.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.txtmoreperc">
+        <title>More Percussion</title>
+	<programlisting>
+<![CDATA[
+PART p1 :name "Perc" \
+        :instr (:percussion :percs ((:snare-drum :note a3) \
+                                    (:low-wood-block :note e4) (:high-wood-block :note g4) \
+                                    (MAKE-PERC :rim-shot :staff 1 :voice 1 :note c4 :autodur t :midinote-im nil :midinote-ex 40))) \
+        :opts (:midi-filename "part1")
+
+NOTE p1 :voice 1 :off 1 :dur (1/2 -100) :note :snare-drum
+NOTE p1 :voice 1 :off 1 :dur 1/2 :note :snare-drum :marks (:sf :accent)
+NOTE p1 :voice 1 :off 5/2 :dur 1/2 :note :snare-drum :marks (:p)
+NOTE p1 :voice 1 :off 4 :dur 1/2 :note :snare-drum
+NOTE p1 :voice 1 :off 11/2 :dur 1/2 :note :snare-drum
+NOTE p1 :voice 1 :off 6 :dur 1/2 :note :snare-drum :marks (:sf :accent)
+NOTE p1 :voice 1 :off 15/2 :dur 1/2 :note :snare-drum
+NOTE p1 :voice 1 :off 8 :dur 1/2 :note :snare-drum :marks (:sf :accent)
+NOTE p1 :voice 1 :off 17/2 :dur 1/2 :note :snare-drum
+
+NOTE p1 :voice 1 :off 10 :dur (1/2 -100) :note :high-wood-block
+NOTE p1 :voice 1 :off 10 :dur 1/2 :note :low-wood-block
+NOTE p1 :voice 1 :off 10.5 :dur 1/2 :note :low-wood-block
+NOTE p1 :voice 1 :off 11 :dur 1/2 :note :low-wood-block
+NOTE p1 :voice 1 :off 11.5 :dur 1/2 :note :low-wood-block
+NOTE p1 :voice 1 :off 12 :dur 1/2 :note :high-wood-block :marks (:sf :accent)
+NOTE p1 :voice 1 :off 12.5 :dur 1/2 :note :low-wood-block
+NOTE p1 :voice 1 :off 13 :dur 1/2 :note :low-wood-block
+NOTE p1 :voice 1 :off 13.5 :dur 1/2 :note :low-wood-block
+NOTE p1 :voice 1 :off 14 :dur 1/2 :note :low-wood-block]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_percfile.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.txtoverser">
+        <title>Overtone Series (using Quartertones)</title>
+	<programlisting>
+<![CDATA[
+INIT :output '(:lilypond :view t)
+INIT :filename "overser"
+INIT :quartertones t
+
+PART h :name nil :instr :piano
+
+TIMESIG :off 0 :time (20 4)
+NOTE h :voice 1 :off 0 :dur 1 :note 42.999996
+NOTE h :voice 1 :off 1 :dur 1 :note 54.999996
+NOTE h :voice 1 :off 2 :dur 1 :note 62.019547
+NOTE h :voice 1 :off 3 :dur 1 :note 67.0
+NOTE h :voice 1 :off 4 :dur 1 :note 70.86313
+NOTE h :voice 1 :off 5 :dur 1 :note 74.01955
+NOTE h :voice 1 :off 6 :dur 1 :note 76.688255
+NOTE h :voice 1 :off 7 :dur 1 :note 79.0
+NOTE h :voice 1 :off 8 :dur 1 :note 81.03909
+NOTE h :voice 1 :off 9 :dur 1 :note 82.86313
+NOTE h :voice 1 :off 10 :dur 1 :note 84.513176
+NOTE h :voice 1 :off 11 :dur 1 :note 86.01955
+NOTE h :voice 1 :off 12 :dur 1 :note 87.40528
+NOTE h :voice 1 :off 13 :dur 1 :note 88.68826
+NOTE h :voice 1 :off 14 :dur 1 :note 89.88269
+NOTE h :voice 1 :off 15 :dur 1 :note 91.0
+NOTE h :voice 1 :off 16 :dur 1 :note 92.04956
+NOTE h :voice 1 :off 17 :dur 1 :note 93.03909
+NOTE h :voice 1 :off 18 :dur 1 :note 93.97514
+NOTE h :voice 1 :off 19 :dur 1 :note 94.86313]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_overser.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.txtmarks1">
+        <title>Marks 1</title>
+	<programlisting>
+<![CDATA[
+INIT :output '(:lilypond :view t)
+INIT :filename "marks1"
+
+PART h :name nil :instr :piano
+
+TIMESIG :off 0 :time (5 4)
+NOTE h :voice 1 :off 0 :dur 1 :note 50 :marks (:IGNORE)
+NOTE h :voice 1 :off 1 :dur 1 :note 51 :marks (:STACCATO)
+NOTE h :voice 1 :off 2 :dur 1 :note 52 :marks (:MARCATO)
+NOTE h :voice 1 :off 3 :dur 1 :note 53 :marks (:STACCATISSIMO)
+NOTE h :voice 1 :off 4 :dur 1 :note 54 :marks (:ACCENT)
+NOTE h :voice 1 :off 5 :dur 1 :note 55 :marks (:TENUTO)
+NOTE h :voice 1 :off 6 :dur 1 :note 56 :marks (:PORTATO)
+NOTE h :voice 1 :off 7 :dur 1 :note 57 :marks (:STARTSLUR-)
+NOTE h :voice 1 :off 8 :dur 1 :note 58 :marks (:ENDSLUR-)
+NOTE h :voice 1 :off 9 :dur 1 :note 59 :marks (:P)
+NOTE h :voice 1 :off 10 :dur 1 :note 60 :marks (:F :MARCATO)
+NOTE h :voice 1 :off 11 :dur 1 :note 61 :marks (:SF :ACCENT)
+NOTE h :voice 1 :off 12 :dur 1 :note 62 :marks (:STARTWEDGE>)
+NOTE h :voice 1 :off 13 :dur 1 :note 63
+NOTE h :voice 1 :off 14 :dur 1 :note 64 :marks (:ENDWEDGE> :P)
+NOTE h :voice 1 :off 15 :dur 1 :note 65 :marks (:PIZZ)
+NOTE h :voice 1 :off 16 :dur 1 :note 66 
+NOTE h :voice 1 :off 17 :dur 1 :note 67 :marks (:MORDENT)
+NOTE h :voice 1 :off 18 :dur 1 :note 68 :marks ((:TRILL 70))
+NOTE h :voice 1 :off 19 :dur 1 :note 69 :marks (:FERMATA)]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_marksfile1.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+      <example id="example.txtmarks2">
+        <title>Marks 2</title>
+	<programlisting>
+<![CDATA[
+INIT :output '(:lilypond :view t)
+INIT :filename "marks2"
+
+PART z :name nil :instr :piano
+
+TIMESIG :off 0 :time (5 4)
+NOTE z :voice 1 :off 0 :dur 2 :note 50 :marks (:tremolo)
+NOTE z :voice 1 :off 2 :dur 2 :note 52 :marks ((:tremolo 1/2))
+NOTE z :voice 1 :off 5 :dur 1 :note 55 :marks ((:glissando :after))
+NOTE z :voice 1 :off 6 :dur 1 :note 56
+NOTE z :voice 1 :off 7 :dur 1 :note 57 :marks ((:breath :after))
+NOTE z :voice 1 :off 8 :dur 1 :note 58 :marks ((:notehead :x))
+NOTE z :voice 1 :off 9 :dur 1 :note 59 :marks ((:textnote ":("))
+NOTE z :voice 1 :off 10 :dur 1 :note 60 :marks ((:textnote ":)"))
+NOTE z :voice 1 :off 11 :dur 1 :note 61 :marks ((:textnote "L.H."))
+NOTE z :voice 1 :off 12 :dur 1 :note 62 :marks ((:textdyn "pppppppppp"))
+NOTE z :voice 1 :off 13 :dur 1 :note 63
+NOTE z :voice 1 :off 14 :dur 1 :note 64 :marks ((:texttempo "Fast"))
+NOTE z :voice 1 :off 15 :dur 1 :note 65 
+NOTE z :voice 1 :off 16 :dur 1 :note 66 :marks ((:starttext- "rit." :up))
+NOTE z :voice 1 :off 17 :dur 1 :note 67
+NOTE z :voice 1 :off 18 :dur 1 :note 68
+NOTE z :voice 1 :off 19 :dur 1 :note 69 :marks (:endtext-)]]>
+	</programlisting>
+	<blockquote>
+	<mediaobject>
+	  <imageobject><imagedata fileref="ex_marksfile2.jpg" format="JPG"/></imageobject>
+	  <caption>Output</caption> 
+	</mediaobject>
+	</blockquote>
+      </example>
+   </section>
+</chapter>

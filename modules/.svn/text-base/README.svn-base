@@ -1,0 +1,63 @@
+This README contains some information for developing modules
+
+
+
+DEFMODULE
+
+Put this declaration at the top of the module file (it needs to be at the top) to define the module.  FOMUS will automatically scan the module
+directory and use these headers to register, compile and load them.
+
+DEFMODULE is a wrapper for DEFPACKAGE and accepts the following keywords:
+fomus-specific: type keyname use initfun entryfun description preload filename-ext
+arguments passed to defpackage: shadowing-import-from package-name import-from intern size export
+
+type = one of :accidentals :voices :staves/clefs :splitrules :quantize or :backend for now
+keyname = keyword ID for this module
+initfun = callback initialization function w/ no arguments (not really necessary in Lisp, but it's included anyways)
+entryfun = function to replace fomus's default function (arguments differ depending on context)
+documentation = passed to defpackage and also printed out when list-fomus-modules is called
+preload = form that is executed before anything else (for loading dependencies)
+filename-ext = string such as "xml" or "ly" added to output filename--only use w/ backends (optional--without this, the base filename is passed to the module function)
+(all other arguments) = same as equivalent args in defpackage (deffomusmodule acts as an extension to defpackage)
+
+DEFMODULE takes care of defining the package, also adds a FOMUS-MODULENAME module to the *MODULES* list (FOMUS uses this)
+It also adds an (in-package ...)
+
+Example:
+
+(deffomusmodule
+    (:keyname :nokey2) (:type :accidentals) (:entryfun acc-nokey2)
+    (:use :iterate) ; automatically uses common-lisp and fomus packages
+    (:export #:make-int-var-from-to #:make-int-var-domain #:post #:ads #:example #:acc-nokey2)
+    (:preload (asdf:operate 'asdf:load-op :iterate))
+    (:documentation "(Experimental) Note-spelling algorithm by Kilian Sprotte using an adaptive search approach"))
+
+
+
+CALLBACK FUNCTION
+
+There needs to be a callback function, specified by the :entryfun argument to DEFFOMUSMODULE.  The API is different for each module type
+and might have to change depending on module requirements.
+
+
+
+DATA
+
+Some data that can be imported from the fomus package that might be useful (things will be added as I go through the code to clean things up & add comments):
+
+(defparameter +nokey-niceints1+ (vector '(0) '(-1 1) '(-1 1) '(0 2) '(-2 0) '(-1 1) '(-1 1))) ; best spellings from unison to 7th (0 = perfect, -1/1 = min/maj, -2/2 = dim/aug)
+(defparameter +nokey-niceints2+ (vector '(-2 2) '(-2 2) '(-2 2) '(-2) '(2) '(-2 2) '(-2 2))) ; 2nd best spellings
+(defparameter +nokey-penalty+ (vector '(1) '(-1 1) '(-1) '(1) '(-1 1) '(-1 1) '(-1))) ; for ea. white key, location of neighboring black keys (1/2 step lower or higher)
+(defparameter +nokey-harmints+ (vector 0 1 1 2 2 3 4 4 5 5 6 6)) ; when two notes are "linked", required interval given the chromatic distance
+
+*verbose* ; the verbosity level (usually only print something if *verbose* >= 2)
+
+
+
+FUNCTIONS
+
+See "misc.lisp" for general miscellaneous things and "util.lisp" for fomus-specific functions
+An important one is print-dot in util.lisp--prints a progress dot only if some number of seconds has elapsed since the last one (insert this somewhere in your code)
+
+
+

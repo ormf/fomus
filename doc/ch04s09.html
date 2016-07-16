@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Structure INSTR</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch04.html" title="Chapter&#160;4.&#160;Objects" /><link rel="prev" href="ch04s08.html" title="Class MARK" /><link rel="next" href="ch04s10.html" title="Structure PERC" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Structure INSTR</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04s08.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;4.&#160;Objects</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch04s10.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.objects9"></a>Structure INSTR</h2></div></div></div><p>
+      An <code class="classname"><a href="ch04s09.html#struct.instr">INSTR</a></code> structure contain instrument-specific data that's used to inform <span class="application">FOMUS</span>
+      on various aspects of notation.
+      Instruments are specified in the <em class="structfield"><code><a href="ch04s02.html#part.instr">INSTR</a></code></em>
+      slot of <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> objects and can be easily
+      modified.
+      Users can also build their own "database" of instruments by creating a <span class="application">FOMUS</span> initialization file (see
+      <a href="ch08.html" title="Chapter&#160;8.&#160;Initialization File">Initialization File</a>).
+    </p><p>Constructor: 
+      <code class="function">(<a id="function.make.instr"></a>MAKE-INSTR &amp;key 
+        :SYM <strong class="userinput"><code>sym</code></strong>
+	:CLEFS <strong class="userinput"><code>clefs</code></strong>
+        :STAVES <strong class="userinput"><code>staves</code></strong>
+	:MINP <strong class="userinput"><code>minp</code></strong>
+	:MAXP <strong class="userinput"><code>maxp</code></strong> 
+	:SIMULTLIM <strong class="userinput"><code>simultlim</code></strong>
+	:TPOSE <strong class="userinput"><code>tpose</code></strong>
+	:CLEFLEGLS <strong class="userinput"><code>cleflegls</code></strong>
+	:8UPLEGLS <strong class="userinput"><code>8uplegls</code></strong>
+	:8DNLEGLS <strong class="userinput"><code>8dnlegls</code></strong>
+	:PERCS <strong class="userinput"><code>percs</code></strong>
+	:MIDIPRGCH-IM <strong class="userinput"><code>midiprgch-im</code></strong>
+	:MIDIPRGCH-EX <strong class="userinput"><code>midiprgch-ex</code></strong>)</code>
+    </p><p>Copy Function: 
+      <code class="function">(<a id="function.copy.instr"></a>COPY-INSTR <strong class="userinput"><code>instr</code></strong> &amp;key
+        :SYM <strong class="userinput"><code>sym</code></strong>
+	:CLEFS <strong class="userinput"><code>clefs</code></strong>
+        :STAVES <strong class="userinput"><code>staves</code></strong>
+	:MINP <strong class="userinput"><code>minp</code></strong>
+	:MAXP <strong class="userinput"><code>maxp</code></strong> 
+	:SIMULTLIM <strong class="userinput"><code>simultlim</code></strong>
+	:TPOSE <strong class="userinput"><code>tpose</code></strong>
+	:CLEFLEGLS <strong class="userinput"><code>cleflegls</code></strong>
+	:8UPLEGLS <strong class="userinput"><code>8uplegls</code></strong>
+	:8DNLEGLS <strong class="userinput"><code>8dnlegls</code></strong>
+	:PERCS <strong class="userinput"><code>percs</code></strong>
+	:MIDIPRGCH-IM <strong class="userinput"><code>midiprgch-im</code></strong>
+	:MIDIPRGCH-EX <strong class="userinput"><code>midiprgch-ex</code></strong>)</code>
+    </p><p>Predicate Function: <code class="function">(INSTRP <strong class="userinput"><code>obj</code></strong>)</code></p><p>Accessors:
+      </p><div class="variablelist"><dl><dt><span class="term"><code class="function"><a id="instr.sym"></a>INSTR-SYM</code></span></dt><dd><p>
+	      This is a unique symbol identifying the instrument.
+	      It is used as a lookup value so that it may easily be specified in <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> objects.
+	    </p></dd><dt><span class="term"><code class="function"><a id="instr.clefs"></a>INSTR-CLEFS</code></span></dt><dd><p>
+	      This is either a symbol or list of symbols, specifying valid clefs for the instrument in order of preference.
+	      The following clefs are supported:
+	      <code class="literal">:bass</code>, <code class="literal">:c-baritone</code>, <code class="literal">:f-baritone</code>, <code class="literal">:tenor</code>, <code class="literal">:alto</code>,
+	      <code class="literal">:mezzosoprano</code>, <code class="literal">:soprano</code>, <code class="literal">:treble</code>
+	      and <code class="literal">:percussion</code>.
+	      The user may also add an <code class="literal">-8UP</code> or <code class="literal">-8DN</code> suffix to the symbol to specify an octave transposition.
+	    </p></dd><dt><span class="term"><code class="function"><a id="instr.staves"></a>INSTR-STAVES</code></span></dt><dd><p>
+	      This is an integer specifying the number of staves to use.
+	      The default is 1.
+	    </p></dd><dt><span class="term"><code class="function"><a id="instr.minp"></a>INSTR-MINP</code></span></dt><dd><p>
+	      This is an integer specifying the lowest pitch in the instrument's range.
+	      It may also be set to <code class="literal">NIL</code>, in which case the lower range is considered to be unlimited.
+	      This is only useful if the <code class="varname"><a href="ch05s04.html#setting.check.ranges">CHECK-RANGES</a></code> setting is set to <code class="literal">T</code>.
+	    </p></dd><dt><span class="term"><code class="function"><a id="instr.maxp"></a>INSTR-MAXP</code></span></dt><dd><p>
+	      This is an integer specifying the highest pitch in the instrument's range.
+	      It may also be set to <code class="literal">NIL</code>, in which case the upper range is considered to be unlimited.
+	      This is only useful if the <code class="varname"><a href="ch05s04.html#setting.check.ranges">CHECK-RANGES</a></code> setting is set to <code class="literal">T</code>.
+	    </p></dd><dt><span class="term"><code class="function"><a id="instr.simultlim"></a>INSTR-SIMULTLIM</code></span></dt><dd><p>
+	      This is an integer of <code class="literal">1</code> or greater specifying the maximum number of simultaneous pitches allowed in a single voice.
+	      It may also be set to <code class="literal">NIL</code>, indicating that there is no limit.
+	    </p></dd><dt><span class="term"><code class="function"><a id="instr.tpose"></a>INSTR-TPOSE</code></span></dt><dd><p>
+	      This is set to the value <code class="literal">NIL</code> or an integer indicating the number of semitones to transpose
+	      the instrument before notating it.
+	      This number only has an effect if the <code class="varname"><a href="ch05s04.html#setting.transpose">TRANSPOSE</a></code> setting is set to <code class="literal">T</code>.
+	    </p></dd><dt><span class="term"><code class="function"><a id="instr.cleflegls"></a>INSTR-CLEFLEGLS</code></span></dt><dd><p>
+	      The value of this slot influences how <span class="application">FOMUS</span> decides when to change clefs.
+	      A clef change isn't considered necessary until the number of ledger lines required exceeds a threshold value.
+	      Other factors determine if there is actually a clef change or not.
+	      If the value is an integer, it designates the threshold number of ledger lines in all cases.
+	      If it's a list, the first element of the list must be an integer specifying a default threshold.
+	      This is followed by one or more exceptions, each in the form of a list.
+	      This exception list contains a clef symbol (see the <em class="structfield"><code><a href="ch04s09.html#instr.clefs">CLEFS</a></code></em> slot above)
+	      followed by one of the two symbols <code class="literal">:UP</code> or <code class="literal">:DN</code>
+	      and ended by an integer specifying the number of ledger lines.
+	      An example illustrates this data structure.
+       	    </p><div class="example"><a id="example.instr-cleflegls.slot.setting"></a><p class="title"><b>Example&#160;4.10.&#160;INSTR-CLEFLEGLS Slot Setting</b></p><div class="example-contents"><pre class="programlisting">
+
+'(2 (:bass :up 3) (:tenor :down 3))
+                </pre></div></div><p><br class="example-break" />	      
+	    </p></dd><dt><span class="term"><code class="function"><a id="instr.8uplegls"></a>INSTR-8UPLEGLS</code></span></dt><dd><p>
+	      This value influences how <span class="application">FOMUS</span> chooses where to place ottava brackets above the staff.
+	      An ottava bracket isn't considered necessary until the number of ledger lines required exceeds a threshold value.
+	      An integer in this slot indicates the threshold value, while
+	      a list of two elements specifies the threshold for the ottava bracket to begin and the threshold below which the number of ledger lines must
+	      drop for it to end.
+	    </p></dd><dt><span class="term"><code class="function"><a id="instr.8dnlegls"></a>INSTR-8DNLEGLS</code></span></dt><dd><p>
+	      This is the same as <code class="function">INSTR-8UPLEGLS</code> above, only for ottava brackets placed below the staff
+	    </p></dd><dt><span class="term"><code class="function"><a id="instr.percs"></a>INSTR-PERCS</code></span></dt><dd><p>
+	      This is a list of symbols, <code class="classname"><a href="ch04s10.html#struct.perc">PERC</a></code> objects, numbers or lists
+	      indicating all of the percussion instruments that are to be notated together as a group.
+	      <code class="classname"><a href="ch04s10.html#struct.perc">PERC</a></code> objects provide necessary extra information for notating percussion.
+	      All of these value types function to lookup percussion instruments in the same way as the <em class="structfield"><code><a href="ch04s02.html#part.instr">PART-INSTR</a></code></em>
+	      slot of the <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> class.
+	      Symbols are used as lookup values into a user-defined percussion instrument table (see the
+	      <code class="varname"><a href="ch05s04.html#setting.percussion">PERCUSSION</a></code> setting) or <span class="application">FOMUS</span>'s own predefined table.
+	      Lists contain a symbol lookup value followed by keyword-argument pairs signifying values to replace in the predefined percussion table--it will
+	      usually be necessary to use a list instead of a symbol since the <em class="structfield"><code><a href="ch04s10.html#perc.note">NOTE</a></code></em> and
+	      <em class="structfield"><code><a href="ch04s10.html#perc.voice">VOICE</a></code></em> slots are empty in <span class="application">FOMUS</span>'s table.
+       	    </p><div class="example"><a id="instr.percs.slot.setting"></a><p class="title"><b>Example&#160;4.11.&#160;INSTR-PERCS Slot Setting</b></p><div class="example-contents"><pre class="programlisting">
+
+(list '(:low-tom :note 0 :voice 1) '(:high-tom :note 4 :voice 1)
+      (make-perc :anvil :note -3 :voice 2 :midinote-ex 79))
+                </pre></div></div><p><br class="example-break" />	      
+	    </p></dd><dt><span class="term"><code class="function"><a id="instr.midiprgch.im"></a>MIDIPRGCH-IM</code></span></dt><dd><p>
+	      This is a number from <code class="literal">0</code> to <code class="literal">127</code> or a list of such numbers specifying which MIDI program change values can
+	      translate to this instrument.
+	      This is used when specifying an instrument as a program change number (see the <em class="structfield"><code><a href="ch04s02.html#part.instr">INSTR</a></code></em> slot in the
+	      <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> class) or calling the 
+	      <code class="function"><a href="ch03s08.html#function.get.midi.instr">GET-MIDI-INSTR</a></code> function.
+	      When given a program change number, <span class="application">FOMUS</span> finds the first instrument that matches in its list.
+	    </p></dd><dt><span class="term"><code class="function"><a id="instr.midiprgch.ex"></a>MIDIPRGCH-EX</code></span></dt><dd><p>
+	      This is usually a number from <code class="literal">0</code> to <code class="literal">127</code> specifying which program change value is to be used when exporting
+	      MIDI data.
+	      It can also be set to a list, the first element of which is the number mentioned above followed by keyword/value pairs indicating alternate program
+	      change values for different playing modes.
+	      (For example, the list <code class="literal">'(40 :pizz 45)</code> is a valid value for a violin instrument.)
+	      The keywords currently allowed are <code class="literal">:PIZZ</code>, <code class="literal">:STOPPED</code>, <code class="literal">:OPEN</code> and <code class="literal">:HARMONIC</code>.
+	      (More will be added in future releases.)
+	    </p></dd></dl></div><p>
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04s08.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch04s10.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Class MARK&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Structure PERC</td></tr></table></div></body></html>

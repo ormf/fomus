@@ -1,0 +1,32 @@
+<chapter id="init">
+  <title id="init.title">Initialization File</title>
+  <section id="section.initfile">
+  <para>
+    All of <application>FOMUS</application>'s default settings may be overridden using an initialization file that <application>FOMUS</application> looks for
+    every time it loads.
+    This file is named <filename>.fomus</filename> and must be created in the user's home directory.
+    To specify default settings, simply list keyword/argument pairs as if they were keyword arguments to the
+    <function><link linkend="function.fomus">FOMUS</link></function> command.
+    <example id="example.init.file">
+      <title>Initialization File Contents</title>
+      <programlisting>
+<![CDATA[
+:output '((:data) (:lilypond :view t))
+
+:lilypond-exe "/usr/local/bin/lilypond"
+:lilypond-opts '("--ps")
+:lilypond-out-ext "ps"
+
+:lilypond-view-exe "/usr/bin/ggv"
+:cmn-view-exe "/usr/bin/ggv"
+
+:verbose 1
+:composer "David Psenicka"
+:min-tuplet-dur 1
+:max-tuplet 13
+:caut-acc-ottavas t]]>
+      </programlisting>
+    </example>
+  </para>
+  </section>
+</chapter>

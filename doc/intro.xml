@@ -1,0 +1,69 @@
+<chapter id="intro">
+  <title id="intro.title">Introduction</title>
+  <section id="section.install5">
+  <para>
+    <application>FOMUS</application> (FOrmat MUSic) is a music notation tool for computer music composers.
+    It is written in the Lisp programming language, and has been tested in the following interpreters:
+    <application><ulink url="http://www.cons.org/cmucl/">CMUCL</ulink></application> (version 19),
+    <application><ulink url="http://www.sbcl.org/">SBCL</ulink></application> (version 0.9.4),
+    <application><ulink url="http://openmcl.clozure.com/">OpenMCL</ulink></application> (version 1),
+    <application><ulink url="http://clisp.sourceforge.net/">CLISP</ulink></application> (version 2),
+    <application><ulink url="http://www.franz.com/">Allegro</ulink></application> (version 7) and
+    <application><ulink url="http://www.lispworks.com/">LispWorks</ulink></application> (version 4).
+    As the program becomes more stable, it will also be tested in other lisp implementations.  Supported operating systems are
+    Linux, Max OS X and Windows.
+    The purpose of it is to facilitate the conversion of "raw" algorithmic output data into readable music notation, a process that can be
+    frustrating and time consuming since it often requires dumping data into some intermediary format (such as MIDI) and importing
+    it into a notation program that only does a mediocre job of conversion.  
+    <application>FOMUS</application> attempts to remove this frustration by making a reasonably intelligent attempt at
+    spelling notes, quantizing offsets and durations into readable rhythms, 
+    laying out the information into voices and staves, and other tasks (such as where to include clef changes or ottava markings).
+    The user may also specify extra information such as articulations, text markings, time signature changes, 
+    notational details of musical instruments, etc..  
+    When the program is run, it outputs a file suitable for importing straight into a notation program, 
+    after which a small amount of editing and layout work should be required to create a finished musical score.
+  </para>
+  <para>
+    Following is a list of some of the tasks <application>FOMUS</application> is designed to automate:
+    <itemizedlist>
+      <listitem>Part grouping and ordering</listitem>
+      <listitem>Transposition and checking of instrument ranges</listitem>
+      <listitem>Note spelling (semitones and quartertones are currently supported) and cautionary accidentals</listitem>
+      <listitem>Rhythmic quantizing (with tuplet choices that minimize the amount of error between input offsets and notational offsets)</listitem>
+      <listitem>Distribution of notes into voices and staves</listitem>
+      <listitem>Note splitting and tying, taking into account metrical divisions, dotted rhythms, and other special cases</listitem>
+      <listitem>Decisions regarding placement of clef changes and ottava brackets</listitem>
+      <listitem>Layout of articulations, slurs, beams, dynamic and text markings, and other notational elements</listitem>
+    </itemizedlist>
+  </para>
+  <para>
+    The following output formats are supported:
+    <itemizedlist>
+      <listitem><application><ulink url="http://www.musicxml.org/">MusicXML</ulink></application></listitem>
+      <listitem><application><ulink url="http://ccrma.stanford.edu/software/cmn/">Common Music Notation</ulink></application> (almost implemented)</listitem>
+      <listitem><application><ulink url="http://lilypond.org/web/">LilyPond</ulink></application></listitem>
+      <listitem>MIDI File/Playback through <application><ulink url="http://commonmusic.sf.net">Common Music</ulink></application></listitem>
+    </itemizedlist>
+    <application>MusicXML</application> files will import (more or less) into popular notation programs like
+    <application><ulink url="http://www.finalemusic.com/">Finale</ulink></application>
+    and <application><ulink url="http://www.sibelius.com/">Sibelius</ulink></application>.
+  </para>
+  <para>
+    <application>FOMUS</application> integrates with <application><ulink url="http://commonmusic.sf.net">Common Music</ulink></application>,
+    using some of its functionality if present and also functioning as a backend.
+    <application>FOMUS</application> has also been designed to allow selection of modules that use different algorithms to perform the same tasks.
+    As new functions are added, users can select the ones that give them the best results.
+    These will be added to the program over time.
+  </para>
+  <para>
+    <application>FOMUS</application> is still in its initial (alpha) development stage, so please expect many bugs.
+    If you wish to report one, please look at the <varname><link linkend="setting.debug.filename">DEBUG-FILENAME</link></varname>
+    setting to see how to create a debug file and e-mail it to <email>dpsenick(at)uiuc(dot)edu</email>.
+    Please send me suggestions and comments.
+  </para>
+  <para>
+  Thanks to Rick Taube, Kilian Sprotte, Mika Kuuskankare and Rob Canning for their help and suggestions.
+  Also thanks to Kilian Sprotte for developing code for the test suite, available in the SVN repository as <literal>fomustest</literal>.
+  </para>
+  </section>
+</chapter>
