@@ -289,6 +289,7 @@
       (in top (collect (list e1 e2))))))
 
 (defun acc-nokey2 (evs)
+  (break "acc-nokey2")
   (let* ((midis (mapcar #'fm:event-note evs))
 	 (domain-data (iter
 			(for m in midis)
@@ -302,8 +303,8 @@
 	 (vars (iter
 		 (for d in domain-data)
 		 (collect (make-int-var-from-to 0 (1- (length d)))))))
-    ;; (print domain-data)
-    ;;     (print vars)
+    (print domain-data)
+    (print vars)
     ;; constraint ivs
     (iter
       (for a in vars)
@@ -380,5 +381,3 @@
 	(unless (zerop proj)
 	  (push `(:text ,(princ-to-string proj)) (fm:event-marks ev)))))
     evs))
-
-

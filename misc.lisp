@@ -123,11 +123,13 @@
   (if (listp list) (copy-list list) (list list)))
 ;; returns doubly nested list, expecting that only some of the inner items might be lists
 (defun force-list2some (list)
+  "returns doubly nested list, expecting that only some of the inner items might be lists"
   (let ((x (force-list list)))
     (if (or (null x) (some #'consp x)) x
 	(list x))))
 ;; returns doubly nested list, expecting that all the inner items might be lists
 (defun force-list2all (list)
+  "returns doubly nested list, expecting that all the inner items might be lists"
   (let ((x (force-list list)))
     (if (or (null x) (every #'consp x)) x
 	(list x))))
@@ -317,6 +319,7 @@
 ;; utility math functions
 (declaim (inline roundint diff roundto))
 (defun diff (a b)
+  "return abs difference of a and b."
   (declare (type real a b))
   (abs (- a b)))
 (defun roundint (i)
@@ -363,6 +366,9 @@
 	    finally (setf (car a) (setf (cdar a) (list e))))
    finally (return (values-list (mapcar #'rest re)))))
 
+;;; (fms::split-list '(0 1 2 3 4 5 6 7 8 9) (lambda (x) (< x 2))(lambda (x) (< x 4))) -> (0 1) (2 3) (4 5 6 7 8 9)
+;;; (fms::split-list '(1 2 3 4 5 6 7 8) #'evenp (lambda (x) (> x 3))) -> (2 4 6 8) (5 7) (1 3)
+
 ;; splits a list into several lists according to vals
 ;; vals = list of values to compare list items to and sort against
 ;; key = function to get comparison val from list item
@@ -380,16 +386,37 @@
 	    finally (setf (car a) (setf (cdar a) (list e))))
    finally (return (mapcar #'rest re))))
 
+;;; (fms::split-list* '(0 1 2 3 4 5 6 7 8 9) '(0 2 4)) -> ((0) (2) (4) (1 3 5 6 7 8 9))
+;;; (fms::split-list* '((:velo 10) (:amp 1) (:dur 3) (:velo 3) (:blah 3) (:blub 4)) '(:velo :amp :dur) :key #'first) -> (((:VELO 10) (:VELO 3)) ((:AMP 1)) ((:DUR 3)) ((:BLAH 3) (:BLUB 4)))
+
 ;; some loop macros for finding argmaxes and mins
+
+;;; compare var in list 
 (defmacro loop-return-firstmin (form for var &rest loop)
   (let ((mx (gensym)) (ev (gensym)) (rt (gensym)))
     `(loop with ,mx and ,ev and ,rt
-      ,for ,var ,@loop
-      do (setq ,ev ,form)
-      until (and ,mx (> ,ev ,mx))
-      when (or (null ,mx) (< ,ev ,mx))
-      do (setq ,mx ,ev ,rt ,var)
-      finally (return ,rt))))
+          ,for ,var ,@loop
+        do (setq ,ev ,form)
+        until (and ,mx (> ,ev ,mx))
+        when (or (null ,mx) (< ,ev ,mx))
+        do (setq ,mx ,ev ,rt ,var)
+        finally (return ,rt))))
+
+#|
+;;; example: This form returns the element of qpts that has the
+;;; smalles difference to e. To return correct answers, qpts has to be
+;;; sorted!:
+
+(let ((e 2.2)
+      (qpts '(0 1 2 3 4)))
+  (fms::loop-return-firstmin (fms::diff i e) for i of-type (rational 0) in qpts)) -> 2
+
+(let ((e 2.8)
+      (qpts '(0 1 2 3 4)))
+  (fms::loop-return-firstmin (fms::diff i e) for i of-type (rational 0) in qpts)) -> 3
+
+|#
+
 (defmacro loop-return-lastmin (form for var &rest loop)
   (let ((mx (gensym)) (ev (gensym)) (rt (gensym)))
     `(loop with ,mx and ,ev and ,rt

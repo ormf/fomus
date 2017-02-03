@@ -23,9 +23,15 @@
 (defparameter *default-grace-num* 0) 
 
 (defun byfit-score-rmse (evpts qpts)
+  "for a list of given timepoints build the rms value of their offsets
+in comparison to a given grid (a sorted list of quantization points)."
   (declare (type list evpts) (type list qpts))
-  (sqrt (loop for e of-type (real 0) in evpts sum (let ((x (diff (loop-return-firstmin (diff i e) for i of-type (rational 0) in qpts) e))) (* x x)))))
+  (sqrt (loop for e of-type (real 0) in evpts sum
+             (let ((x (diff (loop-return-firstmin (diff i e) for i of-type (rational 0) in qpts) e))) (* x x)))))
 (defun byfit-score-ave (evpts qpts)
+  "for a list of given timepoints build the mean value of their
+offsets in comparison to a given grid (a sorted list of quantization
+points)."
   (declare (type list evpts) (type list qpts))
   (ave-list (loop for e of-type (real 0) in evpts collect (diff (loop-return-firstmin (diff i e) for i of-type (rational 0) in qpts) e))))
 

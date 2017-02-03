@@ -37,6 +37,18 @@
 	#+(or cmu sbcl) (muffwarn (fma)) #-(or cmu sbcl) (fma)
 	#+(or cmu sbcl) (muffwarn (fm)) #-(or cmu sbcl) (fm))))
 
+#|
+
+(let ((v (first +settings+)))
+   (intern (symbol-name (first v)) :fomus))
+
+(symbol-value (intern (symbol-name (first (second +settings+))) :fomus))
+
+(symbol-value (find-symbol (conc-strings "*" (symbol-name (first (second +settings+))) "*") :fomus))
+
+(find-symbol (symbol-name (first (second +settings+))))
+|#
+
 (defun fomus (&rest args)
   "Interface function/main entry point:
 Runs FOMUS's algorithms on input data or file"

@@ -94,7 +94,13 @@
 	<code class="function"><a href="ch06s02.html#mark.texttempo">:TEXTTEMPO</a></code> indicates tempo changes (and is printed in a larger boldface font),
 	and <code class="function"><a href="ch06s02.html#mark.textdyn">:TEXTDYN</a></code> is for texts appearing in a dynamics-type font.
 	For text spanners, "levels" may be specified to influence the order of their placement on the score.
-      </p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="function">(<a id="mark.textnote"></a>:TEXTNOTE <strong class="userinput"><code><a href="ch06s02.html#markarg.string">string</a></code></strong>)</code></td></tr><tr><td><code class="function">(<a id="mark.text"></a>:TEXT <strong class="userinput"><code><a href="ch06s02.html#markarg.string">string</a></code></strong> &lt;-&gt; &amp;optional
+        <code class="function"><a href="ch06s02.html#mark.fingering">:FINGERING</a></code> is for fingering indication (currently only in lilypond backend supported), 
+        <code class="function"><a href="ch06s02.html#mark.corda">:CORDA</a></code> is for indication of string (currently only in lilypond backend supported), 
+        </p><table class="simplelist" border="0" summary="Simple list">
+          <tr><td><code class="function">(<a id="mark.textnote"></a>:TEXTNOTE <strong class="userinput"><code><a href="ch06s02.html#markarg.string">string</a></code></strong>)</code></td></tr>
+          <tr><td><code class="function">(<a id="mark.fingering"></a>:FINGERING <strong class="userinput"><code><a href="ch06s02.html#markarg.string">string</a></code></strong>)</code></td></tr>
+          <tr><td><code class="function">(<a id="mark.corda"></a>:CORDA <strong class="userinput"><code><a href="ch06s02.html#markarg.string">string</a></code></strong>)</code></td></tr>
+          <tr><td><code class="function">(<a id="mark.text"></a>:TEXT <strong class="userinput"><code><a href="ch06s02.html#markarg.string">string</a></code></strong> &lt;-&gt; &amp;optional
 	  <code class="literal">:UP</code>|<code class="literal">:DOWN</code>)</code></td></tr><tr><td><code class="function">(<a id="mark.text-"></a>:STARTTEXT- <strong class="userinput"><code><a href="ch06s02.html#markarg.string">string</a></code></strong> &lt;-&gt;
 	  &amp;optional <strong class="userinput"><code><a href="ch06s02.html#markarg.level">level</a></code></strong> &lt;-&gt; <code class="literal">:UP</code>|<code class="literal">:DOWN</code>)</code>
 	  / <code class="function">(:TEXT- &amp;optional

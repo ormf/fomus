@@ -127,7 +127,7 @@
   '((:subbass-8dn . 35) (:bass-8dn . 38) (:c-baritone-8dn . 41) (:f-baritone-8dn . 41) (:tenor-8dn . 45) (:subbass . 47) (:alto-8dn . 48) (:bass . 50) (:mezzosoprano-8dn . 52)
     (:c-baritone . 53) (:f-baritone . 53) (:soprano-8dn . 55) (:tenor . 57) (:subbass-8up . 59) (:treble-8dn . 59) (:alto . 60) (:bass-8up . 62) 
     (:mezzosoprano . 64) (:c-baritone-8up . 65) (:f-baritone-8up . 65) (:soprano . 67) (:tenor-8up . 69) (:treble . 71) (:alto-8up . 72) 
-    (:mezzosoprano-8up . 76) (:soprano-8up . 79) (:treble-8up . 83) (:percussion . nil)))
+    (:mezzosoprano-8up . 76) (:soprano-8up . 79) (:treble-8up . 83) (:treble-15up . 95) (:percussion . nil)))
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (declaim (inline is-clef))
@@ -383,6 +383,8 @@ Returns the symbol if it refers to one of FOMUS's clefs (and NIL if it doesn't)"
 	  (make-instr :harp :clefs '(:treble :bass) :staves 2 :simultlim 5 :8uplegls '(5 2) :8dnlegls '(5 2) :minp 20 :maxp 104 :midiprgch-im 46 :midiprgch-ex 46)
 	  (make-instr :piano :clefs '(:treble :bass) :staves 2 :simultlim 5 :8uplegls '(5 2) :8dnlegls '(5 2) :minp 21 :maxp 108
 		      :midiprgch-im '(0 1 2 3) :midiprgch-ex 0)
+	  (make-instr :piano4st :clefs '(:treble-15up :treble :bass :bass-8dn) :staves 4 :simultlim 5 :8uplegls '(5 5 2 2) :8dnlegls '(5 5 2 2) :minp 21 :maxp 108
+		      :midiprgch-im '(0 1 2 3) :midiprgch-ex 0)
 	  (make-instr :electric-piano :clefs '(:treble :bass) :staves 2 :simultlim 5 :8uplegls '(5 2) :8dnlegls '(5 2) :minp 21 :maxp 108
 		      :midiprgch-im '(4 5 7 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95) :midiprgch-ex 4)
 	  (make-instr :harpsichord :clefs '(:treble :bass) :staves 2 :minp 29 :maxp 89 :midiprgch-im 6 :midiprgch-ex 6)
@@ -394,7 +396,7 @@ Returns the symbol if it refers to one of FOMUS's clefs (and NIL if it doesn't)"
 	  (make-instr :harmonica :clefs '(:bass :treble) :minp 28 :maxp 103 :midiprgch-im 22 :midiprgch-ex 22)
 	  (make-instr :ukulele :clefs :treble :minp 60 :maxp 81 :midiprgch-ex 24)
 	  (make-instr :mandolin :clefs :treble :minp 55 :maxp 85 :midiprgch-ex 24)
-	  (make-instr :guitar :clefs :treble :tpose -12 :minp 40 :maxp 83 :midiprgch-im '(24 25 26 27 28 29 30 31) :midiprgch-ex 24)
+	  (make-instr :guitar :clefs :treble-8dn :tpose 0 :minp 40 :maxp 83 :midiprgch-im '(24 25 26 27 28 29 30 31) :midiprgch-ex 24)
 	  (make-instr :bass-guitar :clefs :bass :tpose -12 :minp 28 :maxp 60 :midiprgch-im '(32 33 34 35 36 37 38 39) :midiprgch-ex 32)
 
 	  (make-instr :soprano :clefs :treble :minp 56 :maxp 87 :midiprgch-ex 52)
@@ -716,7 +718,7 @@ instrument)"
 			 (list* (member :dotted) (unique* si (integer 1))))))) ; startslur-
     (let* ((x (member :slur- :endslur-)))
       (or* (unique* si 1 x) (unique* si 1 (list* x)) (list* x (unique* si (integer 1)))))
-    (let* ((x (member :textnote :texttempo :textdyn :text)))
+    (let* ((x (member :textnote :texttempo :textdyn :text :fingering :corda)))
       (or* (list* x string) (list* x string (member :up :down :nopos :detached)) (list* x (member :up :down :nopos :detached) string)))
     (let* ((x (member :text- :endtext-)))
       (or* (unique* tx 1 x) (unique* tx 1 (list* x)) (list* x (unique* tx (integer 1)))))
@@ -798,7 +800,7 @@ instrument)"
   '(:startslur- :startgraceslur- :start8up- :start8down- :starttext- :startwedge< :startwedge> :startwedge<* :startwedge>* :endgraceslur-
     :pppppp :ppppp :pppp :ppp :pp :p :mp :mf :f :ff :fff :ffff :fffff :ffffff :fp :sf :sff :sp :spp :sfz :rfz
     :pppppp* :ppppp* :pppp* :ppp* :pp* :p* :mp* :mf* :f* :ff* :fff* :ffff* :fffff* :ffffff* :fp* :sf* :sff* :sp* :spp* :sfz* :rfz* 
-    :text :textdyn :textnote :texttempo 
+    :text :textdyn :textnote :texttempo :fingering :corda
     :accent :marcato :tenuto :portato
     :upbow :downbow :thumb :leftheel :rightheel :lefttoe :righttoe
     :trill :prall :mordent  
@@ -862,5 +864,5 @@ instrument)"
 
 (defparameter +marks-defaultdir+ ; default placements (up or down in relation to staff)
   '((:longtrill . :up) (:startlongtrill- . :up) (:texttempo . :up) (:textnote . :up) (:starttext- . :down)
-    (:startwedge< . :down) (:startwedge> . :down) (:textdyn . :down) (:text . :down)))
+    (:startwedge< . :down) (:startwedge> . :down) (:textdyn . :down) (:text . :down) (:fingering . :nopos) (:corda . :detached)))
 (defparameter +marks-long+ '(:startlongtrill-))

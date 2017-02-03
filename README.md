@@ -71,4 +71,3 @@ entry for :lilypond-view-exe in the ".fomus" file):
                          :dur (if (< off 10) 1/2 1)
                          :note (+ 48 (random 25)))))))
 ```
-

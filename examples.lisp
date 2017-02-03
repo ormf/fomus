@@ -106,7 +106,7 @@
  :verbose 2
  :quality 2
  :ensemble-type :orchestra
- ;; :auto-accs-module :nokey2
+ ;:auto-accs-module :nokey2
  :parts
  (list
   (make-part

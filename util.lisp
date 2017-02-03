@@ -84,14 +84,16 @@
 (defparameter +interval-quality+ (vector nil t t nil nil t t)) ; given diatonic interval number as index, contains nil if it can be perfect or t if it's maj/min
 
 ;; return white note spelling (0 - 6) or nil if not possible
-;; note = note value
+;; note = note value (abs midi keynum)
 ;; acc = accidental modification (-2 to 2)
+;; example: (63 1) means ds, (63 -1) means ef!
 (defun notespelling (note acc)
   (declare (type rational note) (type (integer -2 2) acc))
   (multiple-value-bind (o n) (floor (- note acc) 12)
     (let ((x (svref +note-to-white+ n)))
       (when x (values x o)))))
 ;; acc = (-2 to 2) or (-1 . -1/2), etc.
+
 (defun qnotespelling (note acc)
   (declare (type rational note) (type (cons (integer -2 2) (rational -1/2 1/2)) acc))
   (multiple-value-bind (o n) (floor (- note (car acc) (cdr acc)) 12)
@@ -1188,3 +1190,20 @@ Directories are created as needed."
   (let ((pl (gethash keyname *fomus-modules*)))
     (if pl (apply (find-symbol (symbol-name (module-entryfun pl)) (find-package (module-pack pl))) args)
 	(apply #'error err))))
+
+#|
+(let ((keyname :nokey2))
+  (flet ((module-provided-p (module)
+	   (find (module-pack module) *modules* :test #'string=)))
+    (let* ((module (or (gethash keyname *fomus-modules*)
+		       (error "Module ~S is not registered or does not exist" keyname)))
+	   (fasl-path (module-outname (module-file module) (eq (module-type module) :backend))))
+      (when (or (and (module-compile-p module) ; default is T
+		     (compile-module-if-needed (module-file module) fasl-path keyname)) 
+		(not (module-provided-p module)))
+	(when (and (numberp *verbose*) (>= *verbose* 2)) (format t "~&;; Loading module ~S..." keyname))
+	(load fasl-path :verbose nil :print nil)
+	(when (module-initfun module)
+	  (funcall (find-symbol (symbol-name (module-initfun module)) (find-package (module-pack module))))))
+      t)))
+|#

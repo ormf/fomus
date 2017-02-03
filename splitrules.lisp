@@ -273,7 +273,7 @@
   (declare (type timesig-repl ts))
   (if (timesig-div* ts)
       (make-initdiv :time (timesig-time ts) :comp (timesig-comp ts) :beat (timesig-beat* ts)
-		    :list (timesig-div* ts) :tsoff (timesig-off ts) :comp (timesig-comp ts))
+		    :list (timesig-div* ts) :tsoff (timesig-off ts))
       (make-sig :time (timesig-time ts) :comp (timesig-comp ts) :beat (timesig-beat* ts)
-		:alt t :art t :top t :comp (timesig-comp ts))))
+		:alt t :art t :top t)))
 

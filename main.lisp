@@ -219,7 +219,8 @@
 	   (multiple-value-bind (*timesigs* rm) (split-list *global* #'timesigp)
 	     #-debug (declare (ignore rm))
 	     #+debug (when rm (error "Error in FOMUS-PROC"))
-	     (multiple-value-bind (*events* mks) (split-list *events* (lambda (x) (declare (type (or note rest mark) x)) (or (notep x) (restp x)))) 
+	     (multiple-value-bind (*events* mks)
+                 (split-list *events* (lambda (x) (declare (type (or note rest mark) x)) (or (notep x) (restp x)))) 
 	       (let ((pts (progn
 			    (loop with co = 0
 				  for p of-type part in *parts* and i from 0
@@ -227,26 +228,24 @@
 					 (split-list (part-events p) #'timesigp
 						     (lambda (x) (declare (type (or note rest mark timesig) x)) (or (notep x) (restp x)))) ; separate timesigs/keysigs out of part tracks
 				       (unless (part-partid p)
-					 (setf (part-partid p)
+					 (setf (part-partid p);;; set an unused partid number by incrementing co until a number is found which isn't yet used in *parts*. 
 					       (loop
 						for s = (incf co)
 						while (find s *parts* :key #'part-partid)
 						finally (return s))))
-				       (map nil (lambda (x)
-						  (declare (type timesig x))
-						  (unless (timesig-partids x)
-						    (setf (timesig-partids x) (part-partid p))))
-					    ti)
-				       (map nil (lambda (x)
-						  (declare (type mark x))
-						  (unless (event-partid x)
-						    (setf (event-partid x) (part-partid p))))
-					    ma)
+				       (dolist (x ti)
+                                         (declare (type timesig x))
+                                         (unless (timesig-partids x)
+                                           (setf (timesig-partids x) (part-partid p))))
+				       (dolist (x ma)
+                                         (declare (type mark x))
+                                         (unless (event-partid x)
+                                           (setf (event-partid x) (part-partid p))))
 				       (prenconc ti *timesigs*)
 				       (prenconc ma mks)
 				       (multiple-value-bind (eo ep) (split-list evs #'event-partid)
-					 (setf (part-events p) ep)
-					 (prenconc eo *events*))))
+					 (setf (part-events p) ep) ;;; put all events of current part without partid into the eventlist of the current part
+					 (prenconc eo *events*)))) ;;; add all events of current part with partid to *events*
 			    (setf *timesigs* (mapcar #'make-timesigex* *timesigs*))
 			    (loop
 			     with h = (get-timesigs *timesigs* *parts*)

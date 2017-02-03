@@ -148,25 +148,25 @@
     "markAccIn = \\once \\override TextScript #'script-priority = #-100"
     "markOrnIn = \\once \\override Script #'script-priority = #-100"))
 (defparameter +lilypond-defs-24+
-  '("beamL = #(def-music-function (loc num) (number?) #{\\set stemLeftBeamCount = #$num #})"
-    "beamR = #(def-music-function (loc num) (number?) #{\\set stemRightBeamCount = #$num #})"
-    "beamLR = #(def-music-function (loc numl numr) (number? number?) #{\\set stemLeftBeamCount = #$numl \\set stemRightBeamCount = #$numr #})" 
-    "textSpan = #(def-music-function (loc dir str) (number? string?) #{\\override TextSpanner #'direction = #$dir \\override TextSpanner #'edge-text = #(cons $str \"\") #})" 
-    "noteHead = #(def-music-function (loc sty) (symbol?) #{\\once \\override NoteHead #'style = #$sty #})"
+  '("beamL = #(def-music-function (num) (number?) #{\\set stemLeftBeamCount = #num #})"
+    "beamR = #(def-music-function (num) (number?) #{\\set stemRightBeamCount = #num #})"
+    "beamLR = #(def-music-function (numl numr) (number? number?) #{\\set stemLeftBeamCount = #numl \\set stemRightBeamCount = #numr #})" 
+    "textSpan = #(def-music-function (dir str) (number? string?) #{\\override TextSpanner #'direction = #dir \\override TextSpanner #'edge-text = #(cons str \"\") #})" 
+    "noteHead = #(def-music-function (sty) (symbol?) #{\\once \\override NoteHead #'style = #sty #})"
     ))
 (defparameter +lilypond-defs-26+
-  '("beamL = #(def-music-function (par loc num) (number?) #{\\set stemLeftBeamCount = #$num #})"
-    "beamR = #(def-music-function (par loc num) (number?) #{\\set stemRightBeamCount = #$num #})"
-    "beamLR = #(def-music-function (par loc numl numr) (number? number?) #{\\set stemLeftBeamCount = #$numl \\set stemRightBeamCount = #$numr #})" 
-    "textSpan = #(def-music-function (par loc dir str) (number? string?) #{\\override TextSpanner #'direction = #$dir \\override TextSpanner #'edge-text = #(cons $str \"\") #})" 
-    "noteHead = #(def-music-function (par loc sty) (symbol?) #{\\once \\override NoteHead #'style = #$sty #})"
+  '("beamL = #(def-music-function (num) (number?) #{\\set stemLeftBeamCount = #num #})"
+    "beamR = #(def-music-function (num) (number?) #{\\set stemRightBeamCount = #num #})"
+    "beamLR = #(def-music-function (numl numr) (number? number?) #{\\set stemLeftBeamCount = #numl \\set stemRightBeamCount = #numr #})" 
+    "textSpan = #(def-music-function (dir str) (number? string?) #{\\override TextSpanner #'direction = #dir \\override TextSpanner #'edge-text = #(cons str \"\") #})" 
+    "noteHead = #(def-music-function (sty) (symbol?) #{\\once \\override NoteHead #'style = #sty #})"
     ))
 (defparameter +lilypond-defs-28+
-  '("beamL = #(define-music-function (par loc num) (number?) #{\\set stemLeftBeamCount = #$num #})"
-    "beamR = #(define-music-function (par loc num) (number?) #{\\set stemRightBeamCount = #$num #})"
-    "beamLR = #(define-music-function (par loc numl numr) (number? number?) #{\\set stemLeftBeamCount = #$numl \\set stemRightBeamCount = #$numr #})" 
-    "textSpan = #(define-music-function (par loc dir str) (number? string?) #{\\override TextSpanner #'direction = #$dir \\override TextSpanner #'edge-text = #(cons $str \"\") #})" 
-    "noteHead = #(define-music-function (par loc sty) (symbol?) #{\\once \\override NoteHead #'style = #$sty #})"
+  '("beamL = #(define-music-function (num) (number?) #{\\set stemLeftBeamCount = #num #})"
+    "beamR = #(define-music-function (num) (number?) #{\\set stemRightBeamCount = #num #})"
+    "beamLR = #(define-music-function (numl numr) (number? number?) #{\\set stemLeftBeamCount = #numl \\set stemRightBeamCount = #numr #})" 
+    "textSpan = #(define-music-function (dir str) (number? string?) #{\\override TextSpanner #'direction = #dir \\override TextSpanner #'edge-text = #(cons str \"\") #})" 
+    "noteHead = #(define-music-function (sty) (symbol?) #{\\once \\override NoteHead #'style = #sty #})"
     ))
 
 (defparameter +lilypond-num-note+ (vector "c" nil "d" nil "e" "f" nil "g" nil "a" nil "b"))
@@ -184,10 +184,12 @@
 (defparameter +lilypond-trmarks+
   '((:trill . "\\trill") (:startlongtrill- . "\\startTrillSpan") (:prall . "\\prall") (:mordent . "\\mordent")))
 
-(defparameter *lilypond-text-markup* "\\markup{\\italic{~A}}")
+(defparameter *lilypond-text-markup* "\\markup{\\teeny{~A}}")
 (defparameter *lilypond-textdyn-markup* "\\markup{\\dynamic{\\italic{\\bold{~A}}}}")
 (defparameter *lilypond-texttempo-markup* "\\markup{\\bold{\\huge{~A}}}")
-(defparameter *lilypond-textnote-markup* "\\markup{\\italic{~A}}")
+(defparameter *lilypond-textnote-markup* "\\markup{\\teeny{~A}}")
+(defparameter *lilypond-fingering-markup* "~A")
+(defparameter *lilypond-corda-markup* "\\~A")
 (defparameter *lilypond-textacc-markup* "\\markup{\\tiny{~A}}") ;; not user defined yet
 
 (defparameter +lilypond-dyns+
@@ -205,7 +207,7 @@
     (:subbass . "subbass") (:alto-8dn . "\"alto_8\"") (:bass . "bass") (:mezzosoprano-8dn . "\"mezzosoprano_8\"") (:c-baritone . "baritone") (:f-baritone . "varbaritone")
     (:soprano-8dn . "\"soprano_8\"") (:tenor . "tenor") (:subbass-8up . "\"subbass^8\"") (:treble-8dn . "\"treble_8\"") (:alto . "alto") (:bass-8up . "\"bass^8\"")
     (:mezzosoprano . "mezzosoprano") (:c-baritone-8up . "\"baritone^8\"") (:f-baritone-8up . "\"varbaritone^8\"") (:soprano . "soprano") (:tenor-8up . "\"tenor^8\"")
-    (:treble . "treble") (:alto-8up . "\"alto^8\"") (:mezzosoprano-8up . "\"mezzosoprano^8\"") (:soprano-8up . "\"soprano^8\"") (:treble-8up . "\"treble^8\"")
+    (:treble . "treble") (:alto-8up . "\"alto^8\"") (:mezzosoprano-8up . "\"mezzosoprano^8\"") (:soprano-8up . "\"soprano^8\"") (:treble-8up . "\"treble^8\"") (:treble-15up . "\"treble^15\"")
     (:percussion . "percussion")))
 
 (defparameter +lilypond-keysigs+
@@ -233,7 +235,9 @@
 (defun save-lilypond (parts header filename options process view)
   (when (>= *verbose* 1) (out ";; Saving LilyPond file ~S...~%" filename))
   (with-open-file (f filename :direction :output :if-exists :supersede)
-    (destructuring-bind (&key filehead scorehead text-markup textdyn-markup texttempo-markup textnote-markup textacc-markup version &allow-other-keys) options
+    (destructuring-bind (&key filehead scorehead text-markup textdyn-markup texttempo-markup textnote-markup
+                              fingering-markup corda-markup textacc-markup version &allow-other-keys)
+        options
       (let ((ve (lilypond-version options version)))
 	(format f "~A" header)
 	(format f +lilypond-vers+ (floor ve 100) (mod ve 100))
@@ -284,7 +288,7 @@
 		    (push lily-partname nms)
 		    (format f "~A = {~%" lily-partname)
 		    (when (and (part-name p)
-                               (not (eq (instr-sym (part-instr p)) :piano)))
+                               (not (member (instr-sym (part-instr p)) '(:piano :piano4st))))
                       (format f (if (> ve 209) "  \\set Staff.instrumentName = ~S~%" "  \\set Staff.instrument = ~S~%") (part-name p)))
 		    (when (part-abbrev p) (format f (if (> ve 209) "  \\set Staff.shortInstrumentName = ~S~%" "  \\set Staff.instr = ~S~%") (part-abbrev p)))
 		    (when (or (null *timesig-style*) (eq *timesig-style* :fraction))
@@ -494,11 +498,13 @@
 						((getmark e :startwedge>) "\\> ") 
 						(t "")) 
 					  (conc-stringlist
-					   (loop for x in '(:text :textdyn :texttempo :textnote)
+					   (loop for x in '(:text :textdyn :texttempo :textnote :fingering :corda)
 						 and m in (list (or text-markup *lilypond-text-markup*)
 								(or textdyn-markup *lilypond-textdyn-markup*)
 								(or texttempo-markup *lilypond-texttempo-markup*)
-								(or textnote-markup *lilypond-textnote-markup*))
+								(or textnote-markup *lilypond-textnote-markup*)
+								(or fingering-markup *lilypond-fingering-markup*)
+								(or corda-markup *lilypond-corda-markup*))
 						 nconc (loop for (xxx di str) in (getmarks e x)
 							     collect (conc-strings
 								      (ecase di (:up "^") (:down "_") (:nopos "-") (:detached ""))
