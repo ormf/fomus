@@ -127,7 +127,7 @@
   '((:subbass-8dn . 35) (:bass-8dn . 38) (:c-baritone-8dn . 41) (:f-baritone-8dn . 41) (:tenor-8dn . 45) (:subbass . 47) (:alto-8dn . 48) (:bass . 50) (:mezzosoprano-8dn . 52)
     (:c-baritone . 53) (:f-baritone . 53) (:soprano-8dn . 55) (:tenor . 57) (:subbass-8up . 59) (:treble-8dn . 59) (:alto . 60) (:bass-8up . 62) 
     (:mezzosoprano . 64) (:c-baritone-8up . 65) (:f-baritone-8up . 65) (:soprano . 67) (:tenor-8up . 69) (:treble . 71) (:alto-8up . 72) 
-    (:mezzosoprano-8up . 76) (:soprano-8up . 79) (:treble-8up . 83) (:treble-15up . 95) (:percussion . nil)))
+    (:mezzosoprano-8up . 76) (:soprano-8up . 79) (:treble-8up . 83) (:treble-15up . 95) (:percussion . nil) (:tab . 59)))
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (declaim (inline is-clef))
@@ -397,6 +397,7 @@ Returns the symbol if it refers to one of FOMUS's clefs (and NIL if it doesn't)"
 	  (make-instr :ukulele :clefs :treble :minp 60 :maxp 81 :midiprgch-ex 24)
 	  (make-instr :mandolin :clefs :treble :minp 55 :maxp 85 :midiprgch-ex 24)
 	  (make-instr :guitar :clefs :treble-8dn :tpose 0 :minp 40 :maxp 83 :midiprgch-im '(24 25 26 27 28 29 30 31) :midiprgch-ex 24)
+          (make-instr :guitar-tab :clefs :tab :tpose 0 :minp 40 :maxp 83 :midiprgch-im '(24 25 26 27 28 29 30 31) :midiprgch-ex 24)
 	  (make-instr :bass-guitar :clefs :bass :tpose -12 :minp 28 :maxp 60 :midiprgch-im '(32 33 34 35 36 37 38 39) :midiprgch-ex 32)
 
 	  (make-instr :soprano :clefs :treble :minp 56 :maxp 87 :midiprgch-ex 52)

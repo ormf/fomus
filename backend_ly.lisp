@@ -208,7 +208,7 @@
     (:soprano-8dn . "\"soprano_8\"") (:tenor . "tenor") (:subbass-8up . "\"subbass^8\"") (:treble-8dn . "\"treble_8\"") (:alto . "alto") (:bass-8up . "\"bass^8\"")
     (:mezzosoprano . "mezzosoprano") (:c-baritone-8up . "\"baritone^8\"") (:f-baritone-8up . "\"varbaritone^8\"") (:soprano . "soprano") (:tenor-8up . "\"tenor^8\"")
     (:treble . "treble") (:alto-8up . "\"alto^8\"") (:mezzosoprano-8up . "\"mezzosoprano^8\"") (:soprano-8up . "\"soprano^8\"") (:treble-8up . "\"treble^8\"") (:treble-15up . "\"treble^15\"")
-    (:percussion . "percussion")))
+    (:percussion . "percussion") (:tab . w"\"tab\"")))
 
 (defparameter +lilypond-keysigs+
   '((:cmaj . "c \\major") (:amin . "a \\minor")
@@ -573,7 +573,9 @@
 	      (incf in 2))
 	     (let ((ns (instr-staves (part-instr p))))
 	       (if (<= ns 1)
-		   (format f "~A\\new Staff \\~A~%" (make-string in :initial-element #\space) nm)
+                   (case (instr-clefs (part-instr p))
+                     (:tab (format f "~A\\new TabStaff \\~A~%" (make-string in :initial-element #\space) nm))
+                     (t (format f "~A\\new Staff \\~A~%" (make-string in :initial-element #\space) nm)))
 		   (progn
 		     (loop for s from 1 to ns do (format f "~A\\context Staff = ~A \\~A~%"
 							 (make-string in :initial-element #\space)
