@@ -25,6 +25,7 @@
 
 #+debug
 (defun fomus-proc-check (pts n)
+;;  (break "fomus-proc-check: pts: ~a, n: ~a" pts n)
   (loop
    for p in pts 
    if (measp (first (part-events p)))
@@ -340,6 +341,7 @@
 		       (comb-notes pts) #+debug (fomus-proc-check pts 'combnotes))
 		     (backup-props pts)
 		     (postproc-parts pts))))))))))))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAIN

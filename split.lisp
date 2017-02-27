@@ -230,12 +230,13 @@
 	       (not (if (consp x) (and-list x) x)))
 	     (no (di)
 	       (declare (type (rational (0) 1) di))
+;;;               (break "(no ~a), rule-comp: ~a" di (rule-comp rule))
 	       (expof2 (* (if (rule-comp rule) (* (event-effectdur ev) 3/2) (event-effectdur ev)) di)))) ; something wrong here
 	(etypecase rule
 	  (initdiv
 	   (etypecase ev
 	     (rest t)
-	     (note (if (rule-comp rule) (no 2/3) (no 1)))))
+	     (note (or (no 1) (no 2/3))))) ;;; should also check for dotted notes as whole bar notes in 3/4 meters
 	  (sig
 	   (etypecase ev
 	     (rest (or (and (= (event-off ev) off) (= (event-endoff ev) endoff))

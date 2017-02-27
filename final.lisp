@@ -52,7 +52,9 @@ Reloads the \"~/.fomus\" initialization file"
 
 ;; feature
 (eval-when (:load-toplevel :execute)
-  (pushnew :fomus *features*))
+  (pushnew :fomus *features*)
+;;;   (pushnew :debug *features*)
+  )
 
 ;; print load greeting
 (eval-when (:load-toplevel :execute)
