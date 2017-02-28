@@ -634,3 +634,24 @@ Copies a MEAS object"
     (with-error* (part "~~A, part ~S" (function part-name))
       (class* part
        (events (or* null (list-of* (or* (type* +note-type+) (type* +rest-type+) (type* +mark-type+) (type* +timesig-type+)))))))))
+
+(defun finalize-class (class) 
+  (sb-pcl:finalize-inheritance class))
+
+(progn
+  (finalize-class (find-class 'fomusobj-base))
+  (finalize-class (find-class 'event-base))
+  (finalize-class (find-class 'timesig-repl))
+  (finalize-class (find-class 'timesig))
+  (finalize-class (find-class 'mark))
+  (finalize-class (find-class 'dur-base))
+  (finalize-class (find-class 'note))
+  (finalize-class (find-class 'rest))
+  (finalize-class (find-class 'part))
+  (finalize-class (find-class 'meas))
+  (finalize-class (find-class 'ex-base))
+  (finalize-class (find-class 'noteex))
+  (finalize-class (find-class 'restex))
+  (finalize-class (find-class 'partex)))
+
+

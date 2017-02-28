@@ -143,9 +143,7 @@ points)."
 										      (t (car y)))
 										(min x2 y2))))))))
 						     :call-rev nil)))
-                        (setf (part-events p) (sort (part-events p) #'sort-offdur))
-                        ;;; (break "p: ~a" p)
-                        )))))))
+			 (setf (part-events p) (sort (part-events p) #'sort-offdur)))))))))
 
 (declaim (inline load-quantize-modules))
 (defun load-quantize-modules ()
