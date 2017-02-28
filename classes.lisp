@@ -635,6 +635,28 @@ Copies a MEAS object"
       (class* part
        (events (or* null (list-of* (or* (type* +note-type+) (type* +rest-type+) (type* +mark-type+) (type* +timesig-type+)))))))))
 
+#+clisp
+(defun finalize-class (class) class (values))
+
+#+cmu
+(defun finalize-class (class) class)
+
+#+ecl
+(defun finalize-class (class) 
+  class
+  ;(clos:finalize-inheritance class)
+  (values))
+
+#+lispworks
+(defun finalize-class (class) class (values))
+
+#+mcl
+(defun finalize-class (class) class t)
+
+#+openmcl
+(defun finalize-class (class) class t)
+
+#+sbcl
 (defun finalize-class (class) 
   (sb-pcl:finalize-inheritance class))
 
@@ -653,5 +675,3 @@ Copies a MEAS object"
   (finalize-class (find-class 'noteex))
   (finalize-class (find-class 'restex))
   (finalize-class (find-class 'partex)))
-
-
