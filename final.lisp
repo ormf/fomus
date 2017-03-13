@@ -91,5 +91,5 @@ Reloads the \"~/.fomus\" initialization file"
 	(fomus-text (if (list1p filename) (first filename) filename) o #'fomus-textexec))))
   (fresh-line)
   (finish-output)
-  #+cmu (ext:quit) #+sbcl (sb-ext:quit) #+openmcl (ccl:quit) #+clisp (ext:quit))
+  #+cmu (ext:quit) #+sbcl (sb-ext:exit) #+openmcl (ccl:quit) #+clisp (ext:quit))
 
