@@ -40,7 +40,7 @@
 (defparameter +xml-clefs+
   '((:subbass-8dn . ("F" 5 -1)) (:bass-8dn . ("F" 4 -1)) (:c-baritone-8dn . ("C" 5 -1)) (:f-baritone-8dn . ("F" 3 -1)) (:tenor-8dn . ("C" 4 -1))
     (:subbass . ("F" 5)) (:alto-8dn . ("C" 3 -1)) (:bass . ("F" 4)) (:mezzosoprano-8dn . ("C" 2 -1)) (:c-baritone . ("C" 5)) (:f-baritone . ("F" 3))
-    (:soprano-8dn . ("C" 1 -1)) (:tenor . ("C" 4)) (:subbass-8up . ("F" 5 1)) (:treble-8dn . ("G" 2 -1)) (:alto . ("C" 3)) (:bass-8up . ("F" 4 1)) 
+    (:soprano-8dn . ("C" 1 -1)) (:tenor . ("C" 4)) (:subbass-8up . ("F" 5 1)) (:treble-8dn . ("G" 2 -1)) (:alto . ("C" 3)) (:bass-8up . ("F" 4 1))
     (:mezzosoprano . ("C" 2)) (:c-baritone-8up . ("C" 5 1)) (:f-baritone-8up . ("F" 3 1)) (:soprano . ("C" 1)) (:tenor-8up . ("C" 4 1))
     (:treble . ("G" 2)) (:alto-8up . ("C" 3 1)) (:mezzosoprano-8up . ("C" 2 1)) (:soprano-8up . ("C" 1 1)) (:treble-8up . ("G" 2 1))
     (:percussion . ("percussion"))))
@@ -65,7 +65,7 @@
     (:gmaj . ("1" . "major")) (:emin . ("1" . "minor"))
     (:dmaj . ("2" . "major")) (:bmin . ("2" . "minor"))
     (:amaj . ("3" . "major")) (:f+min . ("3" . "minor"))
-    (:emaj . ("4" . "major")) (:c+min . ("4" . "minor")) 
+    (:emaj . ("4" . "major")) (:c+min . ("4" . "minor"))
     (:bmaj . ("5" . "major")) (:g+min . ("5" . "minor")) (:c-maj . ("-7" . "major")) (:a-min . ("-7" . "minor"))
     (:f+maj . ("6" . "major")) (:d+min . ("6" . "minor")) (:g-maj . ("-6" . "major")) (:e-min . ("-6" . "minor"))
     (:c+maj . ("7" . "major")) (:a+min . ("7" . "minor")) (:d-maj . ("-5" . "major")) (:b-min . ("-5" . "minor"))
@@ -113,9 +113,6 @@
 ;; (defparameter *xml-heel-kludge* nil)
 ;; (defparameter *xml-toe-kludge* nil)
 
-;;; Currently, this function does not compile on sbcl. I could not yet
-;;; investigate why. --KS
-#-sbcl
 (defun save-xml (parts header filename options #|process view|#)
   (when (>= *verbose* 1) (out ";; Saving MusicXML file ~S...~%" filename))
   (destructuring-bind (&key (xml-1note-tremolo-kludge *xml-1note-tremolo-kludge*)
@@ -142,7 +139,7 @@
 				  (mloop with ts = (meas-timesig m)
 					 for v in (meas-voices m) maximize
 					 (mloop for e in v
-						maximize (denominator (* (event-writtendur e ts) 4))))))) 
+						maximize (denominator (* (event-writtendur e ts) 4)))))))
 	       (dv (* dv0 4)))
 	  (write-xml
 	   `("score-partwise" nil
@@ -150,7 +147,7 @@
 	     ("identification" nil
 	      ,@(when *composer* `(("creator" ("type" "composer") ,*composer*)))
 	      ("encoding" nil
-	       ("encoding-date" nil ,(apply #'format nil "~A-~A-~A"
+	       ("encoding-date" nil ,(apply #'format nil "~4,'0d-~2,'0d-~2,'0d"
 					    (multiple-value-bind (xxx1 xxx2 xxx3 d m y) (get-decoded-time)
 					      (declare (ignore xxx1 xxx2 xxx3))
 					      (list m d y))))
@@ -214,7 +211,7 @@
 				       and tl in (if (notep e) (if (consp (event-tielt e)) (event-tielt e) (list (event-tielt e))) '(nil))
 				       do (prenconc (sort (mapcar #'rest (getmarks e :starttup)) #'> :key #'first) tv)
 				       nconc (when (and fi (not mfi))
-					       (loop for c in (getmarks e :clef) 
+					       (loop for c in (getmarks e :clef)
 						     for (s l o) = (lookup (second c) +xml-clefs+)
 						     unless (fourth c) collect
 						     `("attributes" nil
@@ -235,7 +232,7 @@
 				       nconc (when fi (loop for xxx in (getmarks e :start8up-) collect
 							    `("direction" nil
 							      ("direction-type" nil
-							       ("octave-shift" (("type" "down") ("number" ,(getnum (event-staff e) olvl))))))))				     
+							       ("octave-shift" (("type" "down") ("number" ,(getnum (event-staff e) olvl))))))))
 				       nconc (when fi (loop for xxx in (getmarks e :start8down-) collect
 							    `("direction" nil
 							      ("direction-type" nil
@@ -388,7 +385,7 @@
 													    when (getmark e m) collect
 													    (cons (if (listp i) i (list i nil)) m))
 												      :key #'cdr :test #'equal)
-												     #'msrt))) 
+												     #'msrt)))
 									      (when (and (not xml-harmonic-kludge) (getmark e (list :harmonic :touched o)))
 										(list '("harmonic" nil ("artificial" nil) ("touching-pitch" nil))))
 									      (when (and (not xml-harmonic-kludge) (getmark e (list :harmonic :sounding o)))
@@ -457,7 +454,7 @@
 				       nconc (when fi (loop for xxx in (getmarks e :end8down-) collect
 							    `("direction" nil
 							      ("direction-type" nil
-							       ("octave-shift" (("type" "stop") ("number" ,(remnum (event-staff e) olvl)))))))) 
+							       ("octave-shift" (("type" "stop") ("number" ,(remnum (event-staff e) olvl))))))))
 				       nconc (when fi (loop for x in (getmarks e :endtext-) collect
 							    `("direction" nil
 							      ("direction-type" nil
@@ -483,4 +480,3 @@
 	 (*xml-harmonic-kludge* t)
 	 (*xml-partgroups-kludge* nil))
     (save-xml ,parts ,header ,filename ,options)))
-
