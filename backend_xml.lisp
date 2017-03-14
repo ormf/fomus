@@ -150,7 +150,7 @@
 	       ("encoding-date" nil ,(apply #'format nil "~4,'0d-~2,'0d-~2,'0d"
 					    (multiple-value-bind (xxx1 xxx2 xxx3 d m y) (get-decoded-time)
 					      (declare (ignore xxx1 xxx2 xxx3))
-					      (list m d y))))
+					      (list y m d))))
 	       ("software" nil ,header)))
 	     ("part-list" nil
 	      ,.(loop
