@@ -25,12 +25,14 @@ LICENSE, no warranties whatsoever.
 ### USAGE
 
 1. Create a Text file with the name ".fomus" in your $HOME directory
-with the following contents:
+with the following contents (adapt to your needs and don't forget to
+set the correct path to the lilypond binary on your computer for
+:lilypond-exe):
 
 ```
 :output '((:data) (:lilypond :view t))
 
-:lilypond-exe "/home/orm/bin/lilypond"
+:lilypond-exe "/path/to/lilypond"
 :lilypond-opts '("--pdf")
 :lilypond-out-ext "pdf"
 
