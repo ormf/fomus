@@ -483,7 +483,7 @@
     (if n 
 	(let ((x (sort (loop ; make more efficient?
 			for e of-type noteex in n
-			if (chordp e) append (event-note* e) into r1 and append (event-note e) into r2 and append (event-tielt e) into r3 and append (event-tiert e) into r4
+			if (chordp e) append (mapcar #'car (event-note e)) into r1 and append (event-note e) into r2 and append (event-tielt e) into r3 and append (event-tiert e) into r4
 			else collect (event-note* e) into r1 and collect (event-note e) into r2 and collect (event-tielt e) into r3 and collect (event-tiert e) into r4
 			finally 
 			(return (mapcar (lambda (y1 y2 y3 y4) (cons (cons y1 y2) (cons y3 y4))) r1 r2 r3 r4)))
