@@ -316,8 +316,9 @@
 		       (grace-slurs pts) #+debug (fomus-proc-check pts 'graceslurs))
 		     (when (>= *verbose* 2) (out "~&; Measures..."))
 		     (init-parts *timesigs* pts) ; ----- MEASURES
-		     #+debug (fomus-proc-check pts 'measures)
+                     #+debug (fomus-proc-check pts 'measures)
 		     #+debug (check-same pts "FOMUS-PROC (MEASURES)" :key (lambda (x) (meas-endoff (last-element (part-meas x)))))
+;;;		     (break "parts: ~a" pts)
 		     (when *auto-cautionary-accs*
 		       (when (>= *verbose* 2) (out "~&; Cautionary accidentals..."))
 		       (cautaccs pts) #+debug (fomus-proc-check pts 'cautaccs))
@@ -325,6 +326,7 @@
 		     (marks-beforeafter pts)
 		     (preproc-userties pts)
 		     (preproc pts) #+debug (fomus-proc-check pts 'preproc) ; ----- CHORDS, RESTS
+;;;		     (break "parts: ~a" pts)
 		     (clean-ties pts) #+debug (fomus-proc-check pts 'cleanties1)
 		     (when (>= *verbose* 2) (out "~&; Splits/ties/rests..."))
 		     (split pts) #+debug (fomus-proc-check pts 'ties)
@@ -347,6 +349,7 @@
 ;; MAIN
 
 (defmacro resolve-deprecated (&body forms)
+  "replace deprecated symbols with the recommended new name."
   `(progn
     ,@(loop for (d . r) of-type (symbol . symbol) in +deprecated-repl+
 	    for ds = (find-symbol (format nil "*~A*" (symbol-name d)) :fomus)

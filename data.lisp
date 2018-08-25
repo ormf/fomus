@@ -40,7 +40,7 @@
 
 ;; nested tuplets indicated by a list
 (declaim (type (or null (integer 2) list) *max-tuplet*))
-(defparameter *max-tuplet* 13)
+(defparameter *max-tuplet* '(13))
 
 (declaim (type (or (integer 1) list) *beat-division*))
 (defparameter *beat-division* 16) ; 64th notes--basic number of divisions-per-beat, if list, second value is compound meter
@@ -719,7 +719,7 @@ instrument)"
 			 (list* (member :dotted) (unique* si (integer 1))))))) ; startslur-
     (let* ((x (member :slur- :endslur-)))
       (or* (unique* si 1 x) (unique* si 1 (list* x)) (list* x (unique* si (integer 1)))))
-    (let* ((x (member :textnote :texttempo :textdyn :text :fingering :corda)))
+    (let* ((x (member :custom :textnote :texttempo :textdyn :text :fingering :corda)))
       (or* (list* x string) (list* x string (member :up :down :nopos :detached)) (list* x (member :up :down :nopos :detached) string)))
     (let* ((x (member :text- :endtext-)))
       (or* (unique* tx 1 x) (unique* tx 1 (list* x)) (list* x (unique* tx (integer 1)))))
@@ -766,10 +766,10 @@ instrument)"
 
 ;; include :staff but not :clef
 (defparameter +marks-rests+
-  '(:fermata :notehead :textnote :texttempo :textdyn :text :text- :endtext- :starttext- :size :staff :staff- :startstaff- :endstaff-))
+  '(:fermata :notehead :custom :textnote :texttempo :textdyn :text :text- :endtext- :starttext- :size :staff :staff- :startstaff- :endstaff-))
 
 (defparameter +marks-first-rest+
-  '(:textnote :texttempo :textdyn :text :text- :starttext-))
+  '(:custom :textnote :texttempo :textdyn :text :text- :starttext-))
 (defparameter +marks-last-rest+
   '(:fermata :endtext-))
 
@@ -787,7 +787,7 @@ instrument)"
     :stopped :open :staccato :staccatissimo
     :mordent :prall :trill :longtrill :longtrill- :righttoe :lefttoe :rightheel :leftheel
     :thumb :downbow :upbow :portato :tenuto :marcato :accent :notehead :size
-    :startslur- :slur- :endslur- :textnote :textdyn))
+    :startslur- :slur- :endslur- :custom :textnote :textdyn))
     
 (declaim (type boolean *auto-pizz/arco* *auto-dyn-nodup*))
 (defparameter *auto-pizz/arco* t)
@@ -801,7 +801,7 @@ instrument)"
   '(:startslur- :startgraceslur- :start8up- :start8down- :starttext- :startwedge< :startwedge> :startwedge<* :startwedge>* :endgraceslur-
     :pppppp :ppppp :pppp :ppp :pp :p :mp :mf :f :ff :fff :ffff :fffff :ffffff :fp :sf :sff :sp :spp :sfz :rfz
     :pppppp* :ppppp* :pppp* :ppp* :pp* :p* :mp* :mf* :f* :ff* :fff* :ffff* :fffff* :ffffff* :fp* :sf* :sff* :sp* :spp* :sfz* :rfz* 
-    :text :textdyn :textnote :texttempo :fingering :corda
+    :text :textdyn :custom :textnote :texttempo :fingering :corda
     :accent :marcato :tenuto :portato
     :upbow :downbow :thumb :leftheel :rightheel :lefttoe :righttoe
     :trill :prall :mordent  
@@ -838,7 +838,7 @@ instrument)"
   '(:starttext- :startwedge< :startwedge> :startwedge<* :startwedge>* 
     :pppppp :ppppp :pppp :ppp :pp :p :mp :mf :f :ff :fff :ffff :fffff :ffffff :fp :sf :sff :sp :spp :sfz :rfz
     :pppppp* :ppppp* :pppp* :ppp* :pp* :p* :mp* :mf* :f* :ff* :fff* :ffff* :fffff* :ffffff* :fp* :sf* :sff* :sp* :spp* :sfz* :rfz* 
-    :text :textdyn :textnote
+    :text :textdyn :textnote :custom
     :accent :marcato :tenuto :portato
     :upbow :downbow :thumb :leftheel :rightheel :lefttoe :righttoe 
     :trill :longtrill :startlongtrill- :prall :mordent 
@@ -864,6 +864,6 @@ instrument)"
   '(((:longtrill . nil) . (:startlongtrill- . :endlongtrill-))))
 
 (defparameter +marks-defaultdir+ ; default placements (up or down in relation to staff)
-  '((:longtrill . :up) (:startlongtrill- . :up) (:texttempo . :up) (:textnote . :up) (:starttext- . :down)
+  '((:longtrill . :up) (:startlongtrill- . :up) (:texttempo . :up) (:custom . :up) (:textnote . :up) (:starttext- . :down)
     (:startwedge< . :down) (:startwedge> . :down) (:textdyn . :down) (:text . :down) (:fingering . :nopos) (:corda . :detached)))
 (defparameter +marks-long+ '(:startlongtrill-))

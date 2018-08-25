@@ -25,9 +25,11 @@
 			 (progv (quote ,v) (list ,@n)
 			   (fomus-main)))))
 	     (fm () (let ((n (mapcar (lambda (x) (declare (type cons x))
-                                        (intern (symbol-name (first x)) :fomus)) +settings+))
+                                        (intern (symbol-name (first x)) :fomus))
+                                     +settings+))
 			  (v (mapcar (lambda (k) (declare (type cons k))
-                                        (find-symbol (conc-strings "*" (symbol-name (first k)) "*") :fomus)) +settings+)))
+                                        (find-symbol (conc-strings "*" (symbol-name (first k)) "*") :fomus))
+                                     +settings+)))
 		      #+debug (when (position nil v) (error "Error in FOMUS")) 
 		      `(destructuring-bind (&key ,@(mapcar (lambda (x y) (list x y)) n v) other-keys) args
 			(declare (ignore other-keys))

@@ -28,6 +28,7 @@
 (defparameter *lilypond-out-ext* #-(or (or darwin macos) mswindows win32) "ps" #+(or (or darwin macos) mswindows win32) "pdf")
 (defparameter *lilypond-view-opts* #-(or darwin macos) nil #+(or darwin macos) '("/Applications/Preview.app"))
 
+
 (defun view-lilypond (filename options view)
   (when (>= *verbose* 1) (out (if view ";; Compiling/opening ~S for viewing...~%" ";; Compiling ~S...~%") filename))
   (destructuring-bind (&key exe view-exe opts view-opts out-ext &allow-other-keys) options
@@ -96,7 +97,7 @@
 
 (defparameter *lilypond-version* nil)
 (defparameter *lilyvers* t)
-(defparameter +lilypond-defaultver+ '("2.10" . 210))
+(defparameter +lilypond-defaultver+ '("2.19" . 219))
 (defun lilypond-version (options usrv)
   (let ((v (or usrv *lilypond-version*)))
     (if v
@@ -184,10 +185,11 @@
 (defparameter +lilypond-trmarks+
   '((:trill . "\\trill") (:startlongtrill- . "\\startTrillSpan") (:prall . "\\prall") (:mordent . "\\mordent")))
 
-(defparameter *lilypond-text-markup* "\\markup{\\teeny{~A}}")
-(defparameter *lilypond-textdyn-markup* "\\markup{\\dynamic{\\italic{\\bold{~A}}}}")
-(defparameter *lilypond-texttempo-markup* "\\markup{\\bold{\\huge{~A}}}")
-(defparameter *lilypond-textnote-markup* "\\markup{\\teeny{~A}}")
+(defparameter *lilypond-text-markup* "\\markup{\\teeny{\"~A\"}}")
+(defparameter *lilypond-textdyn-markup* "\\markup{\\dynamic{\\italic{\\bold{\"~A\"}}}}")
+(defparameter *lilypond-texttempo-markup* "\\markup{\\bold{\\huge{\"~A\"}}}")
+(defparameter *lilypond-textnote-markup* "\\markup{\\teeny{\"~A\"}}")
+(defparameter *lilypond-custom-markup* "~A")
 (defparameter *lilypond-fingering-markup* "~A")
 (defparameter *lilypond-corda-markup* "\\~A")
 (defparameter *lilypond-textacc-markup* "\\markup{\\tiny{~A}}") ;; not user defined yet
@@ -226,6 +228,7 @@
 
 (defparameter *lilypond-filehead* nil)
 (defparameter *lilypond-scorehead* nil)
+(defparameter *lilypond-scorefoot* '("\\layout{}" "\\midi{}"))
 
 (defun lilypond-string-escape (string)
   (if (position #\# string)
@@ -236,7 +239,7 @@
   (when (>= *verbose* 1) (out ";; Saving LilyPond file ~S...~%" filename))
   (with-open-file (f filename :direction :output :if-exists :supersede)
     (destructuring-bind (&key filehead scorehead text-markup textdyn-markup texttempo-markup textnote-markup
-                              fingering-markup corda-markup textacc-markup version &allow-other-keys)
+                              fingering-markup corda-markup textacc-markup custom-markup version &allow-other-keys)
         options
       (let ((ve (lilypond-version options version)))
 	(format f "~A" header)
@@ -301,7 +304,7 @@
 			(when (eq *tuplet-style* :ratio) (format f "  \\set tupletNumberFormatFunction = #fraction-tuplet-formatter~%")))
 		    (format f "  \\autoBeamOff~%")
 		    (if *acc-throughout-meas*
-			(format f "  #(set-accidental-style 'default)~%")
+			(format f "  #(set-accidental-style 'neo-modern)~%")
 			(format f "  #(set-accidental-style 'forget)~%"))
 		    (if (> ns 1)
 			(loop for (xxx cl s) in (sort (getprops p :clef) #'< :key #'third) do
@@ -498,11 +501,12 @@
 						((getmark e :startwedge>) "\\> ") 
 						(t "")) 
 					  (conc-stringlist
-					   (loop for x in '(:text :textdyn :texttempo :textnote :fingering :corda)
+					   (loop for x in '(:text :textdyn :texttempo :textnote :custom :fingering :corda)
 						 and m in (list (or text-markup *lilypond-text-markup*)
 								(or textdyn-markup *lilypond-textdyn-markup*)
 								(or texttempo-markup *lilypond-texttempo-markup*)
 								(or textnote-markup *lilypond-textnote-markup*)
+								(or custom-markup *lilypond-custom-markup*)
 								(or fingering-markup *lilypond-fingering-markup*)
 								(or corda-markup *lilypond-corda-markup*))
 						 nconc (loop for (xxx di str) in (getmarks e x)
@@ -585,6 +589,7 @@
 	     (loop
 	      for xxx in (getprops p :endgroup)
 	      do (decf in 2) (format f "~A>>~%" (make-string in :initial-element #\space))))
+	    (loop for e in (force-list *lilypond-scorefoot*) do (format f "  ~A~%" e))
 	    (format f "}~%"))
 	  (when twrn (format t ";; WARNING: Some string spanners are excluded~%"))))))
   (when process (view-lilypond filename options view)))

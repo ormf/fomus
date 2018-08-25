@@ -276,4 +276,3 @@
 		    :list (timesig-div* ts) :tsoff (timesig-off ts))
       (make-sig :time (timesig-time ts) :comp (timesig-comp ts) :beat (timesig-beat* ts)
 		:alt t :art t :top t)))
-

@@ -87,15 +87,17 @@
 	     collect (if (listp i) (second i) (intern (string i) 'keyword))
 	     collect (list 'slot-value 'x (list 'quote (if (listp i) (first i) i))))))
     `(defmethod print-object ((x ,class) s)
-      (declare (type stream s))
+       (declare (type stream s))
       (princ "#Z" s)
       (if *prepend-fm*
-	  (format s "(~A:~A~{ ~S~})"
-		  (if (eq *print-case* :downcase) "fm" "FM")
-		  ,(list 'quote class)
-		  ,(cons 'list sl))
-	  (prin1 ,(nconc (list 'list (list 'quote class)) sl)
-		 s)))))
+          (format s "(~A:~A~{ ~S~})"
+        	  (if (eq *print-case* :downcase) "fm" "FM")
+        	  ,(list 'quote class)
+        	  ,(cons 'list sl))
+          (prin1 ,(nconc (list 'list (list 'quote class)) sl)
+        	 s))
+      )))
+
 (defmacro defprint-struct (class &rest slots)
   (let ((sl (loop
 	     for i in slots

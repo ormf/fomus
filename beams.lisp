@@ -199,7 +199,11 @@
 	     #+debug (loop for e in (meas-events m)
 			   when (and (notep e) (or (> (event-beamlt e) 0) (> (event-beamrt e) 0))
 				     (/= (max (event-beamlt e) (event-beamrt e)) (event-nbeams e (meas-timesig m))))
-			   do (error "Error in BEAMS-STANDBYDIV (5)"))) (print-dot)))
+                        do (error "Error in BEAMS-STANDBYDIV (5)"))) (print-dot))
+  ;;;(break "meas: ~a" meas)
+  )
+
+
 
 (defun beams (parts)
   (declare (type list parts))

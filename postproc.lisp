@@ -459,7 +459,7 @@
 				    for tx = (or (popmark e :starttext-)  
 						 (popmark e :startwedge<) (popmark e :startwedge>) (popmark e :startlongtrill-)
 						 (popmark e :text) (popmark e :texttempo) (popmark e :textdyn)
-                                                 (popmark e :textnote) (popmark e :fingering) (popmark e :corda))
+                                                 (popmark e :custom) (popmark e :textnote) (popmark e :fingering) (popmark e :corda))
 				    while tx do
 				    (loop with o = (event-voice* e)
 					  for y of-type (integer 1)

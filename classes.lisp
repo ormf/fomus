@@ -21,7 +21,7 @@
   ((time :type cons :accessor timesig-time :initform '(4 4) :initarg :time)
    (div :type list :accessor timesig-div :initform nil :initarg :div) ; list of divisions to force, ex: '((3 3 2) (3 2 3)) or '((3/2 1) (1 3/2))
    (comp :type (or boolean symbol) :accessor timesig-comp :initform 'default :initarg :comp) ; t or nil
-   (beat :type (or (rational 0) null) :accessor timesig-beat :initform nil :initarg :beat) ; what actually gets the beat (ex: 1/4 = quarter note, 1/4 + 1/8 = dotted quarter), compound is deterined from signature
+   (beat :type (or (rational 0) null) :accessor timesig-beat :initform nil :initarg :beat) ; what actually gets the beat (ex: 1/4 = quarter note, 1/4 + 1/8 = dotted quarter), compound is determined from signature
    (props :type list :accessor timesig-props :initform nil :initarg :props))) 
 (defclass timesig (timesig-repl event-base)
   ((off :type (rational 0))
