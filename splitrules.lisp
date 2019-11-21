@@ -54,7 +54,7 @@
 (defclass sig (baserule basesplit baseinit basecomp)
   ((top :type boolean :accessor rule-top :initform nil :initarg :top)))
 (defclass unit (baserule basesplit baseunit basecomp)
-  ((div :type (integer 2) :accessor rule-div :initform 1 :initarg :div)))
+  ((div :type (integer 2) :accessor rule-div :initarg :div)))
 (defclass sig-nodiv (baserule basenodiv basecomp) ())
 (defclass unit-nodiv (baserule basenodiv baseunit basecomp)
   ((rst :type boolean :accessor rule-rst :initform nil :initarg :rst)))
