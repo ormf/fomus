@@ -658,7 +658,7 @@ Copies a MEAS object"
 
 #+sbcl
 (defun finalize-class (class) 
-  (sb-pcl:finalize-inheritance class))
+  (sb-mop:finalize-inheritance class))
 
 (progn
   (finalize-class (find-class 'fomusobj-base))
