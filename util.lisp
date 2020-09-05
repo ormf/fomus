@@ -682,7 +682,7 @@
 	      with eo0 = (when eo1 (- eo1 (or *min-auto-timesig-dur* 0))) ; eo0 = adjusted end-offset (for auto-meas)
 	      for o = (or lo 0) then and
 	      #-clisp while #-clisp (if eo1 (< o eo1) (or (<= o 0) (< o mxo))) ; loop creating measures
-                for nb = #-clisp (* (timesig-den si) (timesig-beat* si) (timesig-nbeats si)) #+clisp (if (if eo1 (< o eo1) (or (<= o 0) (< o mxo))) (timesig-nbeats si) (loop-finish))
+	      for nb = #-clisp (timesig-nbeats si) #+clisp (if (if eo1 (< o eo1) (or (<= o 0) (< o mxo))) (timesig-nbeats si) (loop-finish))
 	      for nd = (+ o nb)	; nd = next downbeat, loop and create measures
 	      for and = (if (and eo0 (> nd eo0)) eo1 nd) ; and = actual next downbeat (>= nd)
 	      for at = (if (/= nb (- and o)) ; at = actual time-signature

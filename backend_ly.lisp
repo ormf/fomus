@@ -238,7 +238,7 @@
 (defun save-lilypond (parts header filename options process view)
   (when (>= *verbose* 1) (out ";; Saving LilyPond file ~S...~%" filename))
   (with-open-file (f filename :direction :output :if-exists :supersede)
-    (destructuring-bind (&key filehead scorehead text-markup textdyn-markup texttempo-markup textnote-markup
+    (destructuring-bind (&key filehead scorehead scorefoot text-markup textdyn-markup texttempo-markup textnote-markup
                               fingering-markup corda-markup textacc-markup custom-markup version &allow-other-keys)
         options
       (let ((ve (lilypond-version options version)))
@@ -302,7 +302,9 @@
 		    (if (>= ve 209)
 			(when (eq *tuplet-style* :ratio) (format f "  \\override TupletNumber #'text = #tuplet-number::calc-fraction-text~%"))
 			(when (eq *tuplet-style* :ratio) (format f "  \\set tupletNumberFormatFunction = #fraction-tuplet-formatter~%")))
-		    (format f "  \\autoBeamOff~%")
+                    (if *auto-beams*
+                        (format f "  \\autoBeamOff~%")
+                        (format f "  \\autoBeamOn~%"))
 		    (if *acc-throughout-meas*
 			(format f "  #(set-accidental-style 'neo-modern)~%")
 			(format f "  #(set-accidental-style 'forget)~%"))
@@ -589,7 +591,7 @@
 	     (loop
 	      for xxx in (getprops p :endgroup)
 	      do (decf in 2) (format f "~A>>~%" (make-string in :initial-element #\space))))
-	    (loop for e in (force-list *lilypond-scorefoot*) do (format f "  ~A~%" e))
+	    (loop for e in (force-list (or scorefoot *lilypond-scorefoot*)) do (format f "  ~A~%" e))
 	    (format f "}~%"))
 	  (when twrn (format t ";; WARNING: Some string spanners are excluded~%"))))))
   (when process (view-lilypond filename options view)))
