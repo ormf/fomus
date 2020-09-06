@@ -66,7 +66,7 @@
 
 (defclass meas (fomusobj-base)
   ((timesig :type timesig-repl :accessor meas-timesig :initform nil :initarg :timesig)
-   (off :type (rational 0) :accessor meas-off :initform nil :initarg :off)
+   (off :type (or (rational 0) null) :accessor meas-off :initform nil :initarg :off)
    (endoff :type (or (rational 0) null) :accessor meas-endoff :initform nil :initarg :endoff)
    (events :type list :accessor meas-events :initform nil :initarg :events)
    (props :type list :accessor meas-props :initform nil :initarg :props)
