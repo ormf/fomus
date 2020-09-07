@@ -24,7 +24,7 @@
    (beat :type (or (rational 0) null) :accessor timesig-beat :initform nil :initarg :beat) ; what actually gets the beat (ex: 1/4 = quarter note, 1/4 + 1/8 = dotted quarter), compound is determined from signature
    (props :type list :accessor timesig-props :initform nil :initarg :props))) 
 (defclass timesig (timesig-repl event-base)
-  ((off :type (rational 0))
+  ((off :type (or (rational 0) null))
    (partid :type (or symbol real list) :accessor timesig-partids :initform nil :initarg :partids) ; list of part ids, nil = default (all parts)
    (repl :type (or timesig-repl list) :accessor timesig-repl :initform nil :initarg :repl))) ; replacement time signatures for before meter change (nil = generate automatically)
 
