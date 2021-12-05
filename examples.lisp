@@ -1376,3 +1376,33 @@
 		       :dur (if (< off 10) 1/2 1)
 		       :note (+ 48 (random 25)))))))
 	
+;; Example of Jianpu notation: First adjust the path in the lisp form
+;; below to the location of the jianpu10b.ly file located in the
+;; "extra" subfolder of the fomus source directory.
+;;
+;; The result will display two staff systems, one with Jianpu notation
+;; and one with Western notation below it. The Western notation can
+;; either be commented out in the lilypond file or the respective
+;; passage altered in "backend_ly.lisp" (search for the format
+;; directive containing the JianpuStaff) by removing the "\new Staff..."
+;; directive.
+
+(fomus
+ :output '(:lilypond :filehead "\\include \"/<path-to>/jianpu10b.ly\"
+" :process t :view t)
+ :global (list
+          (fomus::make-timesig :off 0 :time '(4 4) :comp nil))
+ :parts
+ (list
+  (make-part
+   :instr :pat-waing
+   :events
+   (loop
+     for keynum in '(43 46 48 52 53 55 59 60 64 65 67 69 71 72 74 76 77 79 81 83)
+     for off from 0 by 1/4
+     with dur = 1/4
+     append (list
+             (make-note :off off
+                        :dur dur
+                        :note keynum
+                        :voice 1))))))
