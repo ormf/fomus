@@ -574,13 +574,20 @@
 		    (:grandstaff (if (part-name p)
                                      (format f "~A\\new PianoStaff \\with { instrumentName = \"~a\" } <<~%" (make-string in :initial-element #\space)
                                              (part-name p))
-                                     (format f "~A\\new PianoStaff <<~%" (make-string in :initial-element #\space)))))
+                                     (format f "~A\\new PianoStaff <<~%" (make-string in :initial-element #\space))))
+                    ;; (:jianpu-staff (if (part-name p)
+                    ;;                    (format f "~A\\new JianpuStaff \\with { instrumentName = \"~a\" } <<~%" (make-string in :initial-element #\space) (part-name p))
+                    ;;                    (format f "~A\\new JianpuStaff <<~%" (make-string in :initial-element #\space))))
+                    )
+                  
 		  (format f "~A<<~%" (make-string in :initial-element #\space)))
 	      (incf in 2))
 	     (let ((ns (instr-staves (part-instr p))))
 	       (if (<= ns 1)
                    (case (instr-clefs (part-instr p))
                      (:tab (format f "~A\\new TabStaff \\~A~%" (make-string in :initial-element #\space) nm))
+                     (:jianpu (format f "~A\\new JianpuStaff \\jianpuMusic { \\~A }~%
+\\new Staff { \\~A }~%" (make-string in :initial-element #\space) nm nm))
                      (t (format f "~A\\new Staff \\~A~%" (make-string in :initial-element #\space) nm)))
 		   (progn
 		     (loop for s from 1 to ns do (format f "~A\\context Staff = ~A \\~A~%"
