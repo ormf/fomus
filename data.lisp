@@ -127,7 +127,7 @@
   '((:subbass-8dn . 35) (:bass-8dn . 38) (:c-baritone-8dn . 41) (:f-baritone-8dn . 41) (:tenor-8dn . 45) (:subbass . 47) (:alto-8dn . 48) (:bass . 50) (:mezzosoprano-8dn . 52)
     (:c-baritone . 53) (:f-baritone . 53) (:soprano-8dn . 55) (:tenor . 57) (:subbass-8up . 59) (:treble-8dn . 59) (:alto . 60) (:bass-8up . 62) 
     (:mezzosoprano . 64) (:c-baritone-8up . 65) (:f-baritone-8up . 65) (:soprano . 67) (:tenor-8up . 69) (:treble . 71) (:alto-8up . 72) 
-    (:mezzosoprano-8up . 76) (:soprano-8up . 79) (:treble-8up . 83) (:treble-15up . 95) (:jianpu . 60) (:percussion . nil) (:tab . 59)))
+    (:mezzosoprano-8up . 76) (:soprano-8up . 79) (:treble-8up . 83) (:treble-15up . 95) (:jianpu . 60) (:jianpu2 . 60) (:percussion . nil) (:tab . 59)))
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (declaim (inline is-clef))
@@ -379,6 +379,7 @@ Returns the symbol if it refers to one of FOMUS's clefs (and NIL if it doesn't)"
 	  (make-instr :celesta :clefs '(:treble :bass) :simultlim 5 :tpose 12 :simultlim 5 :8uplegls '(5 2) :minp 60 :maxp 112
 		      :midiprgch-im 8 :midiprgch-ex 8)
           (make-instr :pat-waing :clefs :jianpu :minp 36 :maxp 108 :simultlim 2 :midiprgch-ex 0)
+          (make-instr :pat-waing2 :clefs :jianpu2 :minp 36 :maxp 108 :simultlim 2 :midiprgch-ex 0)
 	  
 	  (make-instr :troubadour-harp :clefs '(:treble :bass) :staves 2 :simultlim 5 :minp 36 :maxp 92 :midiprgch-ex 46)
 	  (make-instr :harp :clefs '(:treble :bass) :staves 2 :simultlim 5 :8uplegls '(5 2) :8dnlegls '(5 2) :minp 20 :maxp 104 :midiprgch-im 46 :midiprgch-ex 46)

@@ -555,8 +555,8 @@
 		  (ecase ty 
 		    ((:group :choirgroup) (format f "~A\\new ~A <<~%" (make-string in :initial-element #\space)
 						  (ecase ty
-						    (:group (if (<= nu 1) "StaffGroup" "InnerStaffGroup"))
-						    (:choirgroup (if (<= nu 1) "ChoirStaff" "InnerChoirStaff")))))
+						    (:group "StaffGroup")
+						    (:choirgroup "ChoirStaff"))))
 		    (:grandstaff (format f "~A\\new PianoStaff <<~%" (make-string in :initial-element #\space))))
 		  (format f "~A<<~%" (make-string in :initial-element #\space)))
 	      (incf in 2))

@@ -146,28 +146,28 @@
   '("octUp = \\ottava #1"
     "octReset = \\ottava #0"
     "octDown = \\ottava #-1"
-    "markAccIn = \\once \\override TextScript #'script-priority = #-100"
-    "markOrnIn = \\once \\override Script #'script-priority = #-100"))
+    "markAccIn = \\once \\override TextScript.script-priority = #-100"
+    "markOrnIn = \\once \\override Script.script-priority = #-100"))
 (defparameter +lilypond-defs-24+
   '("beamL = #(def-music-function (num) (number?) #{\\set stemLeftBeamCount = #num #})"
     "beamR = #(def-music-function (num) (number?) #{\\set stemRightBeamCount = #num #})"
     "beamLR = #(def-music-function (numl numr) (number? number?) #{\\set stemLeftBeamCount = #numl \\set stemRightBeamCount = #numr #})" 
-    "textSpan = #(def-music-function (dir str) (number? string?) #{\\override TextSpanner #'direction = #dir \\override TextSpanner #'edge-text = #(cons str \"\") #})" 
-    "noteHead = #(def-music-function (sty) (symbol?) #{\\once \\override NoteHead #'style = #sty #})"
+    "textSpan = #(def-music-function (dir str) (number? string?) #{\\override TextSpanner.direction = #dir \\override TextSpanner.edge-text = #(cons str \"\") #})" 
+    "noteHead = #(def-music-function (sty) (symbol?) #{\\once \\override NoteHead.style = #sty #})"
     ))
 (defparameter +lilypond-defs-26+
   '("beamL = #(def-music-function (num) (number?) #{\\set stemLeftBeamCount = #num #})"
     "beamR = #(def-music-function (num) (number?) #{\\set stemRightBeamCount = #num #})"
     "beamLR = #(def-music-function (numl numr) (number? number?) #{\\set stemLeftBeamCount = #numl \\set stemRightBeamCount = #numr #})" 
-    "textSpan = #(def-music-function (dir str) (number? string?) #{\\override TextSpanner #'direction = #dir \\override TextSpanner #'edge-text = #(cons str \"\") #})" 
-    "noteHead = #(def-music-function (sty) (symbol?) #{\\once \\override NoteHead #'style = #sty #})"
+    "textSpan = #(def-music-function (dir str) (number? string?) #{\\override TextSpanner.direction = #dir \\override TextSpanner.edge-text = #(cons str \"\") #})" 
+    "noteHead = #(def-music-function (sty) (symbol?) #{\\once \\override NoteHead.style = #sty #})"
     ))
 (defparameter +lilypond-defs-28+
   '("beamL = #(define-music-function (num) (number?) #{\\set stemLeftBeamCount = #num #})"
     "beamR = #(define-music-function (num) (number?) #{\\set stemRightBeamCount = #num #})"
     "beamLR = #(define-music-function (numl numr) (number? number?) #{\\set stemLeftBeamCount = #numl \\set stemRightBeamCount = #numr #})" 
-    "textSpan = #(define-music-function (dir str) (number? string?) #{\\override TextSpanner #'direction = #dir \\override TextSpanner #'edge-text = #(cons str \"\") #})" 
-    "noteHead = #(define-music-function (sty) (symbol?) #{\\once \\override NoteHead #'style = #sty #})"
+    "textSpan = #(define-music-function (dir str) (number? string?) #{\\override TextSpanner.direction = #dir \\override TextSpanner.edge-text = #(cons str \"\") #})" 
+    "noteHead = #(define-music-function (sty) (symbol?) #{\\once \\override NoteHead.style = #sty #})"
     ))
 
 (defparameter +lilypond-num-note+ (vector "c" nil "d" nil "e" "f" nil "g" nil "a" nil "b"))
@@ -297,10 +297,10 @@
 		    (when (or (null *timesig-style*) (eq *timesig-style* :fraction))
 		      (if (> ns 1)
 			  (loop for s from 1 to ns do
-				(format f "  \\change Staff = ~A \\override Staff.TimeSignature #'style = #'()~%" (code-char (+ 64 s))))
-			  (format f "  \\override Staff.TimeSignature #'style = #'()~%")))
+				(format f "  \\change Staff = ~A \\override Staff.TimeSignature.style = #'()~%" (code-char (+ 64 s))))
+			  (format f "  \\override Staff.TimeSignature.style = #'()~%")))
 		    (if (>= ve 209)
-			(when (eq *tuplet-style* :ratio) (format f "  \\override TupletNumber #'text = #tuplet-number::calc-fraction-text~%"))
+			(when (eq *tuplet-style* :ratio) (format f "  \\override TupletNumber.text = #tuplet-number::calc-fraction-text~%"))
 			(when (eq *tuplet-style* :ratio) (format f "  \\set tupletNumberFormatFunction = #fraction-tuplet-formatter~%")))
                     (if *auto-beams*
                         (format f "  \\autoBeamOff~%")
@@ -569,8 +569,8 @@
 		  (ecase ty 
 		    ((:group :choirgroup) (format f "~A\\new ~A <<~%" (make-string in :initial-element #\space)
 						  (ecase ty
-						    (:group (if (<= nu 1) "StaffGroup" "InnerStaffGroup"))
-						    (:choirgroup (if (<= nu 1) "ChoirStaff" "InnerChoirStaff")))))
+						    (:group "StaffGroup")
+						    (:choirgroup "ChoirStaff"))))
 		    (:grandstaff (if (part-name p)
                                      (format f "~A\\new PianoStaff \\with { instrumentName = \"~a\" } <<~%" (make-string in :initial-element #\space)
                                              (part-name p))
@@ -586,8 +586,11 @@
 	       (if (<= ns 1)
                    (case (instr-clefs (part-instr p))
                      (:tab (format f "~A\\new TabStaff \\~A~%" (make-string in :initial-element #\space) nm))
-                     (:jianpu (format f "~A\\new JianpuStaff \\jianpuMusic { \\~A }~%
-\\new Staff { \\~A }~%" (make-string in :initial-element #\space) nm nm))
+                     (:jianpu (format f "~A\\new JianpuStaff { \\jianpuMusic \\~A }~%"
+                                      (make-string in :initial-element #\space) nm))
+                     (:jianpu2 (format f "~A\\new JianpuStaff { \\jianpuMusic \\~A }~%~A\\new Staff { \\~A }~%"
+                                       (make-string in :initial-element #\space) nm
+                                       (make-string in :initial-element #\space) nm))
                      (t (format f "~A\\new Staff \\~A~%" (make-string in :initial-element #\space) nm)))
 		   (progn
 		     (loop for s from 1 to ns do (format f "~A\\context Staff = ~A \\~A~%"
