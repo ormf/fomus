@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Text File Interface</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch03.html" title="Chapter&#160;3.&#160;Usage" /><link rel="prev" href="ch03s03.html" title="Interface 2" /><link rel="next" href="ch03s05.html" title="Common Music Interface" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Text File Interface</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s03.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Usage</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch03s05.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="interface.text"></a>Text File Interface</h2></div></div></div><p>You may also create a text file where each line of the file executes one of the commands listed in 
-    <a href="ch03s03.html" title="Interface 2">Interface 2</a>.  A simple example file is given below:
-      </p><div class="example"><a id="example.text.input.file"></a><p class="title"><b>Example&#160;3.7.&#160;FOMUS Text Input File</b></p><div class="example-contents"><pre class="programlisting">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /><title>Text File Interface</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch03.html" title="Chapter 3. Usage" /><link rel="prev" href="ch03s03.html" title="Interface 2" /><link rel="next" href="ch03s05.html" title="Common Music Interface" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Text File Interface</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s03.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Usage</th><td width="20%" align="right"> <a accesskey="n" href="ch03s05.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="interface.text"></a>Text File Interface</h2></div></div></div><p>You may also create a text file where each line of the file executes one of the commands listed in 
+    <a class="link" href="ch03s03.html" title="Interface 2">Interface 2</a>.  A simple example file is given below:
+      </p><div class="example"><a id="example.text.input.file"></a><p class="title"><b>Example 3.7. FOMUS Text Input File</b></p><div class="example-contents"><pre class="programlisting">
 
 init :output (:lilypond :view t)
 (init
@@ -46,11 +46,11 @@ note 1 :off 20 :dur 2 :notes (c4 e4 g4 c5)
       </p><p>
       To process this file, use the <code class="function">FOMUS</code> command as follows:
       </p><p><code class="function">(<a id="function.fomus2"></a>FOMUS <strong class="userinput"><code>filename</code></strong> &amp;key <strong class="userinput"><code>value</code></strong> ...)</code></p><p>
-      </p><div class="example"><a id="example.fomus.usage7"></a><p class="title"><b>Example&#160;3.8.&#160;FOMUS Usage 7</b></p><div class="example-contents"><pre class="programlisting">
+      </p><div class="example"><a id="example.fomus.usage7"></a><p class="title"><b>Example 3.8. FOMUS Usage 7</b></p><div class="example-contents"><pre class="programlisting">
 
 (fomus "/directory/file.fms")
 	</pre></div></div><p><br class="example-break" />
-      </p><div class="example"><a id="example.fomus.usage8"></a><p class="title"><b>Example&#160;3.9.&#160;FOMUS Usage 8</b></p><div class="example-contents"><pre class="programlisting">
+      </p><div class="example"><a id="example.fomus.usage8"></a><p class="title"><b>Example 3.9. FOMUS Usage 8</b></p><div class="example-contents"><pre class="programlisting">
 
 (fomus "/directory/file.fms" :output :cmn)
 	</pre></div></div><p><br class="example-break" />
@@ -58,13 +58,13 @@ note 1 :off 20 :dur 2 :notes (c4 e4 g4 c5)
     </p><p> 
       The <code class="function">FOMUS-FILE</code> function may be used to parse an input file and return the objects specified in that file without processing them:
       </p><p><code class="function">(FOMUS-FILE <strong class="userinput"><code>filename</code></strong> &amp;key <strong class="userinput"><code>value</code></strong> ...)</code></p><p>
-      Four return values are returned: a list of <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> objects, a sorted list of 
-      <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code>, <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> and
-      <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> objects, a list of <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code>
-      objects (and <code class="classname"><a href="ch04s05.html#class.keysig">KEYSIG</a></code> objects when implemented), 
+      Four return values are returned: a list of <code class="classname"><a class="link" href="ch04s02.html#class.part">PART</a></code> objects, a sorted list of 
+      <code class="classname"><a class="link" href="ch04s06.html#class.note">NOTE</a></code>, <code class="classname"><a class="link" href="ch04s07.html#class.rest">REST</a></code> and
+      <code class="classname"><a class="link" href="ch04s08.html#class.mark">MARK</a></code> objects, a list of <code class="classname"><a class="link" href="ch04s03.html#class.timesig">TIMESIG</a></code>
+      objects (and <code class="classname"><a class="link" href="ch04s05.html#class.keysig">KEYSIG</a></code> objects when implemented), 
       and a list of keyword/argument pairs representing the keywords and values found in the <code class="literal">INIT</code> lines.
       The following example show how you can edit and resave data using these files:
-      </p><div class="example"><a id="example.fomus.usage9"></a><p class="title"><b>Example&#160;3.10.&#160;FOMUS Usage 9</b></p><div class="example-contents"><pre class="programlisting">
+      </p><div class="example"><a id="example.fomus.usage9"></a><p class="title"><b>Example 3.10. FOMUS Usage 9</b></p><div class="example-contents"><pre class="programlisting">
 
 (multiple-value-bind (parts events globals args)
     (fomus-file "/directory/myfomusfile.fms")
@@ -73,4 +73,4 @@ note 1 :off 20 :dur 2 :notes (c4 e4 g4 c5)
 	 :global globals :parts parts :events events
 	 args))
 	</pre></div></div><p><br class="example-break" />
-    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s03.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch03s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Interface 2&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Common Music Interface</td></tr></table></div></body></html>
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s03.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s05.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Interface 2 </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Common Music Interface</td></tr></table></div></body></html>

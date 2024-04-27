@@ -97,7 +97,7 @@
 
 (defparameter *lilypond-version* nil)
 (defparameter *lilyvers* t)
-(defparameter +lilypond-defaultver+ '("2.19" . 219))
+(defparameter +lilypond-defaultver+ '("2.23" . 223))
 (defun lilypond-version (options usrv)
   (let ((v (or usrv *lilypond-version*)))
     (if v

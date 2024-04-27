@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Class PART</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch04.html" title="Chapter&#160;4.&#160;Objects" /><link rel="prev" href="ch04.html" title="Chapter&#160;4.&#160;Objects" /><link rel="next" href="ch04s03.html" title="Class TIMESIG" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Class PART</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;4.&#160;Objects</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch04s03.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.objects2"></a>Class PART</h2></div></div></div><p>
-      A <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> object represents a written part in the score.
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /><title>Class PART</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch04.html" title="Chapter 4. Objects" /><link rel="prev" href="ch04.html" title="Chapter 4. Objects" /><link rel="next" href="ch04s03.html" title="Class TIMESIG" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Class PART</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04.html">Prev</a> </td><th width="60%" align="center">Chapter 4. Objects</th><td width="20%" align="right"> <a accesskey="n" href="ch04s03.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.objects2"></a>Class PART</h2></div></div></div><p>
+      A <code class="classname"><a class="link" href="ch04s02.html#class.part">PART</a></code> object represents a written part in the score.
       They are analogous to tracks in a MIDI sequencer or staves in any notation program,
       though a part may actually represent more than one staff for instruments that require it.
-      <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> objects are containers for <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code>,
-      <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> and <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> objects
-      (and optionally <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> and
-      <code class="classname"><a href="ch04s05.html#class.keysig">KEYSIG</a></code> object if they only apply to that particular part).
-      Each <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> object also specifies an <code class="classname"><a href="ch04s09.html#struct.instr">INSTR</a></code>
+      <code class="classname"><a class="link" href="ch04s02.html#class.part">PART</a></code> objects are containers for <code class="classname"><a class="link" href="ch04s06.html#class.note">NOTE</a></code>,
+      <code class="classname"><a class="link" href="ch04s07.html#class.rest">REST</a></code> and <code class="classname"><a class="link" href="ch04s08.html#class.mark">MARK</a></code> objects
+      (and optionally <code class="classname"><a class="link" href="ch04s03.html#class.timesig">TIMESIG</a></code> and
+      <code class="classname"><a class="link" href="ch04s05.html#class.keysig">KEYSIG</a></code> object if they only apply to that particular part).
+      Each <code class="classname"><a class="link" href="ch04s02.html#class.part">PART</a></code> object also specifies an <code class="classname"><a class="link" href="ch04s09.html#struct.instr">INSTR</a></code>
       object which contains specific information on how
       to notate a particular instrument.
     </p><p>
-      <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> objects are passed to <span class="application">FOMUS</span> by including them in the
-      <code class="varname"><a href="ch05s04.html#setting.parts">PARTS</a></code> list.
+      <code class="classname"><a class="link" href="ch04s02.html#class.part">PART</a></code> objects are passed to <span class="application">FOMUS</span> by including them in the
+      <code class="varname"><a class="link" href="ch05s04.html#setting.parts">PARTS</a></code> list.
     </p><p>Constructor: 
       <code class="function">(MAKE-PART &amp;key
         :ID <strong class="userinput"><code>id</code></strong>
@@ -41,9 +41,9 @@
             </p></dd><dt><span class="term"><code class="function"><a id="part.partid"></a>PART-PARTID</code></span></dt><dd><p>
 	      This is a symbol or number used as an index or reference to identify the part.
 	      It doesn't need to be unique--parts that share the same ID symbol are treated as a group.
-	      When they appear in <em class="structfield"><code><a href="ch04s06.html#note.partid">PARTID</a></code></em> or
-	      <em class="structfield"><code><a href="ch04s03.html#timesig.partids">PARTIDS</a></code></em> slots in classes
-	      other than the <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> class they are treated as references to a particular part or group
+	      When they appear in <em class="structfield"><code><a class="link" href="ch04s06.html#note.partid">PARTID</a></code></em> or
+	      <em class="structfield"><code><a class="link" href="ch04s03.html#timesig.partids">PARTIDS</a></code></em> slots in classes
+	      other than the <code class="classname"><a class="link" href="ch04s02.html#class.part">PART</a></code> class they are treated as references to a particular part or group
 	      of parts.
 	    </p></dd><dt><span class="term"><code class="function"><a id="part.name"></a>PART-NAME</code></span></dt><dd><p>
 	      This is a string value representing the part name that is to appear on the score.
@@ -58,32 +58,32 @@
 	    </p><p>
 	      Instruments may be specified in one of several ways.
 	      If a symbol is provided, it is used to lookup an instrument in a user-defined list
-	      or <span class="application">FOMUS</span>'s own predefined list of instruments (see the <code class="varname"><a href="ch05s04.html#setting.instr.groups">INSTR-GROUPS</a></code>
-	      setting in the <a href="ch05.html" title="Chapter&#160;5.&#160;Settings">Settings</a> chapter).
+	      or <span class="application">FOMUS</span>'s own predefined list of instruments (see the <code class="varname"><a class="link" href="ch05s04.html#setting.instr.groups">INSTR-GROUPS</a></code>
+	      setting in the <a class="link" href="ch05.html" title="Chapter 5. Settings">Settings</a> chapter).
 	      The slot may also contain an instance of an instrument object.
 	      If a list is given, <span class="application">FOMUS</span> expects the first element to be a lookup symbol for an instrument
 	      and the rest of the list to be keyword/argument pairs specifying slots that are to be modified in the original instrument
-	      (as if included in a call to <code class="function"><a href="ch04s09.html#function.copy.instr">COPY-INSTR</a></code>.
-	    </p><div class="example"><a id="example.part.instr.slot.setting"></a><p class="title"><b>Example&#160;4.1.&#160;PART-INSTR Slot Setting</b></p><div class="example-contents"><pre class="programlisting">
+	      (as if included in a call to <code class="function"><a class="link" href="ch04s09.html#function.copy.instr">COPY-INSTR</a></code>.
+	    </p><div class="example"><a id="example.part.instr.slot.setting"></a><p class="title"><b>Example 4.1. PART-INSTR Slot Setting</b></p><div class="example-contents"><pre class="programlisting">
 
 '(:piano :staves 3 :simultlim 6)
                 </pre></div></div><br class="example-break" /><p>
 	      If an integer from <code class="literal">0</code> to <code class="literal">127</code> is provided instead of an identifying symbol, <span class="application">FOMUS</span>
 	      interprets this as a MIDI program change number and will use the first instrument it finds that has this number in its 
-	      <code class="classname"><a href="ch04s09.html#instr.midiprgch.im">MIDIPRGCH-IM</a></code> slot.
+	      <code class="classname"><a class="link" href="ch04s09.html#instr.midiprgch.im">MIDIPRGCH-IM</a></code> slot.
 	    </p></dd><dt><span class="term"><code class="function"><a id="part.events"></a>PART-EVENTS</code></span></dt><dd><p>
-	      This is a list of <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code>,
-	      <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> or
-	      <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> objects.
-	      <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code> and
-	      <code class="classname"><a href="ch04s05.html#class.keysig">KEYSIG</a></code> objects may also be included in this list.
+	      This is a list of <code class="classname"><a class="link" href="ch04s06.html#class.note">NOTE</a></code>,
+	      <code class="classname"><a class="link" href="ch04s07.html#class.rest">REST</a></code> or
+	      <code class="classname"><a class="link" href="ch04s08.html#class.mark">MARK</a></code> objects.
+	      <code class="classname"><a class="link" href="ch04s03.html#class.timesig">TIMESIG</a></code> and
+	      <code class="classname"><a class="link" href="ch04s05.html#class.keysig">KEYSIG</a></code> objects may also be included in this list.
 	    </p></dd><dt><span class="term"><code class="function"><a id="part.props"></a>PART-PROPS</code></span></dt><dd><p>
-	      Part properties are specified in the same way that <em class="structfield"><code><a href="ch04s06.html#note.marks">MARKS</a></code></em> are specified.
+	      Part properties are specified in the same way that <em class="structfield"><code><a class="link" href="ch04s06.html#note.marks">MARKS</a></code></em> are specified.
 	      They are settings that affect only the part they are included in.
-	      See <a href="ch06s04.html" title="PART Properties">PART Properties</a> for a list of these.
+	      See <a class="link" href="ch06s04.html" title="PART Properties">PART Properties</a> for a list of these.
 	    </p></dd><dt><span class="term"><code class="function"><a id="part.opts"></a>PART-OPTS</code></span></dt><dd><p>
 	      This is a keyword/argument pair list specifying options to be passed directly to the backend algorithms.
 	      Each backend has its own set of options that may be specified alongside options for any other backend.
-	      See the <a href="ch07.html" title="Chapter&#160;7.&#160;Outputs">Outputs</a> for more information.
+	      See the <a class="link" href="ch07.html" title="Chapter 7. Outputs">Outputs</a> for more information.
 	    </p></dd></dl></div><p>
-    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch04s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&#160;4.&#160;Objects&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Class TIMESIG</td></tr></table></div></body></html>
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch04s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 4. Objects </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Class TIMESIG</td></tr></table></div></body></html>

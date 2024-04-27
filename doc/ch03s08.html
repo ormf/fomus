@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Other Interface Functions</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch03.html" title="Chapter&#160;3.&#160;Usage" /><link rel="prev" href="ch03s07.html" title="Chunks" /><link rel="next" href="ch04.html" title="Chapter&#160;4.&#160;Objects" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Other Interface Functions</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s07.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Usage</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch04.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.usage4"></a>Other Interface Functions</h2></div></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"></div><p><code class="function">(<a id="function.list.fomus.settings"></a>LIST-FOMUS-SETTINGS)</code></p><p>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /><title>Other Interface Functions</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch03.html" title="Chapter 3. Usage" /><link rel="prev" href="ch03s07.html" title="Chunks" /><link rel="next" href="ch04.html" title="Chapter 4. Objects" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Other Interface Functions</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03s07.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Usage</th><td width="20%" align="right"> <a accesskey="n" href="ch04.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.usage4"></a>Other Interface Functions</h2></div></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"></div><p><code class="function">(<a id="function.list.fomus.settings"></a>LIST-FOMUS-SETTINGS)</code></p><p>
         Lists all <span class="application">FOMUS</span> settings, their expected types and their default values. 
       </p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"></div><p><code class="function">(<a id="function.list.fomus.modules"></a>LIST-FOMUS-MODULES &amp;rest <strong class="userinput"><code>type</code></strong>)</code></p><p>
         Lists all working <span class="application">FOMUS</span> modules and additional backends that can be selected as replacements or additions
@@ -15,56 +15,56 @@
         An API documentation for writing modules will be available sometime in the future.  
       </p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"></div><p><code class="function">(<a id="function.list.fomus.instruments"></a>LIST-FOMUS-INSTRUMENTS)</code></p><p>
         Lists all <span class="application">FOMUS</span> instruments, merging/replacing <span class="application">FOMUS</span>'s own default instruments
-	with the user-specified contents of the <code class="varname"><a href="ch05s04.html#setting.instruments">INSTRUMENTS</a></code> setting.
+	with the user-specified contents of the <code class="varname"><a class="link" href="ch05s04.html#setting.instruments">INSTRUMENTS</a></code> setting.
       </p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"></div><p><code class="function">(<a id="function.get.instr.syms"></a>GET-INSTR-SYMS)</code></p><p>
         Returns a list of available <span class="application">FOMUS</span> instrument ID symbols.
       </p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"></div><p><code class="function">(<a id="function.list.fomus.percussion"></a>LIST-FOMUS-PERCUSSION)</code></p><p>
-        Lists all <span class="application">FOMUS</span> percussion instruments (the contents of the <code class="varname"><a href="ch05s04.html#setting.percussion">PERCUSSION</a></code>
+        Lists all <span class="application">FOMUS</span> percussion instruments (the contents of the <code class="varname"><a class="link" href="ch05s04.html#setting.percussion">PERCUSSION</a></code>
 	setting).
       </p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"></div><p><code class="function">(<a id="function.get.perc.syms"></a>GET-PERC-SYMS)</code></p><p>
         Returns a list of available <span class="application">FOMUS</span> percussion ID symbols.
       </p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"></div><p><code class="function">(<a id="function.list.fomus.instrgroups"></a>LIST-FOMUS-INSTRGROUPS &amp;key :FORMAT <strong class="userinput"><code>format</code></strong>)</code></p><p>
         Lists <span class="application">FOMUS</span> instrument ordering/grouping data, merging/replacing <span class="application">FOMUS</span>'s own defaults
-	with the contents of the <code class="varname"><a href="ch05s04.html#setting.instr.groups">INSTR-GROUPS</a></code> setting.
+	with the contents of the <code class="varname"><a class="link" href="ch05s04.html#setting.instr.groups">INSTR-GROUPS</a></code> setting.
 	If the <code class="literal">FORMAT</code> argument is <code class="literal">T</code> (the default), <span class="application">FOMUS</span> formats the results
 	by listing the instruments for each grouping in a vertical score-order arrangement surrounded by <code class="literal">[]</code>, <code class="literal">{}</code>
 	and <code class="literal">||</code> brackets, denoting whether instruments are grouped by brackets, curly braces or barlines only.
 	If <code class="literal">FORMAT</code> is <code class="literal">NIL</code>, <span class="application">FOMUS</span> outputs the data as nested lists of symbols
-	(see the <code class="varname"><a href="ch05s04.html#setting.instr.groups">INSTR-GROUPS</a></code> setting for details).
+	(see the <code class="varname"><a class="link" href="ch05s04.html#setting.instr.groups">INSTR-GROUPS</a></code> setting for details).
       </p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"></div><p><code class="function">(<a id="function.list.fomus.clefs"></a>LIST-FOMUS-CLEFS)</code></p><p>
         Prints a list of <span class="application">FOMUS</span> clef symbols.
       </p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"></div><p><code class="function">(<a id="function.list.fomus.meas.divs"></a>LIST-FOMUS-MEAS-DIVS)</code></p><p>
         Lists all default measure divisions , merging/replacing <span class="application">FOMUS</span>'s own defaults
-	with the contents of the <code class="varname"><a href="ch05s04.html#setting.default.meas.divs">DEFAULT-MEAS-DIVS</a></code> setting.
-	(See <code class="varname"><a href="ch05s04.html#setting.default.meas.divs">DEFAULT-MEAS-DIVS</a></code> for more information.)
+	with the contents of the <code class="varname"><a class="link" href="ch05s04.html#setting.default.meas.divs">DEFAULT-MEAS-DIVS</a></code> setting.
+	(See <code class="varname"><a class="link" href="ch05s04.html#setting.default.meas.divs">DEFAULT-MEAS-DIVS</a></code> for more information.)
       </p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"></div><p><code class="function">(<a id="function.list.fomus.tuplet.divs"></a>LIST-FOMUS-TUPLET-DIVS)</code></p><p>
         Lists all default tuplet divisions , merging/replacing <span class="application">FOMUS</span>'s own defaults
-	with the contents of the <code class="varname"><a href="ch05s04.html#setting.default.tuplet.divs">DEFAULT-TUPLET-DIVS</a></code> setting.
-	(See <code class="varname"><a href="ch05s04.html#setting.default.tuplet.divs">DEFAULT-TUPLET-DIVS</a></code> for more information.)
+	with the contents of the <code class="varname"><a class="link" href="ch05s04.html#setting.default.tuplet.divs">DEFAULT-TUPLET-DIVS</a></code> setting.
+	(See <code class="varname"><a class="link" href="ch05s04.html#setting.default.tuplet.divs">DEFAULT-TUPLET-DIVS</a></code> for more information.)
       </p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"></div><p><code class="function">(<a id="function.load.init.file"></a>LOAD-INIT-FILE)</code></p><p>
         Reloads the <code class="filename">.fomus</code> initialization file in the user's home directory.
       </p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"></div><p><code class="function">(<a id="function.get.midi.instr"></a>GET-MIDI-INSTR <strong class="userinput"><code>program-change</code></strong> &amp;key 
         :DEFAULT <strong class="userinput"><code>default-instr</code></strong>)</code></p><p>
         Returns an instrument to match the given MIDI program change value.
-	The first <code class="classname"><a href="ch04s09.html#struct.instr">INSTR</a></code> structure 
-	with this number in its <em class="structfield"><code><a href="ch04s09.html#instr.midiprgch.im">MIDIPRGCH-IM</a></code></em>
+	The first <code class="classname"><a class="link" href="ch04s09.html#struct.instr">INSTR</a></code> structure 
+	with this number in its <em class="structfield"><code><a class="link" href="ch04s09.html#instr.midiprgch.im">MIDIPRGCH-IM</a></code></em>
 	slot is returned.
-	If no appropriate instrument is found, the value of either the <code class="varname"><a href="ch05s04.html#setting.default.instr">DEFAULT-INSTR</a></code> 
+	If no appropriate instrument is found, the value of either the <code class="varname"><a class="link" href="ch05s04.html#setting.default.instr">DEFAULT-INSTR</a></code> 
 	setting or (if set) the <code class="literal">DEFAULT</code> argument is returned.
       </p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"></div><p><code class="function">(<a id="function.addmark"></a>ADDMARK <strong class="userinput"><code>event</code></strong> <strong class="userinput"><code>mark</code></strong>)</code></p><p><code class="function">(<a id="function.getmark"></a>GETMARK <strong class="userinput"><code>event</code></strong> <strong class="userinput"><code>markid</code></strong>)</code></p><p><code class="function">(<a id="function.getmarks"></a>GETMARKS <strong class="userinput"><code>event</code></strong> <strong class="userinput"><code>markid</code></strong>)</code></p><p><code class="function">(<a id="function.rmmark"></a>RMMARK <strong class="userinput"><code>event</code></strong> <strong class="userinput"><code>markid</code></strong>)</code></p><p><code class="function">(<a id="function.combmarks"></a>COMBMARKS <strong class="userinput"><code>event-list</code></strong>)</code></p><p><code class="function">(<a id="function.addprop"></a>ADDPROP <strong class="userinput"><code>object</code></strong> <strong class="userinput"><code>prop</code></strong>)</code></p><p><code class="function">(<a id="function.getprop"></a>GETPROP <strong class="userinput"><code>object</code></strong> <strong class="userinput"><code>propid</code></strong>)</code></p><p><code class="function">(<a id="function.getprops"></a>GETPROPS <strong class="userinput"><code>object</code></strong> <strong class="userinput"><code>propid</code></strong>)</code></p><p><code class="function">(<a id="function.rmprop"></a>RMPROP <strong class="userinput"><code>object</code></strong> <strong class="userinput"><code>propid</code></strong>)</code></p><p><code class="function">(<a id="function.combprops"></a>COMBPROPS <strong class="userinput"><code>object-list</code></strong>)</code></p><p>
-        These are utility functions for adding, removing and combining marks and properties in <em class="structfield"><code><a href="ch04s08.html#mark.marks">MARKS</a></code></em>
-	and <em class="structfield"><code><a href="ch04s03.html#timesig.props">PROPS</a></code></em> slots.
-	<code class="function"><a href="ch03s08.html#function.addmark">ADDMARK</a></code> and <code class="function"><a href="ch03s08.html#function.addprop">ADDPROP</a></code>
+        These are utility functions for adding, removing and combining marks and properties in <em class="structfield"><code><a class="link" href="ch04s08.html#mark.marks">MARKS</a></code></em>
+	and <em class="structfield"><code><a class="link" href="ch04s03.html#timesig.props">PROPS</a></code></em> slots.
+	<code class="function"><a class="link" href="ch03s08.html#function.addmark">ADDMARK</a></code> and <code class="function"><a class="link" href="ch03s08.html#function.addprop">ADDPROP</a></code>
 	insert a mark or property (a symbol or list of symbols and arguments values) in the appropriate slot of the object.
-	<code class="function"><a href="ch03s08.html#function.getmark">GETMARK</a></code> and <code class="function"><a href="ch03s08.html#function.getprop">GETPROP</a></code>
+	<code class="function"><a class="link" href="ch03s08.html#function.getmark">GETMARK</a></code> and <code class="function"><a class="link" href="ch03s08.html#function.getprop">GETPROP</a></code>
 	find a mark or property given an identifier.
 	The identifier is a symbol or list specifying the mark/property symbol and any number of the arguments following it.
 	The function returns the first mark that matches the specified symbols/values up to the number of symbols/values given.
 	(For example, <code class="literal">'(:STARTSLUR- 2)</code> will return the starting mark for a "level 2" slur.)
-	<code class="function"><a href="ch03s08.html#function.getmarks">GETMARKS</a></code> and <code class="function"><a href="ch03s08.html#function.getprops">GETPROPS</a></code>
+	<code class="function"><a class="link" href="ch03s08.html#function.getmarks">GETMARKS</a></code> and <code class="function"><a class="link" href="ch03s08.html#function.getprops">GETPROPS</a></code>
 	return all matching marks/properties.
-	<code class="function"><a href="ch03s08.html#function.rmmark">RMMARK</a></code> and <code class="function"><a href="ch03s08.html#function.rmprop">RMPROP</a></code>
+	<code class="function"><a class="link" href="ch03s08.html#function.rmmark">RMMARK</a></code> and <code class="function"><a class="link" href="ch03s08.html#function.rmprop">RMPROP</a></code>
 	remove (as a side-effect) all matching marks/properties from the objects.
-	<code class="function"><a href="ch03s08.html#function.combmarks">COMBMARKS</a></code> and <code class="function"><a href="ch03s08.html#function.combprops">COMBPROPS</a></code>
+	<code class="function"><a class="link" href="ch03s08.html#function.combmarks">COMBMARKS</a></code> and <code class="function"><a class="link" href="ch03s08.html#function.combprops">COMBPROPS</a></code>
 	returns a new mark/property list that is a combination of all marks/properties objects in the supplied list (with duplicates removed).
-      </p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s07.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chunks&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Chapter&#160;4.&#160;Objects</td></tr></table></div></body></html>
+      </p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03s07.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chunks </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 4. Objects</td></tr></table></div></body></html>

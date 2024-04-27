@@ -1,33 +1,33 @@
-<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Class MARK</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch04.html" title="Chapter&#160;4.&#160;Objects" /><link rel="prev" href="ch04s07.html" title="Class REST" /><link rel="next" href="ch04s09.html" title="Structure INSTR" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Class MARK</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04s07.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;4.&#160;Objects</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch04s09.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.objects8"></a>Class MARK</h2></div></div></div><p>
-      The <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> objects allow the user to specify marks outside of a
-      <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code>
-      or <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> class.
-      Marks designate extra information that to be applied to a <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> or
-      <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> object
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /><title>Class MARK</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch04.html" title="Chapter 4. Objects" /><link rel="prev" href="ch04s07.html" title="Class REST" /><link rel="next" href="ch04s09.html" title="Structure INSTR" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Class MARK</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch04s07.html">Prev</a> </td><th width="60%" align="center">Chapter 4. Objects</th><td width="20%" align="right"> <a accesskey="n" href="ch04s09.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.objects8"></a>Class MARK</h2></div></div></div><p>
+      The <code class="classname"><a class="link" href="ch04s08.html#class.mark">MARK</a></code> objects allow the user to specify marks outside of a
+      <code class="classname"><a class="link" href="ch04s06.html#class.note">NOTE</a></code>
+      or <code class="classname"><a class="link" href="ch04s07.html#class.rest">REST</a></code> class.
+      Marks designate extra information that to be applied to a <code class="classname"><a class="link" href="ch04s06.html#class.note">NOTE</a></code> or
+      <code class="classname"><a class="link" href="ch04s07.html#class.rest">REST</a></code> object
       such as articulations, modifications like tremolos or harmonics, printed text, etc..
-      After voices and staff assignments have been established, information in the <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> objects is dumped into the
-      <em class="structfield"><code><a href="ch04s06.html#note.marks">MARKS</a></code></em> slots of <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> and
-      <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> objects
-      according to the values in the <em class="structfield"><code><a href="ch04s08.html#mark.off">OFF</a></code></em> and
-      <em class="structfield"><code><a href="ch04s08.html#mark.partid">PARTID</a></code></em> slots.
+      After voices and staff assignments have been established, information in the <code class="classname"><a class="link" href="ch04s08.html#class.mark">MARK</a></code> objects is dumped into the
+      <em class="structfield"><code><a class="link" href="ch04s06.html#note.marks">MARKS</a></code></em> slots of <code class="classname"><a class="link" href="ch04s06.html#class.note">NOTE</a></code> and
+      <code class="classname"><a class="link" href="ch04s07.html#class.rest">REST</a></code> objects
+      according to the values in the <em class="structfield"><code><a class="link" href="ch04s08.html#mark.off">OFF</a></code></em> and
+      <em class="structfield"><code><a class="link" href="ch04s08.html#mark.partid">PARTID</a></code></em> slots.
     </p><p>
-      There are several advantages to using <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> objects as opposed to specifying marks
-      in <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> or <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> objects.
+      There are several advantages to using <code class="classname"><a class="link" href="ch04s08.html#class.mark">MARK</a></code> objects as opposed to specifying marks
+      in <code class="classname"><a class="link" href="ch04s06.html#class.note">NOTE</a></code> or <code class="classname"><a class="link" href="ch04s07.html#class.rest">REST</a></code> objects.
       One is that many markings (dynamics, for example) might only need to be attached to notes that are in one voice, such as the bottom voice of
       a particular staff.
       Since voice assignments for notes might not be known until <span class="application">FOMUS</span> decides them,
-      <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> objects are the only way of insuring that the marks occur in the right place.
-      <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> objects are also a convenient way of specifying marks for a range of parts,
-      and make it easier to apply spanners such as slurs without having to juggle <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code>
+      <code class="classname"><a class="link" href="ch04s08.html#class.mark">MARK</a></code> objects are the only way of insuring that the marks occur in the right place.
+      <code class="classname"><a class="link" href="ch04s08.html#class.mark">MARK</a></code> objects are also a convenient way of specifying marks for a range of parts,
+      and make it easier to apply spanners such as slurs without having to juggle <code class="classname"><a class="link" href="ch04s06.html#class.note">NOTE</a></code>
       objects around.
     </p><p>
-      <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> objects are passed to <span class="application">FOMUS</span> by including them either
-      in the <em class="structfield"><code><a href="ch04s02.html#part.events">EVENTS</a></code></em> slot list of a <code class="classname"><a href="ch04s02.html#class.part">PART</a></code> object or in
-      the global <code class="varname"><a href="ch05s04.html#setting.events">EVENTS</a></code> list.
-      The behavior in either case is exactly the same as with <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> or
-      <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> objects.
+      <code class="classname"><a class="link" href="ch04s08.html#class.mark">MARK</a></code> objects are passed to <span class="application">FOMUS</span> by including them either
+      in the <em class="structfield"><code><a class="link" href="ch04s02.html#part.events">EVENTS</a></code></em> slot list of a <code class="classname"><a class="link" href="ch04s02.html#class.part">PART</a></code> object or in
+      the global <code class="varname"><a class="link" href="ch05s04.html#setting.events">EVENTS</a></code> list.
+      The behavior in either case is exactly the same as with <code class="classname"><a class="link" href="ch04s06.html#class.note">NOTE</a></code> or
+      <code class="classname"><a class="link" href="ch04s07.html#class.rest">REST</a></code> objects.
     </p><p>Constructor: 
       <code class="function">(MAKE-MARK &amp;key 
         :ID <strong class="userinput"><code>id</code></strong>
@@ -46,11 +46,11 @@
       </p><div class="variablelist"><dl><dt><span class="term"><code class="function"><a id="mark.id"></a>OBJ-ID</code></span></dt><dd><p>
 	      This slot isn't used by FOMUS.
 	    </p></dd><dt><span class="term"><code class="function"><a id="mark.partid"></a>EVENT-PARTID</code></span></dt><dd><p>
-	      This slot is equivalent to the <em class="structfield"><code><a href="ch04s06.html#note.partid">PARTID</a></code></em> slot in the
-	      <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> or <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> class.
+	      This slot is equivalent to the <em class="structfield"><code><a class="link" href="ch04s06.html#note.partid">PARTID</a></code></em> slot in the
+	      <code class="classname"><a class="link" href="ch04s06.html#class.note">NOTE</a></code> or <code class="classname"><a class="link" href="ch04s07.html#class.rest">REST</a></code> class.
 	    </p></dd><dt><span class="term"><code class="function"><a id="mark.voice"></a>EVENT-VOICE</code></span></dt><dd><p>
-    	      This slot is equivalent to the <em class="structfield"><code><a href="ch04s07.html#rest.voice">VOICE</a></code></em>
-	      slot in the <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> class, with the
+    	      This slot is equivalent to the <em class="structfield"><code><a class="link" href="ch04s07.html#rest.voice">VOICE</a></code></em>
+	      slot in the <code class="classname"><a class="link" href="ch04s07.html#class.rest">REST</a></code> class, with the
 	      exception that a staff or list of staves can be specified instead of voices.
 	      Staves are indicated with a list beginning with the symbol <code class="literal">:STAFF</code> followed by
 	      one or more integer values.
@@ -60,25 +60,25 @@
 	      <span class="application">FOMUS</span> chooses the option from the list that places the mark the closest to the
 	      specified offset.
 	      Following is an example of how to specify staves:
-       	    </p><div class="example"><a id="event.voice.slot.setting"></a><p class="title"><b>Example&#160;4.7.&#160;EVENT-VOICE Slot Setting</b></p><div class="example-contents"><pre class="programlisting">
+       	    </p><div class="example"><a id="event.voice.slot.setting"></a><p class="title"><b>Example 4.7. EVENT-VOICE Slot Setting</b></p><div class="example-contents"><pre class="programlisting">
 
 '(:staff 1 -2)
                 </pre></div></div><p><br class="example-break" /> 
 	      Specifying a choice of staves like this allows the user to place marks like dynamics that apply to all voices but
 	      only need to appear in one place.
-	      In the case of the example above, a mark with this value in its <em class="structfield"><code><a href="ch04s08.html#mark.voice">VOICE</a></code></em>
+	      In the case of the example above, a mark with this value in its <em class="structfield"><code><a class="link" href="ch04s08.html#mark.voice">VOICE</a></code></em>
 	      slot that is applied to a grand staff is attached to a note in a voice on the inside of the staff.
 	    </p><p>
-	      As in the case of the <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> class, when set to a list of voices, the
-	      <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> object is distributed to all
+	      As in the case of the <code class="classname"><a class="link" href="ch04s07.html#class.rest">REST</a></code> class, when set to a list of voices, the
+	      <code class="classname"><a class="link" href="ch04s08.html#class.mark">MARK</a></code> object is distributed to all
 	      of them.
 	    </p></dd><dt><span class="term"><code class="function"><a id="mark.off"></a>EVENT-OFF</code></span></dt><dd><p>
-    	      This slot is equivalent to the <em class="structfield"><code><a href="ch04s06.html#note.off">OFF</a></code></em>
-	      slot in the <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> or
-	      <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> class,
+    	      This slot is equivalent to the <em class="structfield"><code><a class="link" href="ch04s06.html#note.off">OFF</a></code></em>
+	      slot in the <code class="classname"><a class="link" href="ch04s06.html#class.note">NOTE</a></code> or
+	      <code class="classname"><a class="link" href="ch04s07.html#class.rest">REST</a></code> class,
 	      with the exception that offsets may also be wrapped inside a list and given
 	      a positive or negative value (for example, <code class="literal">'(3)</code>, <code class="literal">'(11.5)</code> or <code class="literal">'(-11.5)</code>).
-	      When this list is used, it indicates that the marks in the <em class="structfield"><code><a href="ch04s08.html#mark.marks">MARKS</a></code></em> slot are applied to events
+	      When this list is used, it indicates that the marks in the <em class="structfield"><code><a class="link" href="ch04s08.html#mark.marks">MARKS</a></code></em> slot are applied to events
 	      just before or after the given offset depending on its sign.
 	      Positive offset values indicate the mark is to applied to the event just following the offset and negative values indicate the mark is
 	      to be applied just before it (the absolute value of it).
@@ -87,44 +87,44 @@
 	      <span class="application">FOMUS</span> will place the end mark in the proper place (the event that
 	      immediately precedes the one at the indicated offset).
 	    </p></dd><dt><span class="term"><code class="function"><a id="mark.marks"></a>EVENT-MARKS</code></span></dt><dd><p>
-	      <em class="structfield"><code><a href="ch04s08.html#mark.marks">MARKS</a></code></em> slots contain lists of marks.
-	      (In a <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> or <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code>
+	      <em class="structfield"><code><a class="link" href="ch04s08.html#mark.marks">MARKS</a></code></em> slots contain lists of marks.
+	      (In a <code class="classname"><a class="link" href="ch04s06.html#class.note">NOTE</a></code> or <code class="classname"><a class="link" href="ch04s07.html#class.rest">REST</a></code>
 	      object, these marks are "attached" to that event.)
 	      Marks are specified as either symbols or lists of symbols and numbers.
 	      If it is a list, then the first element is the mark symbol followed by one or more arguments.
-	      Following is an example of what may appear in the <em class="structfield"><code><a href="ch04s08.html#mark.marks">MARKS</a></code></em> slot:
-       	    </p><div class="example"><a id="event.marks.slot.setting1"></a><p class="title"><b>Example&#160;4.8.&#160;EVENT-MARKS Slot Setting 1</b></p><div class="example-contents"><pre class="programlisting">
+	      Following is an example of what may appear in the <em class="structfield"><code><a class="link" href="ch04s08.html#mark.marks">MARKS</a></code></em> slot:
+       	    </p><div class="example"><a id="event.marks.slot.setting1"></a><p class="title"><b>Example 4.8. EVENT-MARKS Slot Setting 1</b></p><div class="example-contents"><pre class="programlisting">
 
 '(:accent :startslur- (:startslur- 2 :dotted) (:texttempo "accelerando"))
                 </pre></div></div><p><br class="example-break" />	      
 	    </p><p>
-	      The <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> class can contain one extra mark that
-	      <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> or <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code>
+	      The <code class="classname"><a class="link" href="ch04s08.html#class.mark">MARK</a></code> class can contain one extra mark that
+	      <code class="classname"><a class="link" href="ch04s06.html#class.note">NOTE</a></code> or <code class="classname"><a class="link" href="ch04s07.html#class.rest">REST</a></code>
 	      objects can't contain.
 	      The symbol itself is <code class="literal">:MARK</code> and actually specifies another mark that is to be placed in the same voice
 	      at a different offset.
 	      It has the following format: <code class="literal">'(:MARK <strong class="userinput"><code>off</code></strong> <strong class="userinput"><code>mark</code></strong>
 	      <strong class="userinput"><code>...</code></strong>)</code>, specifying that another mark is to be placed in the same voice at the offset given.
 	      This special mark is necessary if the user specifies a staff instead of a voice and the mark is a symbol indicating the start of a spanner.
-	      It can also be used as a convenience, since only one <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> object needs to be instantiated
+	      It can also be used as a convenience, since only one <code class="classname"><a class="link" href="ch04s08.html#class.mark">MARK</a></code> object needs to be instantiated
 	      to specify several marks that belong together.
 	      By specifying the end symbol here as part of a <code class="literal">MARK</code> mark, <span class="application">FOMUS</span> recognizes the start
 	      and end marks as belonging to each other and will place them in the same voice.
 	      (Starting and ending marks that aren't paired in the same voice cause errors.)
-	      The offset argument that is the second element in this list uses the same extended syntax as the <em class="structfield"><code><a href="ch04s08.html#mark.off">OFF</a></code></em>
+	      The offset argument that is the second element in this list uses the same extended syntax as the <em class="structfield"><code><a class="link" href="ch04s08.html#mark.off">OFF</a></code></em>
 	      slot in this class.
 	      The rest of the list after the second element is the mark symbol and the arguments that apply to that symbol.
 	      Following is an example:
-       	    </p><div class="example"><a id="event.marks.slot.setting2"></a><p class="title"><b>Example&#160;4.9.&#160;EVENT-MARKS Slot Setting 2</b></p><div class="example-contents"><pre class="programlisting">
+       	    </p><div class="example"><a id="event.marks.slot.setting2"></a><p class="title"><b>Example 4.9. EVENT-MARKS Slot Setting 2</b></p><div class="example-contents"><pre class="programlisting">
 
 '(:accent (:startslur- 2) (:mark (-101) :endslur- 2))
                 </pre></div></div><p><br class="example-break" />	      
 	    </p><p>
-	      The contents of the <em class="structfield"><code><a href="ch04s08.html#mark.marks">MARKS</a></code></em> slots of
-	      <code class="classname"><a href="ch04s08.html#class.mark">MARK</a></code> objects are dumped
-	      into the <em class="structfield"><code><a href="ch04s06.html#note.marks">MARKS</a></code></em> slots of <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code> and
-	      <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> objects
+	      The contents of the <em class="structfield"><code><a class="link" href="ch04s08.html#mark.marks">MARKS</a></code></em> slots of
+	      <code class="classname"><a class="link" href="ch04s08.html#class.mark">MARK</a></code> objects are dumped
+	      into the <em class="structfield"><code><a class="link" href="ch04s06.html#note.marks">MARKS</a></code></em> slots of <code class="classname"><a class="link" href="ch04s06.html#class.note">NOTE</a></code> and
+	      <code class="classname"><a class="link" href="ch04s07.html#class.rest">REST</a></code> objects
 	      once voices and staves have been decided.
-	      See <a href="ch06.html" title="Chapter&#160;6.&#160;Marks">Marks</a> for a more detailed explanation of marks and their usage.
+	      See <a class="link" href="ch06.html" title="Chapter 6. Marks">Marks</a> for a more detailed explanation of marks and their usage.
 	    </p></dd></dl></div><p>
-    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04s07.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch04s09.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Class REST&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Structure INSTR</td></tr></table></div></body></html>
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04s07.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch04.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch04s09.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Class REST </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Structure INSTR</td></tr></table></div></body></html>

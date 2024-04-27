@@ -1,20 +1,20 @@
-<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Interface 1</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch03.html" title="Chapter&#160;3.&#160;Usage" /><link rel="prev" href="ch03.html" title="Chapter&#160;3.&#160;Usage" /><link rel="next" href="ch03s03.html" title="Interface 2" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Interface 1</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Usage</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch03s03.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.usage2"></a>Interface 1</h2></div></div></div><p>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /><title>Interface 1</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch03.html" title="Chapter 3. Usage" /><link rel="prev" href="ch03.html" title="Chapter 3. Usage" /><link rel="next" href="ch03s03.html" title="Interface 2" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Interface 1</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch03.html">Prev</a> </td><th width="60%" align="center">Chapter 3. Usage</th><td width="20%" align="right"> <a accesskey="n" href="ch03s03.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.usage2"></a>Interface 1</h2></div></div></div><p>
       The first approach involves creating all the necessary objects and assembling lists, then calling <span class="application">FOMUS</span>'s
       main function to process everything.
       The main function is <code class="function">FOMUS</code> and has the following format:
     </p><p><code class="function">(<a id="function.fomus"></a>FOMUS &amp;key <strong class="userinput"><code>setting</code></strong> <strong class="userinput"><code>value</code></strong> ...)</code></p><p>
-      <strong class="userinput"><code>setting</code></strong> above is one of the setting keywords listed in chapter <a href="ch05.html" title="Chapter&#160;5.&#160;Settings">Settings</a>, and
+      <strong class="userinput"><code>setting</code></strong> above is one of the setting keywords listed in chapter <a class="link" href="ch05.html" title="Chapter 5. Settings">Settings</a>, and
       <strong class="userinput"><code>value</code></strong> is its value.
       Every piece of information <span class="application">FOMUS</span> needs can be included in this function call.
-      The most important settings are <code class="varname"><a href="ch05s04.html#setting.global">GLOBAL</a></code>, <code class="varname"><a href="ch05s04.html#setting.parts">PARTS</a></code>
-      and <code class="varname"><a href="ch05s04.html#setting.events">EVENTS</a></code>, which contain all of the <code class="classname"><a href="ch04s02.html#class.part">PART</a></code>,
-      <code class="classname"><a href="ch04s03.html#class.timesig">TIMESIG</a></code>, <code class="classname"><a href="ch04s06.html#class.note">NOTE</a></code>,
-      <code class="classname"><a href="ch04s07.html#class.rest">REST</a></code> and other objects that directly affect what appears on the score.
+      The most important settings are <code class="varname"><a class="link" href="ch05s04.html#setting.global">GLOBAL</a></code>, <code class="varname"><a class="link" href="ch05s04.html#setting.parts">PARTS</a></code>
+      and <code class="varname"><a class="link" href="ch05s04.html#setting.events">EVENTS</a></code>, which contain all of the <code class="classname"><a class="link" href="ch04s02.html#class.part">PART</a></code>,
+      <code class="classname"><a class="link" href="ch04s03.html#class.timesig">TIMESIG</a></code>, <code class="classname"><a class="link" href="ch04s06.html#class.note">NOTE</a></code>,
+      <code class="classname"><a class="link" href="ch04s07.html#class.rest">REST</a></code> and other objects that directly affect what appears on the score.
       See the individual documentation for these for an explanation of how to use them.
       A few examples are given below (illustrations are "raw" output processed with <span class="application">LilyPond</span> version 2.4.2):
-      </p><div class="example"><a id="example.fomus.usage1"></a><p class="title"><b>Example&#160;3.1.&#160;FOMUS Usage 1</b></p><div class="example-contents"><pre class="programlisting">
+      </p><div class="example"><a id="example.fomus.usage1"></a><p class="title"><b>Example 3.1. FOMUS Usage 1</b></p><div class="example-contents"><pre class="programlisting">
 
 (fomus
  :output '(:lilypond :view t)
@@ -33,7 +33,7 @@
 		       :marks (when (&lt;= (random 3) 0)
 				'(:staccato)))))))
 	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="usage_ex1.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><p><br class="example-break" />
-      </p><div class="example"><a id="example.fomus.usage2"></a><p class="title"><b>Example&#160;3.2.&#160;FOMUS Usage 2</b></p><div class="example-contents"><pre class="programlisting">
+      </p><div class="example"><a id="example.fomus.usage2"></a><p class="title"><b>Example 3.2. FOMUS Usage 2</b></p><div class="example-contents"><pre class="programlisting">
 
 (fomus
  :output '(:lilypond :view t)
@@ -56,7 +56,7 @@
 					:dur dur
 					:note (+ basenote (random 25))))))))
 	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="usage_ex2.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><p><br class="example-break" />
-      </p><div class="example"><a id="example.fomus.usage3"></a><p class="title"><b>Example&#160;3.3.&#160;FOMUS Usage 3</b></p><div class="example-contents"><pre class="programlisting">
+      </p><div class="example"><a id="example.fomus.usage3"></a><p class="title"><b>Example 3.3. FOMUS Usage 3</b></p><div class="example-contents"><pre class="programlisting">
 
 (fomus
  :output '(:lilypond :view t)
@@ -88,8 +88,8 @@
 					   (1 '(:staccato))))))
 	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="usage_ex3.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><p><br class="example-break" />
     </p><p>
-      All of these settings are also present as special variables (see chapter <a href="ch05.html" title="Chapter&#160;5.&#160;Settings">Settings</a>).
-      The following example accomplishes exactly the same thing as example <a href="ch03s02.html#example.fomus.usage1" title="Example&#160;3.1.&#160;FOMUS Usage 1"><pre class="programlisting">
+      All of these settings are also present as special variables (see chapter <a class="link" href="ch05.html" title="Chapter 5. Settings">Settings</a>).
+      The following example accomplishes exactly the same thing as example <a class="link" href="ch03s02.html#example.fomus.usage1" title="Example 3.1. FOMUS Usage 1"><pre class="programlisting">
 
 (fomus
  :output '(:lilypond :view t)
@@ -108,7 +108,7 @@
 		       :marks (when (&lt;= (random 3) 0)
 				'(:staccato)))))))
 	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="usage_ex1.jpg" /><div class="caption">Output</div></div></blockquote></div></a> above:
-      </p><div class="example"><a id="example.fomus.usage4"></a><p class="title"><b>Example&#160;3.4.&#160;FOMUS Usage 4</b></p><div class="example-contents"><pre class="programlisting">
+      </p><div class="example"><a id="example.fomus.usage4"></a><p class="title"><b>Example 3.4. FOMUS Usage 4</b></p><div class="example-contents"><pre class="programlisting">
 
 (setf *output* '(:lilypond :view t))
 (fomus
@@ -127,9 +127,9 @@
 		       :marks (when (&lt;= (random 3) 0)
 				'(:staccato)))))))
 	</pre></div></div><p><br class="example-break" />
-      Specifying keywords in the <code class="function"><a href="ch03s02.html#function.fomus">FOMUS</a></code> function always overrides what is contained in the special variables.
-      Also, <code class="function"><a href="ch03s02.html#function.fomus">FOMUS</a></code> accepts one additional key, <code class="literal">:ALLOW-OTHER-KEYS</code>.
+      Specifying keywords in the <code class="function"><a class="link" href="ch03s02.html#function.fomus">FOMUS</a></code> function always overrides what is contained in the special variables.
+      Also, <code class="function"><a class="link" href="ch03s02.html#function.fomus">FOMUS</a></code> accepts one additional key, <code class="literal">:ALLOW-OTHER-KEYS</code>.
       Passing a value of <code class="literal">T</code> to this argument allows other keys that <span class="application">FOMUS</span> doesn't recognize
       to be present in the call.
-      By default, <code class="function"><a href="ch03s02.html#function.fomus">FOMUS</a></code> accepts only keywords listed in <a href="ch05.html" title="Chapter&#160;5.&#160;Settings">Settings</a>.
-    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch03s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&#160;3.&#160;Usage&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Interface 2</td></tr></table></div></body></html>
+      By default, <code class="function"><a class="link" href="ch03s02.html#function.fomus">FOMUS</a></code> accepts only keywords listed in <a class="link" href="ch05.html" title="Chapter 5. Settings">Settings</a>.
+    </p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch03.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch03.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch03s03.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 3. Usage </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Interface 2</td></tr></table></div></body></html>

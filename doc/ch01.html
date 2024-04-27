@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Chapter&#160;1.&#160;Introduction</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="index.html" title="FOMUS Documentation" /><link rel="prev" href="index.html" title="FOMUS Documentation" /><link rel="next" href="ch02.html" title="Chapter&#160;2.&#160;Installation" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&#160;1.&#160;Introduction</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="index.html">Prev</a>&#160;</td><th width="60%" align="center">&#160;</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch02.html">Next</a></td></tr></table><hr /></div><div class="chapter" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="intro"></a>Chapter&#160;1.&#160;Introduction</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ch01.html#section.install5"></a></span></dt></dl></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"></div><p>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /><title>Chapter 1. Introduction</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="index.html" title="FOMUS Documentation" /><link rel="prev" href="index.html" title="FOMUS Documentation" /><link rel="next" href="ch02.html" title="Chapter 2. Installation" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 1. Introduction</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="index.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch02.html">Next</a></td></tr></table><hr /></div><div class="chapter" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="intro"></a>Chapter 1. Introduction</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ch01.html#section.install5"></a></span></dt></dl></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"></div><p>
     <span class="application">FOMUS</span> (FOrmat MUSic) is a music notation tool for computer music composers.
     It is written in the Lisp programming language, and has been tested in the following interpreters:
-    <span class="application"><a href="http://www.cons.org/cmucl/" target="_top">CMUCL</a></span> (version 19),
-    <span class="application"><a href="http://www.sbcl.org/" target="_top">SBCL</a></span> (version 0.9.4),
-    <span class="application"><a href="http://openmcl.clozure.com/" target="_top">OpenMCL</a></span> (version 1),
-    <span class="application"><a href="http://clisp.sourceforge.net/" target="_top">CLISP</a></span> (version 2),
-    <span class="application"><a href="http://www.franz.com/" target="_top">Allegro</a></span> (version 7) and
-    <span class="application"><a href="http://www.lispworks.com/" target="_top">LispWorks</a></span> (version 4).
+    <span class="application"><a class="ulink" href="http://www.cons.org/cmucl/" target="_top">CMUCL</a></span> (version 19),
+    <span class="application"><a class="ulink" href="http://www.sbcl.org/" target="_top">SBCL</a></span> (version 0.9.4),
+    <span class="application"><a class="ulink" href="http://openmcl.clozure.com/" target="_top">OpenMCL</a></span> (version 1),
+    <span class="application"><a class="ulink" href="http://clisp.sourceforge.net/" target="_top">CLISP</a></span> (version 2),
+    <span class="application"><a class="ulink" href="http://www.franz.com/" target="_top">Allegro</a></span> (version 7) and
+    <span class="application"><a class="ulink" href="http://www.lispworks.com/" target="_top">LispWorks</a></span> (version 4).
     As the program becomes more stable, it will also be tested in other lisp implementations.  Supported operating systems are
     Linux, Max OS X and Windows.
     The purpose of it is to facilitate the conversion of "raw" algorithmic output data into readable music notation, a process that can be
@@ -26,22 +26,22 @@
     </p><div class="itemizedlist"><ul type="disc"><li>Part grouping and ordering</li><li>Transposition and checking of instrument ranges</li><li>Note spelling (semitones and quartertones are currently supported) and cautionary accidentals</li><li>Rhythmic quantizing (with tuplet choices that minimize the amount of error between input offsets and notational offsets)</li><li>Distribution of notes into voices and staves</li><li>Note splitting and tying, taking into account metrical divisions, dotted rhythms, and other special cases</li><li>Decisions regarding placement of clef changes and ottava brackets</li><li>Layout of articulations, slurs, beams, dynamic and text markings, and other notational elements</li></ul></div><p>
   </p><p>
     The following output formats are supported:
-    </p><div class="itemizedlist"><ul type="disc"><li><span class="application"><a href="http://www.musicxml.org/" target="_top">MusicXML</a></span></li><li><span class="application"><a href="http://ccrma.stanford.edu/software/cmn/" target="_top">Common Music Notation</a></span> (almost implemented)</li><li><span class="application"><a href="http://lilypond.org/web/" target="_top">LilyPond</a></span></li><li>MIDI File/Playback through <span class="application"><a href="http://commonmusic.sf.net" target="_top">Common Music</a></span></li></ul></div><p>
+    </p><div class="itemizedlist"><ul type="disc"><li><span class="application"><a class="ulink" href="http://www.musicxml.org/" target="_top">MusicXML</a></span></li><li><span class="application"><a class="ulink" href="http://ccrma.stanford.edu/software/cmn/" target="_top">Common Music Notation</a></span> (almost implemented)</li><li><span class="application"><a class="ulink" href="http://lilypond.org/web/" target="_top">LilyPond</a></span></li><li>MIDI File/Playback through <span class="application"><a class="ulink" href="http://commonmusic.sf.net" target="_top">Common Music</a></span></li></ul></div><p>
     <span class="application">MusicXML</span> files will import (more or less) into popular notation programs like
-    <span class="application"><a href="http://www.finalemusic.com/" target="_top">Finale</a></span>
-    and <span class="application"><a href="http://www.sibelius.com/" target="_top">Sibelius</a></span>.
+    <span class="application"><a class="ulink" href="http://www.finalemusic.com/" target="_top">Finale</a></span>
+    and <span class="application"><a class="ulink" href="http://www.sibelius.com/" target="_top">Sibelius</a></span>.
   </p><p>
-    <span class="application">FOMUS</span> integrates with <span class="application"><a href="http://commonmusic.sf.net" target="_top">Common Music</a></span>,
+    <span class="application">FOMUS</span> integrates with <span class="application"><a class="ulink" href="http://commonmusic.sf.net" target="_top">Common Music</a></span>,
     using some of its functionality if present and also functioning as a backend.
     <span class="application">FOMUS</span> has also been designed to allow selection of modules that use different algorithms to perform the same tasks.
     As new functions are added, users can select the ones that give them the best results.
     These will be added to the program over time.
   </p><p>
     <span class="application">FOMUS</span> is still in its initial (alpha) development stage, so please expect many bugs.
-    If you wish to report one, please look at the <code class="varname"><a href="ch05s04.html#setting.debug.filename">DEBUG-FILENAME</a></code>
-    setting to see how to create a debug file and e-mail it to <code class="email">&lt;<a href="mailto:dpsenick(at)uiuc(dot)edu">dpsenick(at)uiuc(dot)edu</a>&gt;</code>.
+    If you wish to report one, please look at the <code class="varname"><a class="link" href="ch05s04.html#setting.debug.filename">DEBUG-FILENAME</a></code>
+    setting to see how to create a debug file and e-mail it to <code class="email">&lt;<a class="email" href="mailto:dpsenick(at)uiuc(dot)edu">dpsenick(at)uiuc(dot)edu</a>&gt;</code>.
     Please send me suggestions and comments.
   </p><p>
   Thanks to Rick Taube, Kilian Sprotte, Mika Kuuskankare and Rob Canning for their help and suggestions.
   Also thanks to Kilian Sprotte for developing code for the test suite, available in the SVN repository as <code class="literal">fomustest</code>.
-  </p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="index.html">Prev</a>&#160;</td><td width="20%" align="center">&#160;</td><td width="40%" align="right">&#160;<a accesskey="n" href="ch02.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">FOMUS Documentation&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Chapter&#160;2.&#160;Installation</td></tr></table></div></body></html>
+  </p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="index.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch02.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">FOMUS Documentation </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 2. Installation</td></tr></table></div></body></html>

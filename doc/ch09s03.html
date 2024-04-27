@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="ANSI_X3.4-1968" standalone="no"?>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968" /><title>Common Music Examples</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.70.1" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch09.html" title="Chapter&#160;9.&#160;Examples" /><link rel="prev" href="ch09s02.html" title="Lisp Examples" /><link rel="next" href="ch09s04.html" title="Text Input File Examples" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Common Music Examples</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch09s02.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;9.&#160;Examples</th><td width="20%" align="right">&#160;<a accesskey="n" href="ch09s04.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.examples3"></a>Common Music Examples</h2></div></div></div><div class="example"><a id="example.cm.poly1"></a><p class="title"><b>Example&#160;9.13.&#160;2 Part Polyphony</b></p><div class="example-contents"><pre class="programlisting">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /><title>Common Music Examples</title><link rel="stylesheet" href="fomus.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /><link rel="start" href="index.html" title="FOMUS Documentation" /><link rel="up" href="ch09.html" title="Chapter 9. Examples" /><link rel="prev" href="ch09s02.html" title="Lisp Examples" /><link rel="next" href="ch09s04.html" title="Text Input File Examples" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Common Music Examples</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ch09s02.html">Prev</a> </td><th width="60%" align="center">Chapter 9. Examples</th><td width="20%" align="right"> <a accesskey="n" href="ch09s04.html">Next</a></td></tr></table><hr /></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="section.examples3"></a>Common Music Examples</h2></div></div></div><div class="example"><a id="example.cm.poly1"></a><p class="title"><b>Example 9.14. 2 Part Polyphony</b></p><div class="example-contents"><pre class="programlisting">
 
 (defparameter *part* (new fms:part :instr :piano :partid 'pno))
 
@@ -16,7 +16,7 @@
 
 (events (list (polygen 1 20 60 80) (polygen 2 20 40 60)) "/tmp/fomus.ly" :parts *part* :view t)
 
-	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_cm_poly1.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.cm.poly2"></a><p class="title"><b>Example&#160;9.14.&#160;2 Part Polyphony (FOMUS Chooses the Voice)</b></p><div class="example-contents"><pre class="programlisting">
+	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_cm_poly1.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.cm.poly2"></a><p class="title"><b>Example 9.15. 2 Part Polyphony (FOMUS Chooses the Voice)</b></p><div class="example-contents"><pre class="programlisting">
 
 (defparameter *part* (new fms:part :instr '(:piano :simultlim 1) :partid 'pno))
 
@@ -31,7 +31,7 @@
 	   wait 1/2))
 
 (events (list (polygen '(1 2) 20 50 80) (polygen '(1 2) 20 40 70)) "/tmp/fomus.ly" :parts *part* :view t)
-	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_cm_poly2.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.cm.poly3pt"></a><p class="title"><b>Example&#160;9.15.&#160;3 Part Polyphony</b></p><div class="example-contents"><pre class="programlisting">
+	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_cm_poly2.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.cm.poly3pt"></a><p class="title"><b>Example 9.16. 3 Part Polyphony</b></p><div class="example-contents"><pre class="programlisting">
 
 (defparameter *part* (new fms:part :instr '(:piano :simultlim 1) :partid 'pno))
 
@@ -47,7 +47,7 @@
 
 (events (list (polygen '(1 2 3) 20 50 70) (polygen '(1 2 3) 20 50 70) (polygen '(1 2 3) 20 50 70))
 	"/tmp/fomus.ly" :parts *part* :view t)
-	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_cm_poly3pt.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.cm.poly6pt"></a><p class="title"><b>Example&#160;9.16.&#160;6 Part Polyphony</b></p><div class="example-contents"><pre class="programlisting">
+	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_cm_poly3pt.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /><div class="example"><a id="example.cm.poly6pt"></a><p class="title"><b>Example 9.17. 6 Part Polyphony</b></p><div class="example-contents"><pre class="programlisting">
 
 (defparameter *parts*
   (list (new fms:part :name "Violin 1" :instr :violin :partid 'vlns
@@ -75,4 +75,4 @@
 	      (polygen '(1 2 3 4 5 6) 20 75 90)
 	      (polygen '(1 2 3 4 5 6) 20 80 95))
 	"/tmp/fomus.ly" :parts *parts* :quality 3 :view t)
-	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_cm_poly6pt.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch09s02.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="ch09.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ch09s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Lisp Examples&#160;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Text Input File Examples</td></tr></table></div></body></html>
+	</pre><div class="blockquote"><blockquote class="blockquote"><div class="mediaobject"><img src="ex_cm_poly6pt.jpg" /><div class="caption">Output</div></div></blockquote></div></div></div><br class="example-break" /></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch09s02.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="ch09.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ch09s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Lisp Examples </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Text Input File Examples</td></tr></table></div></body></html>
