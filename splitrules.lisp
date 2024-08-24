@@ -45,7 +45,7 @@
   ((tup :type list :accessor rule-tup :initform nil :initarg :tup)	; tup members multiplied together gives the actual fraction
    (dmu :type list :accessor rule-dmu :initform nil :initarg :dmu)))
 (defclass baseinit ()
-  ((time :type (cons (integer 1) (integer 1)) :accessor rule-time :initform '(1 1) :initarg :time)
+  ((time :type (cons (integer 1) (integer 1)) :accessor rule-time :initform '(1 . 1) :initarg :time)
    (beat :type (rational (0)) :accessor rule-beat :initform 1 :initarg :beat)))
 
 (defclass initdiv (baserule baseinit basecomp)
@@ -94,7 +94,7 @@
 (defparameter *syncopated-notes-level* t) ; b bah.. bah.. bah.. b
 
 (declaim (type boolean *double-dotted-notes* *tuplet-dotted-rests*))
-(defparameter *double-dotted-notes* t) ; = t if can use double dotted notes 
+(defparameter *double-dotted-notes* t) ; = t if can use double dotted notes
 (defparameter *tuplet-dotted-rests* t)
 
 (defun split-rules-bylevel (rule tups)	; tups = tuplets are allowed
@@ -135,7 +135,7 @@
 				(make-sig :time (cons (* (rule-num rule) n) (rule-den rule)) :comp (rule-comp rule) :beat (rule-beat rule)
 					  :alt al :art ar :init in :irr (not ex) :comp (rule-comp rule))
 				(make-unit :div (if (or (rule-comp rule) ir) 3 2) ;; (if (rule-comp rule) 3 2)
-					   :tup nil :alt t :art t :init in :irr (not ex) :comp (rule-comp rule)))) 
+					   :tup nil :alt t :art t :init in :irr (not ex) :comp (rule-comp rule))))
 			  (snd (n tl tr)
 			    (declare (type (rational (0) (1)) n) (type boolean tl tr))
 			    (if (if (rule-comp rule) (>= num (/ n)) (> num (/ n)))
@@ -182,8 +182,8 @@
 					     collect (let ((aa (or (and co (expof2 (* xx 3/2)) (expof2 (* (- num xx) 3/2)))
 								   (and (expof2 xx) (expof2 (- num xx))))))
 						       (list x
-							     (si x :l t aa (and (rule-irr rule) (expof2 (* xx 2/3)))) 
-							     (si (- 1 x) :r aa t (and (rule-irr rule) (expof2 (* x 2/3)))))))))) 
+							     (si x :l t aa (and (rule-irr rule) (expof2 (* xx 2/3))))
+							     (si (- 1 x) :r aa t (and (rule-irr rule) (expof2 (* x 2/3))))))))))
 			      (when (and (al *dotted-note-level*) (or (initdivp rule) (rule-alt rule)) ex (not (rule-comp rule)))
 				(nconc (list (list 3/4 (snd 3/4 t nil) (si 1/4 :r t t))) ; dotted notes
 				       (when *double-dotted-notes*
